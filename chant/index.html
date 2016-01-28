@@ -103,12 +103,12 @@
 			$.get("fiveSubjectsForFrequentRecollection.txt",function(data){
 				var chantLines = data.split("\n");
 				var currentLineNumber = 0;
-				var currentLineArray = currentLineNumber.split(" ");
+				var currentLineArray = chantLines[0].split(" ");
 				var currentWordNumber = 0;
 				$("#currentWordButton").click(function() {
 					$("#fill").append(currentLineArray[currentWordNumber++] + " ");
 					if(currentWordNumber >= currentLineArray.length) {
-						if(currentLineNumber >= chantLines.length) {
+						if(++currentLineNumber >= chantLines.length) {
 							//it's at end of file
 							$("#currentWordButton").hide();
 							return;
@@ -116,7 +116,7 @@
 						else {
 							//it's end of line, so add a <br> and reset
 							$("#fill").append("<br>");
-							currentLineArray = chantLines[++currentLineNumber].split(" ");
+							currentLineArray = chantLines[currentLineNumber].split(" ");
 							currentWordNumber = 0;
 						}
 					}
@@ -126,7 +126,7 @@
 				//load first word
 				$("#currentWordButton").text(currentLineArray[0]);
 			})
-			
+
 		});
 	</script>
 
