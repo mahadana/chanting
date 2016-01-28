@@ -17,7 +17,7 @@
 	/* HTML ELEMENTS */
 	body { font: 12px "Lucida Grande","Lucida Sans Unicode",Helvetica,Arial,Verdana,sans-serif; padding-bottom:200px; }
 	h1 { padding:60px 0 0 40px; }
-	p,form { padding:10px 40px; white-space: pre}
+	p,form { padding:10px 40px; }
 	a { color:#999; text-decoration:none; }
 	a:hover { text-decoration:underline; }
 </style>
@@ -80,7 +80,7 @@
 
     </script>
 
-    <title>Listen</title>
+    <title>Chant</title>
 
 </head>
 <body ontouchmove="BlockElasticScroll(event);">
@@ -100,7 +100,7 @@
 			attachFastClick(document.body);
 
 			var chantString = "I am of the nature to age; I have not gone beyond aging.\nI am of the nature to sicken; I have not gone beyond sickness. \nI am of the nature to die; I have not gone beyond dying. \nAll that is mine, beloved and pleasing, will become otherwise; will become separated from me. \nI am the owner of my karma, heir to my karma, born of my karma, related to my karma, abide supported by my karma. Whatever karma I shall do, for good or for ill, of that I shall be the heir. \nThus we should frequently recollect.";
-			var chantArray = chantString.split(" ");
+			var chantArray = chantString.split(/[\s\n]+/);
 			var currentWordNumber = 0;
 			$("#currentWordButton").click(function() {
 
