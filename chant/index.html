@@ -142,7 +142,7 @@
 							while(currentLineArray.length == 1 && (currentLineArray[0] == null || currentLineArray[0].length == 0)){
 								$("#fill").append("<br>");
 								if(typeof chantLines[++currentLineNumber] !== 'undefined') currentLineArray = chantLines[currentLineNumber].split(" ");
-								return endChant();
+								else return endChant();
 
 								// WARNING -- won't work well if it ends on an empty line!
 								// for now, just avoid doing that in the text file
