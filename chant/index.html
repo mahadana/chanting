@@ -6,7 +6,7 @@
 ?>
 <style>
 
-	button { font-size: 20pt; }
+	button { font-size: 40pt; }
 	#currentWordButton { position: absolute;
     top: 80%;
 		left: 100px;
@@ -95,22 +95,38 @@
 	<script type='application/javascript' src='fastclick.js'></script>
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
 	<script type="text/javascript">
+
 		$(document).ready(function()  {
 			var attachFastClick = Origami.fastclick;
 			attachFastClick(document.body);
 
-			var chantString = "I am of the nature to age; I have not gone beyond aging.\nI am of the nature to sicken; I have not gone beyond sickness. \nI am of the nature to die; I have not gone beyond dying. \nAll that is mine, beloved and pleasing, will become otherwise; will become separated from me. \nI am the owner of my karma, heir to my karma, born of my karma, related to my karma, abide supported by my karma. Whatever karma I shall do, for good or for ill, of that I shall be the heir. \nThus we should frequently recollect.";
-			var chantArray = chantString.split(/[\s\n]+/);
-			var currentWordNumber = 0;
-			$("#currentWordButton").click(function() {
+			$.get("fiveSubjectsForFrequentRecollection.txt",function(data){
+				var chantLines = data.split("\n");
+				var currentLineNumber = 0;
+				var currentLineArray = currentLineNumber.split(" ");
+				var currentWordNumber = 0;
+				$("#currentWordButton").click(function() {
+					$("#fill").append(currentLineArray[currentWordNumber++] + " ");
+					if(currentWordNumber >= currentLineArray.length) {
+						if(currentLineNumber >= chantLines.length) {
+							//it's at end of file
+							$("#currentWordButton").hide();
+							return;
+						}
+						else {
+							//it's end of line, so add a <br> and reset
+							$("#fill").append("<br>");
+							currentLineArray = chantLines[++currentLineNumber].split(" ");
+							currentWordNumber = 0;
+						}
+					}
+					$("#currentWordButton").text(currentLineArray[currentWordNumber]);
+				});
 
-				$("#fill").text($("#fill").text()+chantArray[currentWordNumber++] + " ");
-				if(currentWordNumber == chantArray.length) $("#currentWordButton").hide();
-				else $("#currentWordButton").text(chantArray[currentWordNumber]);
-			});
-
-			//load first word
-			$("#currentWordButton").text(chantArray[0]);
+				//load first word
+				$("#currentWordButton").text(currentLineArray[0]);
+			})
+			
 		});
 	</script>
 
