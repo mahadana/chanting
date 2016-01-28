@@ -108,8 +108,8 @@
 			// inherited from directory.js
 			var selectedChant = Directory[Math.floor(Math.random()*Directory.length)];
 
-			//$.get("texts/"+selectedChant.id +".txt",function(data){
-			$.get("texts/4.txt",function(data){
+			$.get("texts/"+selectedChant.id +".txt",function(data){
+			//$.get("texts/4.txt",function(data){
 				var chantLines = data.split("\n");
 				var currentLineNumber = 0;
 				var currentLineArray = chantLines[0].split(" ");
