@@ -1,9 +1,3 @@
-<?php
-
-//this is where the real UI goes with javascript and such
-
-
-?>
 <style>
 
 	button { font-size: 20pt; }
@@ -94,6 +88,7 @@
 
 
 	<script type='application/javascript' src='fastclick.js'></script>
+	<script type='application/javascript' src='directory.js'></script>
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
 	<script type="text/javascript">
 
@@ -101,7 +96,11 @@
 			var attachFastClick = Origami.fastclick;
 			attachFastClick(document.body);
 
-			$.get("fiveSubjectsForFrequentRecollection.txt",function(data){
+			//pick a random chant
+			// inherited from directory.js
+			var selectedChant = Directory[Math.floor(Math.random()*directory.length)];
+
+			$.get("texts/"+selectedChant.id +".txt",function(data){
 				var chantLines = data.split("\n");
 				var currentLineNumber = 0;
 				var currentLineArray = chantLines[0].split(" ");
@@ -111,8 +110,14 @@
 					if(currentWordNumber >= currentLineArray.length) {
 						if(++currentLineNumber >= chantLines.length) {
 							//it's at end of file
-							$("#currentWordButton").hide();
-							return;
+							$("#currentWordButton").hide().delay(1200).text("Next Chant").show().fadeIn(300).off().click(function() {
+										location.reload();
+							});
+
+							// could do fun stuff here, like prompt to share (send link to same chant)
+							// (or share text of chant to social media)
+							// Or could show the options screen + next button + set repeat
+
 						}
 						else {
 							//it's end of line, so add a <br> and reset
