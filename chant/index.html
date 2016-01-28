@@ -98,7 +98,7 @@
 
 			//pick a random chant
 			// inherited from directory.js
-			var selectedChant = Directory[Math.floor(Math.random()*directory.length)];
+			var selectedChant = Directory[Math.floor(Math.random()*Directory.length)];
 
 			$.get("texts/"+selectedChant.id +".txt",function(data){
 				var chantLines = data.split("\n");
