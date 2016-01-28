@@ -104,6 +104,11 @@
 				});
 			}
 
+			//make the text itself refresh the page
+			$("#fill").click(function(){
+				if(confirm("refresh page?")) location.reload();
+			});
+
 			//pick a random chant
 			// inherited from directory.js
 			var selectedChant = Directory[Math.floor(Math.random()*Directory.length)];
