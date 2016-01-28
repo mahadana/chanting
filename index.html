@@ -85,28 +85,30 @@
 </head>
 <body ontouchmove="BlockElasticScroll(event);">
 	<p id=fill></p>
-	<button id="currentWordButton" onclick="tapWord();"></button>
+	<button id="currentWordButton"></button>
 
 
 
 
 
 
-
+	<script type='application/javascript' src='fastclick.js'></script>
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
 	<script type="text/javascript">
-		var chantString = "I am of the nature to age; I have not gone beyond aging.\nI am of the nature to sicken; I have not gone beyond sickness. \nI am of the nature to die; I have not gone beyond dying. \nAll that is mine, beloved and pleasing, will become otherwise; will become separated from me. \nI am the owner of my karma, heir to my karma, born of my karma, related to my karma, abide supported by my karma. Whatever karma I shall do, for good or for ill, of that I shall be the heir. \nThus we should frequently recollect.";
-		var chantArray = chantString.split(" ");
-		var currentWordNumber = 0;
-		function tapWord() {
-
-			$("#fill").text($("#fill").text()+chantArray[currentWordNumber++] + " ");
-			if(currentWordNumber == chantArray.length) $("#currentWordButton").hide();
-			else $("#currentWordButton").text(chantArray[currentWordNumber]);
-		}
-
-
 		$(document).ready(function()  {
+			var attachFastClick = Origami.fastclick;
+			attachFastClick(document.body);
+
+			var chantString = "I am of the nature to age; I have not gone beyond aging.\nI am of the nature to sicken; I have not gone beyond sickness. \nI am of the nature to die; I have not gone beyond dying. \nAll that is mine, beloved and pleasing, will become otherwise; will become separated from me. \nI am the owner of my karma, heir to my karma, born of my karma, related to my karma, abide supported by my karma. Whatever karma I shall do, for good or for ill, of that I shall be the heir. \nThus we should frequently recollect.";
+			var chantArray = chantString.split(" ");
+			var currentWordNumber = 0;
+			$("#currentWordButton").click(function() {
+
+				$("#fill").text($("#fill").text()+chantArray[currentWordNumber++] + " ");
+				if(currentWordNumber == chantArray.length) $("#currentWordButton").hide();
+				else $("#currentWordButton").text(chantArray[currentWordNumber]);
+			});
+
 			//load first word
 			$("#currentWordButton").text(chantArray[0]);
 		});
