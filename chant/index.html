@@ -1,16 +1,22 @@
 <style>
 
-	button { font-size: 20pt; }
-	#currentWordButton { position: absolute;
-    top: 80%;
-		left: 50px;
+	button { font-size: 20pt; margin: 20px; }
+	#buttonDiv {
+		position: absolute;
+	  bottom: 10%;
+		text-align: center;
+	}
+	#currentWordButton {
 		min-width: 200px;
-    }
+  }
+	#fill{
+		padding:20px 30px;
+	}
 	/* BASIC RESET */
 	ul,ol,li,h1,h2,h3,h4,h5,h6,pre,form,body,html,p,blockquote,fieldset,input{margin:0; padding:0;}
 
 	/* HTML ELEMENTS */
-	body { font: 12px "Lucida Grande","Lucida Sans Unicode",Helvetica,Arial,Verdana,sans-serif; padding-bottom:200px; }
+	body { font: 14px "Lucida Grande","Lucida Sans Unicode",Helvetica,Arial,Verdana,sans-serif; padding-bottom:200px; }
 	h1 { padding:60px 0 0 40px; }
 	p,form { padding:10px 40px; }
 	a { color:#999; text-decoration:none; }
@@ -80,7 +86,9 @@
 </head>
 <body ontouchmove="BlockElasticScroll(event);">
 	<p id=fill></p>
-	<button id="currentWordButton"></button>
+	<div id=buttonDiv>
+		<button id="currentWordButton"></button>
+	</div>
 
 
 
@@ -96,11 +104,52 @@
 			var attachFastClick = Origami.fastclick;
 			attachFastClick(document.body);
 
-			function endChant()
-			{
-				$("#currentWordButton").hide().off().text("Next Chant").delay(500);
-				$("#currentWordButton").fadeIn(1300).click(function() {
-							location.reload();
+
+
+			function loadChant(chantId) {
+				$.get("texts/"+chantId +".txt",function(data){
+				//$.get("texts/4.txt",function(data){
+					var chantLines = data.split("\n");
+					var currentLineNumber = 0;
+					var currentLineArray = chantLines[0].split(" ");
+					var currentWordNumber = 0;
+					$("#currentWordButton").click(function() {
+						// END OF LINE CASE
+						//console.log(currentLineArray);
+						//console.log(currentLineNumber);
+						//console.log(currentWordNumber);
+						$("#fill").append(currentLineArray[currentWordNumber] + " ");
+						if(++currentWordNumber >= currentLineArray.length) {
+							if(++currentLineNumber >= chantLines.length) {
+								//it's at end of file
+								return endChant();
+								// could do fun stuff here, like prompt to share (send link to same chant)
+								// (or share text of chant to social media)
+								// Or could show the options screen + next button + set repeat
+
+							}
+							else {
+								//it's end of line, so add a <br> and reset
+								$("#fill").append("<br>");
+								currentLineArray = chantLines[currentLineNumber].split(" ");
+								// handle the case of an empty line
+								while(currentLineArray.length == 1 && (currentLineArray[0] == null || currentLineArray[0].length == 0)){
+									$("#fill").append("<br>");
+									if(typeof chantLines[++currentLineNumber] !== 'undefined') currentLineArray = chantLines[currentLineNumber].split(" ");
+									else return endChant();
+
+									// WARNING -- won't work well if it ends on an empty line!
+									// for now, just avoid doing that in the text file
+								}
+								currentWordNumber = 0;
+							}
+						}
+						//console.log("fill button with "+currentLineArray[currentWordNumber]);
+						$("#currentWordButton").text(currentLineArray[currentWordNumber]);
+					});
+
+					//load first word
+					$("#currentWordButton").text(currentLineArray[0]);
 				});
 			}
 
@@ -112,51 +161,27 @@
 			//pick a random chant
 			// inherited from directory.js
 			var selectedChant = Directory[Math.floor(Math.random()*Directory.length)];
+			//selectedChant.id = 4; //for test
+			loadChant(selectedChant.id);
 
-			$.get("texts/"+selectedChant.id +".txt",function(data){
-			//$.get("texts/4.txt",function(data){
-				var chantLines = data.split("\n");
-				var currentLineNumber = 0;
-				var currentLineArray = chantLines[0].split(" ");
-				var currentWordNumber = 0;
-				$("#currentWordButton").click(function() {
-					// END OF LINE CASE
-					//console.log(currentLineArray);
-					//console.log(currentLineNumber);
-					//console.log(currentWordNumber);
-					$("#fill").append(currentLineArray[currentWordNumber] + " ");
-					if(++currentWordNumber >= currentLineArray.length) {
-						if(++currentLineNumber >= chantLines.length) {
-							//it's at end of file
-							return endChant();
-							// could do fun stuff here, like prompt to share (send link to same chant)
-							// (or share text of chant to social media)
-							// Or could show the options screen + next button + set repeat
-
-						}
-						else {
-							//it's end of line, so add a <br> and reset
-							$("#fill").append("<br>");
-							currentLineArray = chantLines[currentLineNumber].split(" ");
-							// handle the case of an empty line
-							while(currentLineArray.length == 1 && (currentLineArray[0] == null || currentLineArray[0].length == 0)){
-								$("#fill").append("<br>");
-								if(typeof chantLines[++currentLineNumber] !== 'undefined') currentLineArray = chantLines[currentLineNumber].split(" ");
-								else return endChant();
-
-								// WARNING -- won't work well if it ends on an empty line!
-								// for now, just avoid doing that in the text file
-							}
-							currentWordNumber = 0;
-						}
-					}
-					//console.log("fill button with "+currentLineArray[currentWordNumber]);
-					$("#currentWordButton").text(currentLineArray[currentWordNumber]);
-				});
-
-				//load first word
-				$("#currentWordButton").text(currentLineArray[0]);
-			})
+			function endChant()
+			{
+				$("#currentWordButton").hide().off();
+				$("#buttonDiv").hide();
+				$("#buttonDiv").append( $("<button>").addClass("tempButtons").text("Random").click(function()
+						{
+							location.reload();
+						})
+				);
+				$("#buttonDiv").append($("<button>").addClass("tempButtons").text("Repeat").click(function() {
+							//empty the divs, and reset.
+							$("#currentWordButton").show();
+							$("#fill").empty();
+							$(".tempButtons").remove();
+							loadChant(selectedChant.id);
+				}));
+				$("#buttonDiv").delay(500).fadeIn(1300);
+			}
 
 		});
 	</script>
