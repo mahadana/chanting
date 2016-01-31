@@ -1,6 +1,6 @@
 <style>
 
-	button { font-size: 20pt; margin: 20px; }
+	button { font-size: 20pt; margin: 10px; }
 	#buttonDiv {
 		/*position: absolute;
 	  bottom: 10%;*/
@@ -108,14 +108,18 @@
 
 	<script type='application/javascript' src='fastclick.js'></script>
 	<script type='application/javascript' src='directory.js'></script>
+
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
+	<script type='application/javascript' src='longclick.js'></script>
+	<script src="//cdnjs.cloudflare.com/ajax/libs/underscore.js/1.5.2/underscore-min.js"></script>
+
 	<script type="text/javascript">
 
+
 		$(document).ready(function()  {
+			var loopProcessId;
 			var attachFastClick = Origami.fastclick;
 			attachFastClick(document.body);
-
-
 
 			function loadChant(chantId) {
 				$.get("texts/"+chantId +".txt",function(data){
@@ -124,7 +128,7 @@
 					var currentLineNumber = 0;
 					var currentLineArray = chantLines[0].split(" ");
 					var currentWordNumber = 0;
-					$("#currentWordButton").click(function() {
+					var fireNextWord = function() {
 						// END OF LINE CASE
 						//console.log(currentLineArray);
 						//console.log(currentLineNumber);
@@ -162,7 +166,18 @@
 						}
 						//console.log("fill button with "+currentLineArray[currentWordNumber]);
 						$("#currentWordButton").text(currentLineArray[currentWordNumber]);
+					}
+					$("#currentWordButton").click(function() {fireNextWord()});
+
+					//long press loop.
+					$("#currentWordButton").longclick(500,function() {
+						console.log("long click")
+						loopProcessId = self.setInterval(fireNextWord, 50);
 					});
+					$("#currentWordButton").mouseup(function(){
+						console.log("stop");
+						window.clearInterval(loopProcessId);
+					})
 
 					//load first word
 					$("#currentWordButton").text(currentLineArray[0]);
@@ -182,6 +197,7 @@
 
 			function endChant()
 			{
+				window.clearInterval(loopProcessId);
 				$("#currentWordButton").hide().off();
 				$("#buttonDiv").hide();
 				$("#buttonDiv").append( $("<button>").addClass("tempButtons").text("Random").click(function()
