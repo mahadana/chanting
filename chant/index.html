@@ -2,16 +2,20 @@
 
 	button { font-size: 20pt; margin: 20px; }
 	#buttonDiv {
-		position: absolute;
-	  bottom: 10%;
+		/*position: absolute;
+	  bottom: 10%;*/
 		text-align: center;
 	}
 	#currentWordButton {
 		min-width: 200px;
-		margin-left: 60px;
   }
+	#mainWindow {
+
+	}
 	#fill{
-		padding:50px 30px;
+		height:80%;
+		overflow-y: scroll;
+		padding: 50px 30px 0px 30px;
 		/*color:white;*/
 	}
 	/* BASIC RESET */
@@ -19,7 +23,7 @@
 
 	/* HTML ELEMENTS */
 	body { font: 14px "Lucida Grande","Lucida Sans Unicode",Helvetica,Arial,Verdana,sans-serif;
-	padding-bottom:200px;
+	/*padding-bottom:200px;*/
 	/*background-color: black;*/
 }
 	h1 { padding:60px 0 0 40px; }
@@ -90,7 +94,9 @@
 
 </head>
 <body ontouchmove="BlockElasticScroll(event);">
-	<p id=fill></p>
+	<div id=mainWindow>
+		<p id=fill></p>
+	</div>
 	<div id=buttonDiv>
 		<button id="currentWordButton"></button>
 	</div>
@@ -123,7 +129,12 @@
 						//console.log(currentLineArray);
 						//console.log(currentLineNumber);
 						//console.log(currentWordNumber);
+
 						$("#fill").append(currentLineArray[currentWordNumber] + " ");
+						//now scroll down
+						var $d = $('#fill');
+						$d.scrollTop($d.prop("scrollHeight"));
+
 						if(++currentWordNumber >= currentLineArray.length) {
 							if(++currentLineNumber >= chantLines.length) {
 								//it's at end of file
