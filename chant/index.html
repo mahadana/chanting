@@ -174,7 +174,7 @@
 						console.log("long click")
 						loopProcessId = self.setInterval(fireNextWord, 50);
 					});
-					$("#currentWordButton").mouseup(function(){
+					$("#currentWordButton").bind( "touchend",function(){
 						console.log("stop");
 						window.clearInterval(loopProcessId);
 					})
