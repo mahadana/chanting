@@ -8,6 +8,7 @@
 	#buttonDiv {
 		/*position: absolute;
 	  bottom: 10%;*/
+		padding: 2px;
 		text-align: center;
 	}
 	#currentWordButton {
@@ -168,6 +169,7 @@
 					$d.scrollTop($d.prop("scrollHeight"));
 
 					if(++currentWordNumber >= currentLineArray.length) {
+						//TEST -- don't allow continuous press: if(loopProcessId) window.clearInterval(loopProcessId);
 						//it's at end of file
 						if(++currentLineNumber >= chantLines.length) {  return endChant();  }
 						else {
@@ -203,9 +205,9 @@
 					loopProcessId = null;
 				});
 
-				// ACTION
+				// ACTION (Secret)
 				//make the text itself refresh the page
-				$("#fill").dblclick(function(){
+				$("#fill").longclick(150,function(){
 					if(confirm("refresh page?")) location.reload();
 				});
 
@@ -243,7 +245,7 @@
 					$("#buttonDiv").delay(delay).fadeIn(500);
 				}
 				// "x" to close
-				$("#buttonDiv").append( $("<span>").click(function() {dedicate()}).text("x").addClass("closeButton") );
+				$("#buttonDiv").append( $("<span>").click(function() {dedicate()}).text("(X)").addClass("closeButton") );
 				// dedicate button.
 				$("#buttonDiv").append(
 					$("<button>").on('click', function() {dedicate(true) }).addClass("tempButtons").text("Dedicate Merit")
