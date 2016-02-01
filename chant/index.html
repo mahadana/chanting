@@ -63,7 +63,7 @@
     <meta http-equiv="content-type" content="text/html;charset=utf-8"/>
 
     <!-- Set the viewport to show the page at a scale of 1.0, and make it non-scalable -->
-    <meta name="viewport" content="width=device-width; initial-scale=1.0; maximum-scale=1.0; user-scalable=0;"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0"/>
 
     <!-- Make it fullscreen / hide the browser URL bar -->
     <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -192,7 +192,7 @@
 
 				// ACTION
 				//long press loop.
-				$("#currentWordButton").longclick(200,function() {
+				$("#currentWordButton").longclick(250,function() {
 					//keep global ref to the process id so we can kill it later
 					console.log("long click");
 					loopProcessId = self.setInterval(fireNextWord, 100);
