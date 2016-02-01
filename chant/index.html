@@ -192,7 +192,7 @@
 
 				// ACTION
 				//long press loop.
-				$("#currentWordButton").longclick(100,function() {
+				$("#currentWordButton").longclick(200,function() {
 					//keep global ref to the process id so we can kill it later
 					console.log("long click");
 					loopProcessId = self.setInterval(fireNextWord, 100);
