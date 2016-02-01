@@ -171,16 +171,16 @@
 						//console.log("fill button with "+currentLineArray[currentWordNumber]);
 						$("#currentWordButton").text(currentLineArray[currentWordNumber]);
 					}
-					$("#currentWordButton").click(function() {fireNextWord()});
 
 					//long press loop.
-					$("#currentWordButton").longclick(500,function() {
-						console.log("long click")
-						loopProcessId = self.setInterval(fireNextWord, 50);
+					$("#currentWordButton").longclick(100,function() {
+						//keep global ref to the process id so we can kill it later
+						loopProcessId = self.setInterval(fireNextWord, 100);
 					});
-					$("#currentWordButton").bind( "touchend",function(){
-						console.log("stop");
-						window.clearInterval(loopProcessId);
+					$("#currentWordButton").bind( "touchend mouseup",function(){
+						if(loopProcessId) window.clearInterval(loopProcessId);
+						else fireNextWord(); //this is the case where we're not looping, and they just tap once.
+						loopProcessId = null;
 					})
 
 					//load first word
