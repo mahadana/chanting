@@ -200,12 +200,12 @@
 
 				// ACTION
 				// release button -- add word, or end long press loop
-				$("#currentWordButton").bind( "touchend mouseup",function(e){
-					console.log("touchend/mouseup",loopProcessId,e);
+				$("#currentWordButton").bind( "touchend mouseup",_.debounce(function(e){
+					console.log("touchend/mouseup");
 					if(loopProcessId) window.clearInterval(loopProcessId);
 					else fireNextWord(); //this is the case where we're not looping, and they just tap once.
 					loopProcessId = null;
-				});
+				}, 10,true));
 
 				// ACTION (Secret)
 				//make the text itself refresh the page
