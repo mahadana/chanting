@@ -48,5 +48,10 @@ var Directory = [
     types:[t.sanskrit,t.mantra],
     title:"Gate Gate Paragate"
   },
-  
+  {
+    id:9,
+    types:[t.pali,t.mantra],
+    title:"Annica Vata Sankhara"
+  },
+
 ];

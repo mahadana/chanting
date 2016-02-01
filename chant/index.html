@@ -194,12 +194,14 @@
 				//long press loop.
 				$("#currentWordButton").longclick(100,function() {
 					//keep global ref to the process id so we can kill it later
+					console.log("long click");
 					loopProcessId = self.setInterval(fireNextWord, 100);
 				});
 
 				// ACTION
 				// release button -- add word, or end long press loop
-				$("#currentWordButton").bind( "touchend mouseup",function(){
+				$("#currentWordButton").bind( "touchend mouseup",function(e){
+					console.log("touchend/mouseup",loopProcessId,e);
 					if(loopProcessId) window.clearInterval(loopProcessId);
 					else fireNextWord(); //this is the case where we're not looping, and they just tap once.
 					loopProcessId = null;
