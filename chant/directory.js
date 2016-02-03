@@ -53,5 +53,14 @@ var Directory = [
     types:[t.pali,t.mantra],
     title:"Annica Vata Sankhara"
   },
-
+  {
+    id:10,
+    types:[t.chinese,t.mantra],
+    title:"A Mi Tuo Fu"
+  },
+  {
+    id:11,
+    types:[t.chinese,t.mantra],
+    title:"namo, fundamental teacher"
+  },
 ];
