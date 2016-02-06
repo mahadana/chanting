@@ -22,7 +22,7 @@
 		float:right;
 	}
 	#fill{
-		padding: 50px 30px 0px 30px;
+		padding: 50px 30px 0px 60px;
 		/*color:white;*/
 
 		-webkit-transition: all 1000ms linear;
@@ -117,7 +117,7 @@
     <title>Chant</title>
 
 </head>
-<body ontouchmove="BlockElasticScroll(event);">
+<body id=body ontouchmove="BlockElasticScroll(event);">
 	<div id=mainWindow>
 		<p id=fill></p>
 	</div>
@@ -233,11 +233,13 @@
 						$('#fill').addClass('close');
 						setTimeout(function(){
 								$('#fill').hide();
+								$("#body").click(function() {  reloadPage(selectedChant.id); } );
 						}, 1000);
 					}
 					//wait 2s, and then show buttons again.
 					$("#buttonDiv").hide();
 					// Button -- "next chant"
+					/*
 					$("#buttonDiv").append( $("<button>").addClass("tempButtons")
 						.text("Next").click(function(){  reloadPage();  }));
 					// Button -- "repeat chant"
@@ -245,9 +247,10 @@
 						.text("Repeat").click(function() {  reloadPage(selectedChant.id); }));
 					var delay = doAnimation ? 1500 : 300;
 					$("#buttonDiv").delay(delay).fadeIn(500);
+					*/
 				}
 				// "x" to close
-				$("#buttonDiv").append( $("<span>").click(function() {dedicate()}).text("(X)").addClass("closeButton") );
+				//$("#buttonDiv").append( $("<span>").click(function() {dedicate()}).text("(X)").addClass("closeButton") );
 				// dedicate button.
 				$("#buttonDiv").append(
 					$("<button>").on('click', function() {dedicate(true) }).addClass("tempButtons").text("Dedicate Merit")
