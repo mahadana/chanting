@@ -5,6 +5,7 @@
 	  -webkit-user-select: none; /* disable selection/Copy of UIWebView */
 	  -webkit-touch-callout: none; /* disable the IOS popup when long-press on a link */
 	}
+	.settingRow { padding: 10px;}
 	#buttonDiv {
 		/*position: absolute;
 	  bottom: 10%;*/
@@ -118,11 +119,17 @@
 
 </head>
 <body id=body ontouchmove="BlockElasticScroll(event);">
+	<div id=settings style="display:none;">
+		<div class=settingRow><input type=checkbox id=english checked="checked" disabled="disabled">English chants</div>
+		<div class=settingRow><input type=checkbox id=pali>Pali chants</div>
+		<div class=settingRow><input type=checkbox id=chinese>Chinese chants</div>
+		<button id=submitSettings>Done</button>
+	</div>
 	<div id=mainWindow>
 		<p id=fill></p>
 	</div>
 	<div id=buttonDiv>
-		<button id="currentWordButton"></button>
+		<button id="currentWordButton" style="display:none;"></button>
 	</div>
 
 
@@ -132,6 +139,7 @@
 
 	<script type='application/javascript' src='fastclick.js'></script>
 	<script type='application/javascript' src='directory.js'></script>
+	<script type='application/javascript' src='js.cookie.js'></script>
 
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
 	<script type='application/javascript' src='longclick.js'></script>
@@ -143,15 +151,68 @@
 			return match && decodeURIComponent(match[1].replace(/\+/g, ' '));
 		}
 
+		var getSettingsFromCookie = function()
+		{
+			var defaultSettings = {
+				pali:true,
+				chinese:true,
+				english:true
+			}
+			return Cookies.get("settingsJson") ? JSON.parse(Cookies.get("settingsJson")) : defaultSettings;
+		}
+
+
 		$(document).ready(function()  {
 			var loopProcessId; //global.
 			var attachFastClick = Origami.fastclick;
 			attachFastClick(document.body);
 
+			// Settings page
+			//console.log(getParameterByName("settings"));
+			if(getParameterByName("settings"))
+			{
+				//get the cookie, load the data
+				$("#settings").show();
+				var settings = getSettingsFromCookie();
+				$("#pali").prop("checked", settings.pali ? true : false);
+				$("#chinese").prop("checked",settings.chinese ? true : false);
+				$("#submitSettings").click(function(){
+					//save the cookie
+					var newSettings = {};
+					newSettings.pali = $("#pali").prop("checked");
+					newSettings.chinese = $("#chinese").prop("checked");
+					newSettings.english = true; //hardcode
+					Cookies.set("settingsJson",JSON.stringify(newSettings),{ expires: 100 });
+					reloadPage(null);
+				});
+				return;
+			}
+
+
+
+			function getRandomChant()
+			{
+				var loops = 0;
+				while(loops++ < 100 ){
+					var rand = Math.floor(Math.random()*Directory.length);
+					var settings = getSettingsFromCookie();
+					for(var type in settings)
+					{
+						if(!settings[type]) continue;
+						if(Directory[rand].types.indexOf(CHANTTYPE[type]) != -1){
+							//console.log(type,CHANTTYPE[type],Directory[rand].types);
+							return Directory[rand];
+						}
+					}
+				}
+				return Directory[0];
+			}
+
 			//pick a random chant, or use the one that was passed
 			// inherited from directory.js
+			$("#currentWordButton").show();
 			var passedChantId = getParameterByName("chantId");
-			var selectedChant = passedChantId ? Directory[passedChantId-1]: Directory[Math.floor(Math.random()*Directory.length)];
+			var selectedChant = passedChantId ? Directory[passedChantId-1]: getRandomChant();
 
 			$.get("texts/"+selectedChant.id +".txt",function(data){
 				// INIT DATA
@@ -209,7 +270,7 @@
 
 				// ACTION (Secret)
 				//make the text itself refresh the page
-				$("#fill").longclick(150,function(){
+				$("#fill").longclick(350,function(){
 					if(confirm("refresh page?")) location.reload();
 				});
 
@@ -233,21 +294,21 @@
 						$('#fill').addClass('close');
 						setTimeout(function(){
 								$('#fill').hide();
-								$("#body").click(function() {  reloadPage(selectedChant.id); } );
+								//$("#body").click(function() {  reloadPage(selectedChant.id); } );
 						}, 1000);
 					}
 					//wait 2s, and then show buttons again.
 					$("#buttonDiv").hide();
 					// Button -- "next chant"
-					/*
+
 					$("#buttonDiv").append( $("<button>").addClass("tempButtons")
-						.text("Next").click(function(){  reloadPage();  }));
+						.text("Continue").click(function(){  reloadPage(null);  }));
+					$("#buttonDiv").append("<br><br><a class='settings' href='?settings=1'>Settings</a>");
 					// Button -- "repeat chant"
-					$("#buttonDiv").append($("<button>").addClass("tempButtons")
-						.text("Repeat").click(function() {  reloadPage(selectedChant.id); }));
+					//$("#buttonDiv").append($("<button>").addClass("tempButtons")
+					//	.text("Repeat").click(function() {  reloadPage(selectedChant.id); }));
 					var delay = doAnimation ? 1500 : 300;
 					$("#buttonDiv").delay(delay).fadeIn(500);
-					*/
 				}
 				// "x" to close
 				//$("#buttonDiv").append( $("<span>").click(function() {dedicate()}).text("(X)").addClass("closeButton") );
