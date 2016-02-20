@@ -23,7 +23,7 @@
 		float:right;
 	}
 	#fill{
-		padding: 50px 30px 0px 60px;
+		padding: 50px 30px 40px 60px;
 		/*color:white;*/
 
 		-webkit-transition: all 1000ms linear;
@@ -303,7 +303,10 @@
 
 					$("#buttonDiv").append( $("<button>").addClass("tempButtons")
 						.text("Continue").click(function(){  reloadPage(null);  }));
-					$("#buttonDiv").append("<br><br><a class='settings' href='?settings=1'>Settings</a>");
+					$("#buttonDiv").append("<br><br>");
+					$("#buttonDiv").append($("<a>").addClass("settings").text("Settings").click( function(){
+						window.location = "?settings=1";
+					} ));
 					// Button -- "repeat chant"
 					//$("#buttonDiv").append($("<button>").addClass("tempButtons")
 					//	.text("Repeat").click(function() {  reloadPage(selectedChant.id); }));
