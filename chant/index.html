@@ -6,6 +6,7 @@
 	  -webkit-touch-callout: none; /* disable the IOS popup when long-press on a link */
 	}
 	.settingRow { padding: 10px;}
+	.settings { color: #999;  }
 	#buttonDiv {
 		/*position: absolute;
 	  bottom: 10%;*/
@@ -86,7 +87,7 @@
 
         In case you don't want the gloss applied, use "apple-touch-icon-precomposed" instead of "apple-touch-icon".
     -->
-    <link rel="apple-touch-icon" href="images/startup.png" />
+    <link rel="apple-touch-icon" href="apple-touch-icon.png" />
 
     <!--
         Add a splash screen / startup image.
@@ -304,7 +305,7 @@
 					$("#buttonDiv").append( $("<button>").addClass("tempButtons")
 						.text("Continue").click(function(){  reloadPage(null);  }));
 					$("#buttonDiv").append("<br><br>");
-					$("#buttonDiv").append($("<a>").addClass("settings").text("Settings").click( function(){
+					$("#buttonDiv").append($("<p>").addClass("settings").text("Settings").click( function(){
 						window.location = "?settings=1";
 					} ));
 					// Button -- "repeat chant"
