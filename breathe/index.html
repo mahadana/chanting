@@ -180,6 +180,7 @@
 
 			// While moving, update the color
 			$("#body").on("touchmove mousemove",function(e) {
+				console.log("touchmove",e);
 				e.preventDefault();
 				e.stopPropagation();
 				//DANGER -- could be client-dependent
