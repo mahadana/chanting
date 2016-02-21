@@ -13,7 +13,7 @@
 	ul,ol,li,h1,h2,h3,h4,h5,h6,pre,form,body,html,p,blockquote,fieldset,input{margin:0; padding:0;}
 
 	/* HTML ELEMENTS */
-	body { font: 20px "Lucida Grande","Lucida Sans Unicode",Helvetica,Arial,Verdana,sans-serif;
+	body { background-color:black; font: 20px "Lucida Grande","Lucida Sans Unicode",Helvetica,Arial,Verdana,sans-serif;
 	/*padding-bottom:200px;*/
 	/*background-color: black;*/
 }
@@ -172,6 +172,7 @@
 
 			//reset start position each time
 			$("#body").on("touchstart mousedown",function(e) {
+				console.log("touchstart")
 				//DANGER -- could be client-dependent
 				if(!touchStartY)
 					touchStartY = e.touches && e.touches[0] ? e.touches[0].clientY : e.clientY;
