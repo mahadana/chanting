@@ -180,12 +180,12 @@
 
 			// While moving, update the color
 			$("#body").on("touchmove mousemove",function(e) {
-				console.log("touchmove",e);
+				console.log("touchmove",e.originalEvent);
 				e.preventDefault();
 				e.stopPropagation();
 				//DANGER -- could be client-dependent
 				if(e.originalEvent && e.originalEvent.touches && e.originalEvent.touches[0]) e.touches = e.originalEvent.touches;
-				var currentYCoordinate = e.touches && e.touches[0] ? e.touches[0].clientY : e.clientY;
+				var currentYCoordinate = e.originalEvent && e.originalEvent.touches && e.originalEvent.touches[0] ? e.originalEvent.touches[0].clientY : e.clientY;
 				//special formula -- if you go below min it does nothing. Over max does nothing as well.
 				var distance = currentYCoordinate - touchStartY > 0 ? Math.min(maxDistance,currentYCoordinate - touchStartY) : 0;
 				var blackness = Math.floor(256* distance / maxDistance);
