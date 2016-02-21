@@ -1,7 +1,8 @@
 <style>
 
 
-	button, p,#mainWindow {
+	#text {
+		color: white;
 	  -webkit-user-select: none; /* disable selection/Copy of UIWebView */
 	  -webkit-touch-callout: none; /* disable the IOS popup when long-press on a link */
 	}
@@ -12,7 +13,7 @@
 	ul,ol,li,h1,h2,h3,h4,h5,h6,pre,form,body,html,p,blockquote,fieldset,input{margin:0; padding:0;}
 
 	/* HTML ELEMENTS */
-	body { font: 14px "Lucida Grande","Lucida Sans Unicode",Helvetica,Arial,Verdana,sans-serif;
+	body { font: 20px "Lucida Grande","Lucida Sans Unicode",Helvetica,Arial,Verdana,sans-serif;
 	/*padding-bottom:200px;*/
 	/*background-color: black;*/
 }
@@ -84,7 +85,7 @@
 
 </head>
 <body id=body> <!--ontouchmove="BlockElasticScroll(event);" -->
-	<div id=text></div>
+	<div id=text style="display:none;"></div>
 
 
 
@@ -117,18 +118,86 @@
 		}
 
 
-		$(document).ready(function()  {
-
-			document.getElementById('body').ontouchmove = function (e)
+		var currentInstructionNumber = 0;
+		var instructions = [
+			"Take a few moments to feel your breath in your belly",
+			"Now, let's follow your breathing with your thumb",
+			"Pull down as you breathe in",
+			"And push up as you breathe out",
+		];
+		var loadNextInstruction = function(callback,white)
+		{
+			console.log(instructions[currentInstructionNumber]);
+			var fadeOutDuration = 1000;
+			var fadeInDuration = 2000;
+			var $text = $("#text");
+			var changeTextAndFadeIn = function() {
+				console.log("starting change and fade in")
+				$text.text(instructions[currentInstructionNumber]);
+				$text.css("color",white ? "white":"black");
+				$text.fadeIn(fadeInDuration,function() {
+					console.log("executing callback")
+					currentInstructionNumber++;
+					callback()
+				});
+			}
+			//fade out the old, then fade in the new
+			if($text.text())
 			{
+				console.log("has text")
+				$text.fadeOut(fadeOutDuration, function() {changeTextAndFadeIn()});
+			}
+			else {
+				console.log("no text")
+				changeTextAndFadeIn();
+			}
+		}
+
+
+		$(document).ready(function()  {
+			//load initial instructions in sequence (REFACTOR LATER)
+			console.log("ready")
+			var okToBreatheOut = false;
+			loadNextInstruction(function(){
+				console.log("callback1");
+				loadNextInstruction(function() {
+					console.log("callback2");
+					loadNextInstruction(function() {console.log("callback3");},true); //wait 2 seconds
+					okToBreatheOut = true;
+				},true);
+			}, true);
+
+			var touchStartY;
+			var maxDistance = 200;
+
+			//reset start position each time
+			$("#body").on("touchstart mousedown",function(e) {
+				//DANGER -- could be client-dependent
+				if(!touchStartY)
+					touchStartY = e.touches && e.touches[0] ? e.touches[0].clientY : e.clientY;
+			});
+
+			// While moving, update the color
+			$("#body").on("touchmove mousemove",function(e) {
 				e.preventDefault();
 				e.stopPropagation();
-
-				var blackness = Math.floor(256* e.touches[0].clientY / $(window).height());
+				//DANGER -- could be client-dependent
+				var currentYCoordinate = e.touches && e.touches[0] ? e.touches[0].clientY : e.clientY;
+				//special formula -- if you go below min it does nothing. Over max does nothing as well.
+				var distance = currentYCoordinate - touchStartY > 0 ? Math.min(maxDistance,currentYCoordinate - touchStartY) : 0;
+				var blackness = Math.floor(256* distance / maxDistance);
 				var string = "rgb("+blackness+","+blackness+","+blackness+")";
 				//$("#body").text(string);
 				$("#body").css("background-color",string);
-			};
+
+				//load the final instruction
+				if(okToBreatheOut && distance > 150) {
+					okToBreatheOut = false;
+					loadNextInstruction(function() {
+						$("#text").fadeOut(1000);
+					});
+				}
+			});
 
 		});
 	</script>
