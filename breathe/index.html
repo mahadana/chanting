@@ -170,7 +170,7 @@
 			var touchStartY;
 			var maxDistance = 200;
 
-			function getYPos()
+			function getYPos(e)
 			{
 				return e.originalEvent && e.originalEvent.touches && e.originalEvent.touches[0] ? e.originalEvent.touches[0].clientY : e.clientY;
 			}
@@ -180,7 +180,7 @@
 				console.log("touchstart")
 				//DANGER -- could be client-dependent
 				if(!touchStartY)
-					touchStartY = getYPos();
+					touchStartY = getYPos(e);
 			});
 
 			// While moving, update the color
@@ -189,7 +189,7 @@
 				e.preventDefault();
 				e.stopPropagation();
 				//DANGER -- could be client-dependent
-				var currentYCoordinate = getYPos();
+				var currentYCoordinate = getYPos(e);
 				//special formula -- if you go below min it does nothing. Over max does nothing as well.
 				var distance = currentYCoordinate - touchStartY > 0 ? Math.min(maxDistance,currentYCoordinate - touchStartY) : 0;
 				var blackness = Math.floor(256* distance / maxDistance);
