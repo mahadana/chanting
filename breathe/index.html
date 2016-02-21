@@ -184,13 +184,13 @@
 				e.preventDefault();
 				e.stopPropagation();
 				//DANGER -- could be client-dependent
-				if(e.originalEvent && e.originalEvent.touches && e.originalEvent.touches[0]) e.touches = e.originalEvent.touches;
 				var currentYCoordinate = e.originalEvent && e.originalEvent.touches && e.originalEvent.touches[0] ? e.originalEvent.touches[0].clientY : e.clientY;
 				//special formula -- if you go below min it does nothing. Over max does nothing as well.
 				var distance = currentYCoordinate - touchStartY > 0 ? Math.min(maxDistance,currentYCoordinate - touchStartY) : 0;
 				var blackness = Math.floor(256* distance / maxDistance);
 				var string = "rgb("+blackness+","+blackness+","+blackness+")";
 				//$("#body").text(string);
+				console.log(string)
 				$("#body").css("background-color",string);
 
 				//load the final instruction
