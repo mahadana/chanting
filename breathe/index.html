@@ -2,6 +2,7 @@
 
 
 	#text {
+		padding : 40px;
 		color: white;
 	  -webkit-user-select: none; /* disable selection/Copy of UIWebView */
 	  -webkit-touch-callout: none; /* disable the IOS popup when long-press on a link */
@@ -159,12 +160,14 @@
 			console.log("ready")
 			var okToBreatheOut = false;
 			loadNextInstruction(function(){
-				console.log("callback1");
-				loadNextInstruction(function() {
-					console.log("callback2");
-					loadNextInstruction(function() {console.log("callback3");},true); //wait 2 seconds
-					okToBreatheOut = true;
-				},true);
+				setTimeout(function() {
+					loadNextInstruction(function() {
+						setTimeout(function() {
+							loadNextInstruction(function() {console.log("callback3");},true); //wait 2 seconds
+							okToBreatheOut = true;
+						},2000);
+					},true);
+				},8000);
 			}, true);
 
 			var touchStartY;
