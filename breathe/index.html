@@ -82,7 +82,7 @@
 
     </script>
 
-    <title>Breathe</title>
+    <title>10 Breaths</title>
 
 </head>
 <body id=body> <!--ontouchmove="BlockElasticScroll(event);" -->
@@ -121,10 +121,10 @@
 
 		var currentInstructionNumber = 0;
 		var instructions = [
-			"Take a few moments to feel your breath in your belly",
-			"Now, let's follow your breathing with your thumb",
-			"Pull down as you breathe in",
-			"And push up as you breathe out",
+			"Take a few moments to feel your belly moving in and out as you breathe",
+			"Now, let's follow your breathing using this app",
+			"At the start of your next in-breath, drag down slowly as you follow the air in",
+			"Then drag back up slowly as you breathe out",
 		];
 		var loadNextInstruction = function(callback,white)
 		{
@@ -220,7 +220,7 @@
 			// While moving, update the color
 			var breathingIn = true;
 			var breathCount = 0;
-			var notifyCounts = [1,3,6,10,15,20];
+			var notifyCounts = [1,3,6,10];
 			function changeDirection(){
 				breathingIn = !breathingIn;
 				if(breathingIn) {
