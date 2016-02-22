@@ -171,22 +171,67 @@
 			}, true);
 
 			var touchStartY;
-			var maxDistance = 200;
+			var maxDistance = 180;
 
 			function getYPos(e)
 			{
 				return e.originalEvent && e.originalEvent.touches && e.originalEvent.touches[0] ? e.originalEvent.touches[0].clientY : e.clientY;
 			}
 
+			function isOppositeDirection(breathingIn,distanceStack){
+				//console.log("is opposite",distanceStack)
+				var stack = distanceStack.slice(0); //make a clone
+				if(stack.length > 4)
+				{
+					var lastVal = stack.shift();
+					var currentVal;
+					while(stack.length > 0){
+						currentVal = stack.shift();
+						if(breathingIn && currentVal > lastVal) return false;
+						if(!breathingIn && currentVal < lastVal) return false;
+						lastVal = currentVal;
+					}
+					//if it gets here, it's in the opposite direction!
+					//console.log("opposite")
+					return true;
+				}
+				return false; //edge case -- stack too short. So can't be changing direction
+			}
+
+			function sayCount(count) {
+				console.log("say "+count)
+				var $text = $("#text");
+				$text.text(count+" breath"+(count>1 ? "s":""));
+				$text.css("color","white");
+				$text.fadeIn(1000,function() {
+					$text.fadeOut(1000);
+				});
+			}
+
+
 			//reset start position each time
 			$("#body").on("touchstart mousedown",function(e) {
-				console.log("touchstart")
+				//console.log("touchstart")
 				//DANGER -- could be client-dependent
 				if(!touchStartY)
 					touchStartY = getYPos(e);
 			});
 
 			// While moving, update the color
+			var breathingIn = true;
+			var breathCount = 0;
+			var notifyCounts = [1,3,6,10,15,20];
+			function changeDirection(){
+				if(breathingIn) {
+					breathCount++;
+					console.log(breathCount +" breaths completed ")
+					if(notifyCounts.indexOf(breathCount) != -1){
+						sayCount(breathCount);
+					}
+				}
+				breathingIn = !breathingIn;
+			}
+			var distanceStack = [];
 			$("#body").on("touchmove mousemove",function(e) {
 				//console.log("touchmove",e.originalEvent.touches[0].clientY);
 				e.preventDefault();
@@ -197,11 +242,22 @@
 				var distance = currentYCoordinate - touchStartY > 0 ? Math.min(maxDistance,currentYCoordinate - touchStartY) : 0;
 				var blackness = Math.floor(256* distance / maxDistance);
 				var string = "rgb("+blackness+","+blackness+","+blackness+")";
+
+				// update stack
+				if(distanceStack.length > 5) distanceStack.shift();
+				if(touchStartY) distanceStack.push(currentYCoordinate - touchStartY);
+				//console.log(distanceStack,currentYCoordinate,touchStartY,breathingIn)
+
+				// if changed direction recently, breathing out.
+				if(isOppositeDirection(breathingIn,distanceStack)) changeDirection();
+
+
 				//$("#body").text(string);
 				//console.log(touchStartY, currentYCoordinate, maxDistance, blackness, string);
 				$("#body").css("background-color",string);
 
 				//load the final instruction
+
 				if(okToBreatheOut && distance > 150) {
 					okToBreatheOut = false;
 					loadNextInstruction(function() {
