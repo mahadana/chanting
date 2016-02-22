@@ -222,6 +222,7 @@
 			var breathCount = 0;
 			var notifyCounts = [1,3,6,10,15,20];
 			function changeDirection(){
+				breathingIn = !breathingIn;
 				if(breathingIn) {
 					breathCount++;
 					console.log(breathCount +" breaths completed ")
@@ -229,7 +230,6 @@
 						sayCount(breathCount);
 					}
 				}
-				breathingIn = !breathingIn;
 			}
 			var distanceStack = [];
 			$("#body").on("touchmove mousemove",function(e) {
