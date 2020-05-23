@@ -109,13 +109,17 @@
 
 
 	<div class='embed-container'>
-		<!--<iframe src='https://www.youtube.com/embed/4AgcwfG2mXg' frameborder='0' allowfullscreen></iframe>-->
-		<iframe src='https://www.youtube.com/embed/live_stream?channel=UCFAuQ5fmYYVv5_Dim0EQpVA' frameborder='0' allowfullscreen></iframe>
+		<iframe id="demo-video" style="display: none;" src='https://www.youtube.com/embed/zwuKRGndLN0' frameborder='0' allowfullscreen></iframe>
+		<iframe id="real-video" src='https://www.youtube.com/embed/live_stream?channel=UCFAuQ5fmYYVv5_Dim0EQpVA' frameborder='0' allowfullscreen></iframe>
 	</div>
 
 	<div class="w3-container">
 	  <button onclick="document.getElementById('id01').style.display='block'" class="w3-button w3-black">Book 1</button>
 	  <button onclick="document.getElementById('id02').style.display='block'" class="w3-button w3-black">Book 2</button>
+	  
+	  <div style="margin-top: 80%">
+	  	<button class="w3-button w3-black" onclick="document.getElementById('demo-video').style.display='block'; document.getElementById('real-video').style.display='none'">(demo)</button>
+	  </div>
 	  
 	  
 	  <!-- CHANTING BOOK 2 ---> 
