@@ -35,7 +35,7 @@
 	.chant-image { width: 100%; }
 	
 
-	
+	#dhamma-image-2 { margin-top: -40px }
 	
 </style>
 
@@ -94,6 +94,25 @@
     // var isIPod = navigator.userAgent.indexOf("iPod") != -1 ;
     // var isIPad = navigator.userAgent.indexOf("iPad") != -1 ;
     // var isIOs = isIPhone || isIPod || isIPad ;
+    
+    
+    function loadDhamma() {
+    	const startPage = 9;
+    	const endPage = 111;
+    	const totalPages = endPage - startPage + 1;
+    	console.log(totalPages)
+    	const selectedOddPagesFromStart = 2 * Math.ceil(Math.random()*totalPages / 2) - 1; //want odd start page
+    	console.log(selectedOddPagesFromStart)
+    	let pageNum = selectedOddPagesFromStart - 1 + startPage;
+
+    	
+    	
+    	
+    	const prefix = "dhamma/dpr2-";
+    	const suffix = ".png";
+    	document.getElementById('dhamma-image-1').src = prefix + (""+pageNum).padStart(3, "0") + suffix;
+    	document.getElementById('dhamma-image-2').src = prefix + (""+(pageNum + 1)).padStart(3, "0") + suffix;
+    }
 
     </script>
 
@@ -101,7 +120,7 @@
     <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
 
 </head>
-<body id=body> <!--ontouchmove="BlockElasticScroll(event);" -->
+<body id=body onload="document.getElementById('dhamma-of-the-day').style.display='block'; loadDhamma()"> <!--ontouchmove="BlockElasticScroll(event);" -->
 	<div id=text style="display:none;"></div>
 	
 	
@@ -119,6 +138,20 @@
 	  
 	  <div style="margin-top: 80%">
 	  	<button class="w3-button w3-black" onclick="document.getElementById('demo-video').style.display='block'; document.getElementById('real-video').style.display='none'">(demo)</button>
+	  </div>
+	  
+	  
+	  <!-- dhamma of the day ---> 
+	  <div id="dhamma-of-the-day" class="w3-modal">
+	    <div class="w3-modal-content">
+	      <div class="w3-container">
+	        <span id="close-button" onclick="document.getElementById('dhamma-of-the-day').style.display='none'" class="w3-button w3-display-topright">&times;</span>
+	        <div class="main-content">
+	        	<img id="dhamma-image-1" class="chant-image" src="" >
+	        	<img id="dhamma-image-2" class="chant-image" src="" >
+	       	</div>
+	      </div>
+	    </div>
 	  </div>
 	  
 	  
