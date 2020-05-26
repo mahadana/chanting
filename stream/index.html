@@ -1,41 +1,37 @@
 <style>
 
-
-	#text {
-		padding : 40px;
-		color: white;
-	  -webkit-user-select: none; /* disable selection/Copy of UIWebView */
-	  -webkit-touch-callout: none; /* disable the IOS popup when long-press on a link */
-	}
-
-
-
-	/* BASIC RESET */
+	/* BASIC RESET -- from another project */
 	ul,ol,li,h1,h2,h3,h4,h5,h6,pre,form,body,html,p,blockquote,fieldset,input{margin:0; padding:0;}
 
-	/* HTML ELEMENTS */
-	body { background-color:black; font: 20px "Lucida Grande","Lucida Sans Unicode",Helvetica,Arial,Verdana,sans-serif;
-	/*padding-bottom:200px;*/
-	/*background-color: black;*/
-}
+	/* HTML ELEMENTS -- from another project */
+	body { background-color:black; font: 20px "Lucida Grande","Lucida Sans Unicode",Helvetica,Arial,Verdana,sans-serif; }
 	h1 { padding:60px 0 0 40px; }
 	p,form { padding:10px 40px; }
 	a { color:#999; text-decoration:none; }
 	a:hover { text-decoration:underline; }
 	
 	
-	/* youtube mobile embed styles */
+	/* youtube mobile embed styles. Taken from some guy's site */
 	.embed-container { position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; max-width: 100%; margin-top: 50%} 
 	.embed-container iframe, .embed-container object, .embed-container embed { position: absolute; top: 0; left: 0; width: 100%; height: 100%; }
 	
-	#close-button { font-size: 20pt; color: rgb(186, 181, 181); }
-	.main-content { overflow-y: scroll; padding-top: 40px; }
-	.image-holder { height: 50% }
+	/*keep a little margin at bottom below popup*/
+	#dhamma-of-the-day { height: 95% }
+	#id02 { height: 95% }
+	#id01 { height: 95% }
 	
+	/* make close button larger and gray */
+	#close-button { font-size: 20pt; color: rgb(186, 181, 181); }
+	
+	/* scroll within the popup, max height at 100% so overflow will scroll. Padding for the X button */
+	.main-content { overflow-y: scroll; padding-top: 40px; height: 100% } 
+	
+	
+	/* don't let the images get wider than popup. Auto scale height accordingly */
 	.chant-image { width: 100%; }
 	
-
-	#dhamma-image-2 { margin-top: -40px }
+	/* a little too much space taken up by the dhamma of the day images. Chop off the page numbers too */
+	#dhamma-image-2, #dhamma-image-1 { margin-top: -40px }
 	
 </style>
 
@@ -59,6 +55,8 @@
         "black-translucent", the content is displayed under the bar.
     -->
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    
+    
 
     <!--
         Add a Home icon.
@@ -68,7 +66,8 @@
 
         In case you don't want the gloss applied, use "apple-touch-icon-precomposed" instead of "apple-touch-icon".
     -->
-    <link rel="apple-touch-icon" href="apple-touch-icon.png" />
+    <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
+    <!-- <link rel="apple-touch-icon" href="apple-touch-icon.png" /> -->
 
     <!--
         Add a splash screen / startup image.
@@ -186,8 +185,7 @@
     <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
 
 </head>
-<body id=body onload="document.getElementById('dhamma-of-the-day').style.display='block'; loadDhamma(); loadImages(); loadTOCs(); "> <!--ontouchmove="BlockElasticScroll(event);" -->
-	<div id=text style="display:none;"></div>
+<body id=body onload="document.getElementById('dhamma-of-the-day').style.display='block'; loadDhamma(); loadImages(); loadTOCs(); "> 
 	
 	
 	
@@ -202,7 +200,7 @@
 	  <button onclick="document.getElementById('id01').style.display='block'" class="w3-button w3-black">Book 1</button>
 	  <button onclick="document.getElementById('id02').style.display='block'" class="w3-button w3-black">Book 2</button>
 	  
-	  <div style="margin-top: 80%">
+	  <div style="margin-top: 50px">
 	  	<button class="w3-button w3-black" onclick="document.getElementById('demo-video').style.display='block'; document.getElementById('real-video').style.display='none'">(demo)</button>
 	  </div>
 	  
