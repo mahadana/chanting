@@ -141,7 +141,7 @@
     		let newPara = document.createElement("p");	
     		let newLink = document.createElement("a");	
     		newLink.href = "#"+bookNum+"-"+obj.startPage; //jump to that start page when clicked (so as to scroll TOC out of view)
-    		newLink.innerHTML = obj.name
+    		newLink.innerHTML = obj.name+" ("+ obj.startPage + ")";
     		newLink.addEventListener("click", function(event) {
     			event.preventDefault();  
     			showPages(bookNum, obj.pages)	
