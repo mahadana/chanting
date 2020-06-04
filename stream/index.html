@@ -205,7 +205,8 @@
     <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
 
 </head>
-<body id=body onload="document.getElementById('dhamma-of-the-day').style.display='block'; loadDhamma(); loadImages(); loadTOCs(); "> 
+<!-- document.getElementById('dhamma-of-the-day').style.display='block'; loadDhamma; -->
+<body id=body onload="loadImages(); loadTOCs(); "> 
 	
 	
 	
@@ -234,7 +235,7 @@
 	  
 	  
 	  <!-- dhamma of the day ---> 
-	  <div id="dhamma-of-the-day" class="w3-modal">
+	  <div id="dhamma-of-the-day" class="w3-modal" style="display: none;"> <!-- block display for now --> 
 	    <div class="w3-modal-content">
 	      <div class="w3-container">
 	        <span id="close-button" onclick="document.getElementById('dhamma-of-the-day').style.display='none'" class="w3-button w3-display-topright">&times;</span>
