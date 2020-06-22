@@ -377,7 +377,8 @@ function loadUserGeneratedChants() {
 		// id = chant id
 		// onclick = hide index, load audio, load text
 		const newPara = document.createElement("p");
-		newPara.innerHTML = ", created by "+record.get("email")+" at "+record.get("timestamp");
+		const displayName = record.get("email").split("@")[0] //make it somewhat anonymous
+		newPara.innerHTML = ", created by "+displayName+" at "+record.get("timestamp");
 		
    		let newLink = document.createElement("a");	
    		newLink.href = "#";
