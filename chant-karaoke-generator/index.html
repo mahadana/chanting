@@ -10,20 +10,32 @@
 	
 	</style>
 </head>
-<!-- document.getElementById('dhamma-of-the-day').style.display='block'; loadDhamma; -->
+
 <body id=body onload="loadChantIndex()">
+    <div id="nav">(Other pages: <a href="chantList.html">View All user-recorded Chants</a>) </div>
+    <p><h1 id="instructions"> Select the chant you'll be uploading: </h1> </p>
+	<!-- STEP 1: select a chant -->
 	<div id="chantIndex">
-		<a class="chantLoder" id="chant1" href="#">Load Chant 1</a>
+	
 	</div>
-	<div id="main">
-		<audio id="audio" controls src="">
+	<!-- STEP 2: select a file from computer -->
+	<form id="audioFileForm" style="display: none">
+		
+		<input type='file' id="audioFileInput" /> <!-- starts hidden, loads after chant has been selected-->
+	</form>
+	<!-- STEP 3: click and go! -->
+	<div id="karaokeBuilder" style="display: none" >
+		<audio id="audio" controls src="" > <!-- starts hidden, loads after a file is selected-->
 	            Your browser does not support the
-	            <code>audio</code> element.
+	            <code>audio</code> element.  Try another browser (safari, chrome, etc)
 		</audio>
 		<pre id="chantText">
 			
 		</pre>
+		<button id="doneButton" onclick="doneTaggingKaraoke();">Review Chant</button>
+        <button id="submitButton" onclick="submitToServerClicked()" style="display: none">Submit to server</button>
 	</div>
+	<!-- STEP 4: review and submit -->
 	
 
 	
@@ -33,7 +45,7 @@
 
 
 
-	
+	<script src="airtable.js"></script>	
 	<script src="scripts.js"></script>
 
 </body>

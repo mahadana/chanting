@@ -1,0 +1,46 @@
+<html>
+<head>
+	<style>
+		#scrollDemo { font-size: 24px; line-height: 40px; max-height: 120px; width: 500px; white-space: pre-wrap; overflow-y: scroll  }
+		#scrollDemoHolder {  }
+		button {margin: 5px;}
+	</style>
+</head>
+
+<body id=body onload="loadUserGeneratedChants()">
+	<div id="nav">(Other pages: <a href="index.html">Create a new chant</a>)</div>
+	<p><h1 id="instructions"> Select a chant to listen to </h1> </p>
+	<!-- STEP 1: select a chant -->
+	<div id="chantIndex">
+	
+	</div>
+
+	<!-- STEP 3: click and go! -->
+	<div id="karaokeBuilder" style="display: none" >
+		<button id="scrollDemoButton" onclick="clickedButtonScrollDemo()">switch to scrolling mode</button>
+		<button id="yellowDemoButton" onclick="clickedButtonYellowDemo()">switch to highlighted mode</button>
+		<audio id="audio" controls src="" > <!-- starts hidden, loads after a file is selected-->
+	            Your browser does not support the
+	            <code>audio</code> element.  Try another browser (safari, chrome, etc)
+		</audio>
+
+		<pre id="chantText">
+			
+		</pre>
+		<div id="scrollDemoHolder"><div id="scrollDemo" style="display:none"></div></div>
+	</div>
+	<!-- STEP 4: review and submit -->
+	
+
+	
+
+
+
+
+
+
+	<script src="airtable.js"></script>	
+	<script src="scripts.js"></script>
+
+</body>
+</html>
