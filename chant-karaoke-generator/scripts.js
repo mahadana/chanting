@@ -197,7 +197,7 @@ function audioFileSelected(url, rowId) {
 	audioElement.src = url;
 	selectedChantData.rowId = rowId;
 	karaokeBuilderElement.style.display = "block";
-	instructionsElement.innerHTML = "Now, press play and click words AS THEY START in the chant audio";
+	instructionsElement.innerHTML = "Now, press play and click words AS THEY START in the chant audio. <br>You do not need to click every word. It will fill in the gaps. End of the sentence and beginning of the next is often helpful";
 }
 
 
