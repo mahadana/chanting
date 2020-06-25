@@ -70,7 +70,9 @@ function chantDataFetchedCallback(chantData) {
    			//hide index, show the file selector (STEP 2)
    			chantSelected(chantInfo);
    		})
-   		chantIndexDiv.appendChild(newLink);
+			const newPara = document.createElement("p");
+   		newPara.appendChild(newLink);
+   		chantIndexDiv.appendChild(newPara);
 	})
 }
 
