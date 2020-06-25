@@ -1,7 +1,6 @@
 const chantIndexDiv = document.getElementById("chantIndex");
 const audioElement = document.getElementById("audio");
 const chantTextElement = document.getElementById("chantText");
-const audioFileInput = document.getElementById("audioFileInput");
 const karaokeBuilderElement = document.getElementById("karaokeBuilder");
 const instructionsElement = document.getElementById("instructions");
 
@@ -14,7 +13,8 @@ let selectedChantData = {
 	//name
 	//wordTimePoints
 		// [{ word: "blah", index: 0, startTime: 0, endTime: 1.2333}, .... {...} ]
-	//fullText	
+	//fullText
+	//rowId -- id of the row in airtable
 };
 
 
@@ -80,12 +80,28 @@ function chantSelected(chantInfo) {
 	//buh, global
 	selectedChantData.name = chantInfo.name
 	selectedChantData.fullText = chantInfo.text
-	
+
+	// UI: hide the last div, show next div in line, update instructions
 	chantIndexDiv.style.display = "none"
-	instructionsElement.innerHTML = "Now, select a file from your computer that is of type = '<b>"+chantInfo.name+"</b>'";
-	document.getElementById("audioFileForm").style.display = "block"
- 			
-	
+	document.getElementById("airtableHolder").style.display = "block";
+	instructionsElement.innerHTML =
+		"Now, select a file from your computer that is of type = '<b>"
+		+chantInfo.name+"</b>', and upload to airtable using the form";
+
+	//set the form to have the chant_type prefilled
+	document.getElementById("airtableIframe").src =
+		"https://airtable.com/embed/shru3Iy9k4JHyBIAJ?backgroundColor=purple&prefill_chant_type="
+		+encodeURIComponent(chantInfo.name);
+
+	//configure the button to handle the next action
+	// could move this code elsewhere for cleanliness. Putting it here because it's next in logical sequence
+	document.getElementById("airtableUploadComplete").onclick = function () {
+		document.getElementById("airtableHolder").style.display = "none";
+		showAudioFileSelector(chantInfo.name);
+	}
+
+	//REFACTOR: can move this around.
+	// we can jump the gun since we know what chant_type they've selected. Fill out the info
 	const [words, splitTokens] = getWordsAndSplitTokens(chantInfo.text);
 	
 	//reset the word time points
@@ -136,26 +152,50 @@ function getWordsAndSplitTokens(text) {
 
 // ======================= SELECT AUDIO FILE ===================================
 
-//attach change function.
-//loads file into the audio element
-if(audioFileInput) {
-	
-	audioFileInput.onchange = function(e) {
-		const input = this;
-		if (input.files && input.files[0]) {
-	    const reader = new FileReader();
-	    
-	    reader.onload = function(e) {
-	    	//update audio element, show it, and hide the file input
-	      	audioElement.src = e.target.result;
-	      	karaokeBuilderElement.style.display = "block";
-	      	document.getElementById("audioFileForm").style.display = "none";
-	      	instructionsElement.innerHTML = "Now, press play and click words AS THEY START in the chant audio";
-	    }
-	    
-	    reader.readAsDataURL(input.files[0]); // convert to base64 string
-	  }
-	}
+function showAudioFileSelector(chantType) {
+	//fetch all recent entries of chant-type
+	// when complete, load all entries as links
+	const recentUploadsElement = document.getElementById("recentUploads");
+	const base = new Airtable({apiKey: 'keyRp9BN8f0DZ5JKN'}).base('appzQalaTVDxWFNUa'); //keyRp9BN8f0DZ5JKN -- read only of chant types
+	base('audio_uploads').select({
+		filterByFormula: "chant_type = '"+chantType+"'",
+	}).eachPage(function page(records, fetchNextPage) {
+		// This function (`page`) will get called for each page of records.
+
+		records.forEach(function(record) {
+			console.log(record);
+			// fill up the rows
+			const attachment = record.get("audio_file") ? record.get("audio_file")[0] : null;
+			//if row is not empty, and if it hasn't already been filled out.... create new link
+			if(attachment && attachment.url && !record.get("fulltext")) {
+				const newLink = document.createElement("a");
+				newLink.href = "#";
+				newLink.innerHTML = chantType+ " ("+attachment.filename+", "+record.get("timestamp")+")";
+
+				newLink.addEventListener("click", function(event) {
+					event.preventDefault();
+					//hide index, show the file selector (STEP 2)
+					audioFileSelected(attachment.url, record.id);
+				})
+				recentUploadsElement.appendChild(newLink);
+			}
+		});
+		// To fetch the next page of records, call `fetchNextPage`.
+		// If there are more records, `page` will get called again.
+		// If there are no more records, `done` will get called.
+		fetchNextPage();
+
+	}, function done(err) {
+		//do nothing
+	});
+}
+
+function audioFileSelected(url, rowId) {
+	document.getElementById("recentUploads").style.display = "none";
+	audioElement.src = url;
+	selectedChantData.rowId = rowId;
+	karaokeBuilderElement.style.display = "block";
+	instructionsElement.innerHTML = "Now, press play and click words AS THEY START in the chant audio";
 }
 
 
@@ -324,8 +364,9 @@ function uploadKaraokeDataToAirtable(selectedChantData, successCallback) {
 	const base = new Airtable({apiKey: 'keyRp9BN8f0DZ5JKN'}).base('appzQalaTVDxWFNUa'); //public haha bad news
 	console.log("type", selectedChantData.name);
 
-	base('Table 1').create([
+	base('audio_uploads').update([
 	  {
+	  	"id":selectedChantData.rowId,
 	    "fields": {
 	    	email: email,
 	    	chant_type: selectedChantData.name,
@@ -352,7 +393,7 @@ let userGeneratedChants;
 function loadUserGeneratedChants() {
 	userGeneratedChants = [];
 	const base = new Airtable({apiKey: 'keyRp9BN8f0DZ5JKN'}).base('appzQalaTVDxWFNUa'); //public haha bad news
-	base('Table 1').select({}).eachPage(function page(records, fetchNextPage) {
+	base('audio_uploads').select({}).eachPage(function page(records, fetchNextPage) {
 	    // This function (`page`) will get called for each page of records.
 	
 
@@ -409,7 +450,8 @@ function userGeneratedChantSelected(record) {
 	selectedChantData = {
 		fullText: record.get("fulltext"),
 		name: record.get("chant_type"),
-		wordTimePoints: JSON.parse(record.get("data"))
+		wordTimePoints: JSON.parse(record.get("data")),
+		rowId: record.id,
 	}
 	
 	//pass in the callback "wordClicked", which will be fired when that word is clicked
