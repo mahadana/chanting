@@ -1,0 +1,41 @@
+/*
+NOTE: use relative paths while the project is deployed to a folder.
+*/
+
+@font-face {
+    font-family: 'Gentium Incantation';
+    src: url('../fonts/subset-GentiumIncantation-Regular.woff2') format('woff2'),
+         url('../fonts/subset-GentiumIncantation-Regular.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Gentium Incantation';
+    src: url('../fonts/subset-GentiumIncantation-Italic.woff2') format('woff2'),
+         url('../fonts/subset-GentiumIncantation-Italic.woff') format('woff');
+    font-weight: normal;
+    font-style: italic;
+    font-display: swap;
+}
+
+#scrollDemo {
+    font-size: 24px;
+    line-height: 40px;
+    max-height: 120px;
+    width: 500px;
+    white-space: pre-wrap;
+    overflow-y: scroll;
+}
+
+#scrollDemoHolder {}
+
+button {
+    margin: 5px;
+}
+
+#chantText {
+  font-family: 'Gentium Incantation';
+  line-height: 1.7;
+}

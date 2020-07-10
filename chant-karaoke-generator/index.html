@@ -1,14 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
 
+    <!-- Set the base path of relative URLs. Necessary when deploying to a folder. CSS and other paths must be used as relative. -->
+    <!-- Comment out or update when developing on a localhost server. -->
+    <base href="http://jeffzira.github.io/chant-karaoke-generator/" />
 
+  <title>Chanting Karaoke Generator</title>
 
-
-<html>
-<head>
-	<style>
-		
-
-	
-	</style>
+  <link rel="stylesheet" href="assets/css/main.css">
 </head>
 
 <body id=body onload="loadChantIndex()">
@@ -16,7 +20,7 @@
     <p><h1 id="instructions"> Select the chant you'll be uploading: </h1> </p>
 	<!-- STEP 1: select a chant -->
 	<div id="chantIndex">
-	
+
 	</div>
 	<div id="airtableHolder" style="display:none">
 		<iframe id="airtableIframe" class="airtable-embed" src="" frameborder="0" onmousewheel="" width="500" height="533" style="background: transparent; border: 1px solid #ccc;"></iframe>
@@ -37,22 +41,22 @@
 	            <code>audio</code> element.  Try another browser (safari, chrome, etc)
 		</audio>
 		<pre id="chantText">
-			
+
 		</pre>
 		<button id="doneButton" onclick="doneTaggingKaraoke();">Review Chant</button>
         <button id="submitButton" onclick="submitToServerClicked()" style="display: none">Submit to server</button>
 	</div>
 	<!-- STEP 4: review and submit -->
-	
-
-	
 
 
 
 
 
 
-	<script src="airtable.js"></script>	
+
+
+
+	<script src="airtable.js"></script>
 	<script src="scripts.js"></script>
 
 </body>
