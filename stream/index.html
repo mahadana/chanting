@@ -9,7 +9,9 @@
 	p,form { padding:10px 40px; }
 	a { color:#999; text-decoration:none; }
 	a:hover { text-decoration:underline; }
-	
+
+
+	#livestream-not-started { font-size: 24pt; color: white; }
 	
 	/* youtube mobile embed styles. Taken from some guy's site */
 	.embed-container { position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; max-width: 100%; margin-top: 50%} 
@@ -28,7 +30,7 @@
 	#id01 { height: 95% }
 	
 	/* make close button larger and gray */
-	#close-button { font-size: 20pt; color: rgb(186, 181, 181); }
+	.close-button { font-size: 20pt; color: rgb(186, 181, 181); }
 	
 	/* scroll within the popup, max height at 100% so overflow will scroll. Padding for the X button */
 	.main-content { overflow-y: scroll; padding-top: 40px; height: 100% } 
@@ -86,6 +88,8 @@
         Prevent the user from elastic scrolling / rubber banding. Sadly, doesn't always work properly.
         For a more solid solution, check out ScrollFix ( https://github.com/joelambert/ScrollFix )
     -->
+
+	<script src="schedule.js"></script>
     <script>
     function BlockElasticScroll(event) {
         //event.preventDefault() ;
@@ -100,7 +104,24 @@
     // var isIPad = navigator.userAgent.indexOf("iPad") != -1 ;
     // var isIOs = isIPhone || isIPod || isIPad ;
     
-    
+    function loadVideo() {
+    	const videoIframe = document.getElementById("real-video");
+    	if(LIVESTREAM.secondsUntilStart() > 0) {
+    		//livestream hasn't started yet. Tell them to come back at the right time.
+			videoIframe.style.display = "none";
+			const startDate = new Date((new Date()).setHours(0,0,LIVESTREAM.info.startTimeInSeconds));
+			const infoDiv = document.getElementById("livestream-not-started");
+			infoDiv.style.display = "block";
+			infoDiv.innerText= "Stream will start at "
+					+startDate.toLocaleString('en-US', { timeZone: 'America/Los_Angeles' }).substr(11, 10)
+					+" PT";
+
+			// TODO: make a retry handler that updates once the time is past
+		} else {
+			videoIframe.src = LIVESTREAM.generateUrl();
+		}
+	}
+
     function loadDhamma() {
     	const startPage = 9;
     	const endPage = 111;
@@ -206,15 +227,16 @@
 
 </head>
 <!-- document.getElementById('dhamma-of-the-day').style.display='block'; loadDhamma; -->
-<body id=body onload="loadImages(); loadTOCs(); "> 
+<body id=body onload="loadImages(); loadTOCs(); loadVideo();">
 	
 	
 	
 
 
 	<div class='embed-container'>
+		<div id="livestream-not-started" style="display: none"></div>
 		<iframe id="demo-video" style="display: none;" src='https://www.youtube.com/embed/zwuKRGndLN0?playsinline=1' frameborder='0'></iframe>
-		<iframe id="real-video" src='https://www.youtube.com/embed/live_stream?channel=UCFAuQ5fmYYVv5_Dim0EQpVA&playsinline=1' frameborder='0' ></iframe>
+		<iframe id="real-video" src='' frameborder='0' ></iframe>
 		<div id="demo-audio"  style="display: none;">
 			<img src="chant-demo.jpeg"><br>
 			<audio controls src="5-18-2020-puja-small.mp3">
@@ -238,7 +260,7 @@
 	  <div id="dhamma-of-the-day" class="w3-modal" style="display: none;"> <!-- block display for now --> 
 	    <div class="w3-modal-content">
 	      <div class="w3-container">
-	        <span id="close-button" onclick="document.getElementById('dhamma-of-the-day').style.display='none'" class="w3-button w3-display-topright">&times;</span>
+	        <span class="close-button" onclick="document.getElementById('dhamma-of-the-day').style.display='none'" class="w3-button w3-display-topright">&times;</span>
 	        <div class="main-content">
 	        	<img id="dhamma-image-1" class="chant-image" src="" >
 	        	<img id="dhamma-image-2" class="chant-image" src="" >
@@ -253,7 +275,7 @@
 	  <div id="id02" class="w3-modal">
 	    <div class="w3-modal-content">
 	      <div class="w3-container">
-	        <span id="close-button" onclick="document.getElementById('toc-2').scrollIntoView(true); document.getElementById('id02').style.display='none'; showAllPagesForBook(2)" class="w3-button w3-display-topright">&times;</span>
+	        <span class="close-button" onclick="document.getElementById('toc-2').scrollIntoView(true); document.getElementById('id02').style.display='none'; showAllPagesForBook(2)" class="w3-button w3-display-topright">&times;</span>
 	        <div class="main-content">	        
 	        	<div id="toc-2" class="toc">
 	        		<!-- filled in by loadTOC -->
@@ -297,8 +319,6 @@
 
 
 
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
-	<script src="//cdnjs.cloudflare.com/ajax/libs/underscore.js/1.5.2/underscore-min.js"></script>
 
 	
 
