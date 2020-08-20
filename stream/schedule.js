@@ -11,6 +11,7 @@ LIVESTREAM = {
     //TODO: this will break in non-us locales. Whatevs.
     const todayName = now.toLocaleDateString(undefined, {weekday: 'long'}).toLowerCase();
     const todayInfo = info.schedule[todayName];
+    console.log("today info",todayInfo);
 
     let url;
 
@@ -27,6 +28,7 @@ LIVESTREAM = {
       // The user will start this many seconds into the livestream based on when they join
       // compute start by number of seconds after start time.
       const secondsSinceVideoStart = 0 - LIVESTREAM.secondsUntilStart(); // must use the negative of this function
+      console.log("seconds since start", secondsSinceVideoStart)
       const offset = secondsSinceVideoStart + (todayInfo.startOffset ? todayInfo.startOffset : 0);
       url += "?start="+offset;
 
@@ -37,6 +39,7 @@ LIVESTREAM = {
     // set default settings
     url += "&playsinline=1"; //make sure you can't full screen it so we can show the chant option
 
+    console.log(url);
     return url;
   },
   /**
