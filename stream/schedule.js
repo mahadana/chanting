@@ -28,10 +28,10 @@ LIVESTREAM = {
       // compute start by number of seconds after start time.
       const secondsSinceVideoStart = 0 - LIVESTREAM.secondsUntilStart(); // must use the negative of this function
       const offset = secondsSinceVideoStart + (todayInfo.startOffset ? todayInfo.startOffset : 0);
-      url += "?t="+offset;
+      url += "?start="+offset;
 
       //autoplay the video at that start time
-      url += "&autoplay=1";
+      url += "&autoplay=1&mute=1";
     }
 
     // set default settings
