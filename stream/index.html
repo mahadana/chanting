@@ -11,7 +11,12 @@
 	a:hover { text-decoration:underline; }
 
 
-	#livestream-not-started { font-size: 24pt; color: white; }
+	#livestream-not-started {
+		font-size: 24pt;
+		color: white;
+		margin-top: 10%;
+		padding: 30px;
+	}
 
 	.counter-holder {
 		color: white;
@@ -136,6 +141,9 @@
 		} else {
     		// it's already started
 
+			//set up the url, whether it's streaming or prerecorded
+			videoIframe.src = LIVESTREAM.generateUrl();
+
 			const videoInfo = LIVESTREAM.getTodaysVideoInfo();
 			if(videoInfo) {
 				//it's a prerecorded video
@@ -144,7 +152,6 @@
 				const timeUntilEnd = secondsUntilStart + videoInfo.durationInSeconds;
 				if(timeUntilEnd > 0) {
 					// if it's NOT over (ie, currently running)
-					videoIframe.src = LIVESTREAM.generateUrl();
 					alert("Don't forget to unmute for sound!");
 				}
 
