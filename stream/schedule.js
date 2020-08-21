@@ -1,23 +1,26 @@
 
 let LIVESTREAM;
 LIVESTREAM = {
-  generateUrl: function() {
-    const info = LIVESTREAM.info;
-
+  getTodaysVideoInfo: function() {
     //figure out today's date
     const now = new Date();
-
-    // will give us "thursday" or whatever
     //TODO: this will break in non-us locales. Whatevs.
     const todayName = now.toLocaleDateString(undefined, {weekday: 'long'}).toLowerCase();
-    const todayInfo = info.schedule[todayName];
-    console.log("today info",todayInfo);
+    const prerecordedVideoId = this.info.schedule[todayName];
+    const todayInfo = this.info.videos[prerecordedVideoId];
+    console.log("today info",prerecordedVideoId,todayInfo);
+    return todayInfo;
+  },
+
+  generateUrl: function() {
+    // will give us "thursday" or whatever
+    const todayInfo = this.getTodaysVideoInfo()
 
     let url;
 
-    if(!todayInfo) {
+    if(!todayInfo.youtubeVideoId) {
       //if there's no override for today, that means we should use the livestream
-      url = info.livestreamUrl
+      url = this.info.livestreamUrl
     }
     else {
       // else, there's an override. Ie, there's no livestream
@@ -65,25 +68,20 @@ LIVESTREAM = {
         }
 
        */
-      sunday: {
-        youtubeVideoId: "zwuKRGndLN0",
-        startOffset: 0,
-      },
-      monday: {
-        youtubeVideoId: "zwuKRGndLN0",
-        startOffset: 0,
-      },
+      sunday: "zwuKRGndLN0",
+      monday: "zwuKRGndLN0",
       tuesday: null,
-      wednesday: {
-        youtubeVideoId: "zwuKRGndLN0",
-        startOffset: 0,
-      },
-      thursday: {
-        youtubeVideoId: "zwuKRGndLN0",
-        startOffset: 0,
-      },
+      wednesday:  "zwuKRGndLN0",
+      thursday: "zwuKRGndLN0",
       friday: null,
       saturday: null,
+    },
+    videos: {
+      zwuKRGndLN0: {
+        youtubeVideoId: "zwuKRGndLN0",
+        startOffset: 0,
+        durationInSeconds: 3900,
+      },
     }
-  }
+  },
 }

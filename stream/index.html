@@ -12,15 +12,21 @@
 
 
 	#livestream-not-started { font-size: 24pt; color: white; }
-	
+
+	.counter-holder {
+		color: white;
+		float: right;
+		position: relative;
+		padding: 8px; /*to match the button padding*/
+	}
+
 	/* youtube mobile embed styles. Taken from some guy's site */
 	.embed-container {
 		position: relative;
 		padding-bottom: 56.25%;
 		height: 0;
 		overflow: hidden;
-		max-width: 100%;
-		margin-top: 50%
+		max-width: 100%; /*non-standard*/
 	}
 	.embed-container iframe, .embed-container object, .embed-container embed, .embed-container audio { position: absolute; top: 0; left: 0; width: 100%; height: 100%; }
 	#demo-audio img {
@@ -113,20 +119,50 @@
     
     function loadVideo() {
     	const videoIframe = document.getElementById("real-video");
-    	if(LIVESTREAM.secondsUntilStart() > 0) {
+    	const secondsUntilStart = LIVESTREAM.secondsUntilStart()
+    	if(secondsUntilStart > 0) {
     		//livestream hasn't started yet. Tell them to come back at the right time.
-			videoIframe.style.display = "none";
 			const startDate = new Date((new Date()).setHours(0,0,LIVESTREAM.info.startTimeInSeconds));
-			const infoDiv = document.getElementById("livestream-not-started");
-			infoDiv.style.display = "block";
-			infoDiv.innerText= "Stream will start at "
+			const description =
+					"Stream will start at "
 					+startDate.toLocaleString('en-US', { timeZone: 'America/Los_Angeles' }).substr(11, 10)
 					+" PT";
+			displayVideoInfoDivWithMessage(description);
 
-			// TODO: make a retry handler that updates once the time is past
+			// refresh once it's time to start!
+			setTimeout(function () {
+				location.reload();
+			}, (secondsUntilStart + 1)* 1000)
 		} else {
-			videoIframe.src = LIVESTREAM.generateUrl();
+    		// it's already started
+
+			const videoInfo = LIVESTREAM.getTodaysVideoInfo();
+			if(videoInfo) {
+				//it's a prerecorded video
+
+				//seconds until start will be negative, I hope.
+				const timeUntilEnd = secondsUntilStart + videoInfo.durationInSeconds;
+				if(timeUntilEnd > 0) {
+					// if it's NOT over (ie, currently running)
+					videoIframe.src = LIVESTREAM.generateUrl();
+					alert("Don't forget to unmute for sound!");
+				}
+
+				//when it ends we can show an end message. That includes if it's already over
+				setTimeout(function () {
+					displayVideoInfoDivWithMessage("Session complete. Come back tomorrow!");
+				}, timeUntilEnd * 1000) //even if timeUntilEnd is negative, this is good!
+			}
+
 		}
+	}
+
+	function displayVideoInfoDivWithMessage(message) {
+		const videoIframe = document.getElementById("real-video");
+		videoIframe.style.display = "none";
+		const infoDiv = document.getElementById("livestream-not-started");
+		infoDiv.style.display = "block";
+		infoDiv.innerText= message;
 	}
 
     function loadDhamma() {
@@ -255,10 +291,10 @@
 
 	<div class="w3-container">
 
-	  <button onclick="document.getElementById('id01').style.display='block'" class="w3-button w3-black">Book 1</button>
-	  <button onclick="document.getElementById('id02').style.display='block'" class="w3-button w3-black">Book 2</button>
-		<script type="text/javascript" src="//livecounter.theyosh.nl/3666.js"></script>
-	  <div id="demo-buttons" style="margin-top: 50px">
+	  <button onclick="document.getElementById('id01').style.display='block'" class="w3-button w3-black">Chanting Book 1</button>
+	  <button onclick="document.getElementById('id02').style.display='block'" class="w3-button w3-black">Chanting Book 2</button>
+		<div class="counter-holder">	Sangha online: <script type="text/javascript" src="//livecounter.theyosh.nl/3666.js"></script></div>
+	  <div id="demo-buttons" style="margin-top: 50px; display:none;">
 	  	<button class="w3-button w3-black" onclick="document.getElementById('demo-video').style.display='block'; hideDemoStuff()">(video demo)</button><br>
 	  	<button class="w3-button w3-black" onclick="document.getElementById('demo-audio').style.display='block'; hideDemoStuff()">(audio demo)</button>
 	  </div>
