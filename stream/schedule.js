@@ -18,7 +18,7 @@ LIVESTREAM = {
 
     let url;
 
-    if(!todayInfo.youtubeVideoId) {
+    if(!todayInfo) {
       //if there's no override for today, that means we should use the livestream
       url = this.info.livestreamUrl
     }
