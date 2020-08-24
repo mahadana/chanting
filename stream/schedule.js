@@ -71,9 +71,9 @@ LIVESTREAM = {
       sunday: "zwuKRGndLN0",
       monday: "zwuKRGndLN0",
       tuesday: null,
-      wednesday:  "zwuKRGndLN0",
+      wednesday:  null,
       thursday: "zwuKRGndLN0",
-      friday: null,
+      friday: "zwuKRGndLN0",
       saturday: null,
     },
     videos: {
