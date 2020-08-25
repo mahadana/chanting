@@ -68,11 +68,11 @@ LIVESTREAM = {
         }
 
        */
-      sunday: "zwuKRGndLN0",
+      sunday: "OcFwgx9aiE0",
       monday: "zwuKRGndLN0",
       tuesday: null,
       wednesday:  null,
-      thursday: "zwuKRGndLN0",
+      thursday: "OcFwgx9aiE0",
       friday: "zwuKRGndLN0",
       saturday: null,
     },
