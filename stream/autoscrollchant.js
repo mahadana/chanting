@@ -82,7 +82,7 @@ ChantAutoScroll = {
    * @param optionalReasonString
    */
   cancelAutoScrolling: function(optionalReasonString){
-    // this._removeAllScrollingListeners(); //todo: remove. And now cancel is redundant as there is no longer any "resume" functionality
+    this._removeAllScrollingListeners(); //todo: remove. And now cancel is redundant as there is no longer any "resume" functionality
     this.stopAutoScrolling(optionalReasonString);
   },
 
@@ -136,7 +136,7 @@ ChantAutoScroll = {
     this.isAutoScrolling = true;
     //TODO: remove
     // if the user scrolls, we need to stop autoscrolling, and then resume from wherever they stop.
-    //this._startListeningForUserScrollEvents();
+    this._startListeningForUserScrollEvents();
 
     if(this.instance._currentHolderScrollPosition() - this.instance.originalStartHeightInPx >= 0) {
       // we are within the actual chant (not the index). Proceed
@@ -205,7 +205,7 @@ ChantAutoScroll = {
    * To avoid the addition of multiple scrolling listeners as well as clear out behavior if user pauses
    * @private
    */
-  /*
+
   _removeAllScrollingListeners: function() {
     //TODO: do something
     const holder = this.instance.holder;
@@ -228,11 +228,11 @@ ChantAutoScroll = {
     holder.addEventListener("ontouchstart",this.handlers.touchStartHandler, {passive:true})
     holder.addEventListener("wheel", this.handlers.wheelHandler, {passive:true})
   }
-  */
+
 
 }
 
-/*
+
 // TODO: remove this commented-out code
 //init handlers with "this" attached
 ChantAutoScroll.handlers = (function(chantAutoScroll) {
@@ -252,7 +252,7 @@ ChantAutoScroll.handlers = (function(chantAutoScroll) {
   }
   let resumeFunction;
   wheelHandler = function(e) {
-    console.log("wheel", e)
+    console.log("wheel touchmove", e)
     thisInstance.stopAutoScrolling("wheeled element")
     clearTimeout(resumeFunction)
     resumeFunction = setTimeout(function () {
@@ -267,4 +267,3 @@ ChantAutoScroll.handlers = (function(chantAutoScroll) {
     wheelHandler: wheelHandler,
   }
 })(ChantAutoScroll)
-*/
