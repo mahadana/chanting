@@ -62,7 +62,7 @@ ChantAutoScroll = {
 
   constants:{
     presumedEyeHeightAsFractionOfPage: 0.5,
-    scrollingIntervalInMilliseconds: 1000,
+    scrollingIntervalInMilliseconds: 10,
     marginHeightTopConstant: 0.045,
     marginHeightBottomConstant: 0.045,
     marginScrollMultiplier: 2, // scroll this many times faster in the margin
@@ -82,7 +82,7 @@ ChantAutoScroll = {
    * @param optionalReasonString
    */
   cancelAutoScrolling: function(optionalReasonString){
-    this._removeAllScrollingListeners();
+    // this._removeAllScrollingListeners(); //todo: remove. And now cancel is redundant as there is no longer any "resume" functionality
     this.stopAutoScrolling(optionalReasonString);
   },
 
@@ -95,9 +95,8 @@ ChantAutoScroll = {
     console.log("stopped autoscrolling"+ (optionalReasonString ? ": "+optionalReasonString : ""))
     clearInterval(this.autoScrollingIntervalFunctionId);
 
-    //TODO: use the config data
-    document.getElementById("stop-scrolling-button1").style.display = "none"
-    document.getElementById("stop-scrolling-button2").style.display = "none"
+    //hide the pause button
+    document.getElementById("stop-scrolling-button"+this.instance.bookNum).style.display = "none"
   },
 
   /**
@@ -135,8 +134,9 @@ ChantAutoScroll = {
     clearInterval(this.autoScrollingIntervalFunctionId);
 
     this.isAutoScrolling = true;
+    //TODO: remove
     // if the user scrolls, we need to stop autoscrolling, and then resume from wherever they stop.
-    this._startListeningForUserScrollEvents();
+    //this._startListeningForUserScrollEvents();
 
     if(this.instance._currentHolderScrollPosition() - this.instance.originalStartHeightInPx >= 0) {
       // we are within the actual chant (not the index). Proceed
@@ -164,9 +164,17 @@ ChantAutoScroll = {
 
     //make sure this page exists. If not, it means we have scrolled off the edge
     if(!this.instance._doesPageExistInScrollData(pageNum)) {
-      //we've reached the end. Stop scrolling! Fully cancel and remove listeners
-      this.cancelAutoScrolling(" trueEnd on last page. Page = "+pageNum);
-      return;
+      if(pageNum < 0) {
+        //user has scrolled up above the top boundary. Pause any scrolling until they scroll down again
+        this.stopAutoScrolling("We are above the first page (must be in TOC). Pause scrolling")
+        return;
+      } else {
+        //we are at a page >= 0 where there is no data. We must therefore have reaced the true end
+        //we've reached the end. Stop scrolling! Fully cancel and remove listeners
+        this.cancelAutoScrolling(" trueEnd on last page. Page = "+pageNum);
+        return;
+      }
+
     }
 
     //if we've reached here, the page exists. Proceed
@@ -197,6 +205,7 @@ ChantAutoScroll = {
    * To avoid the addition of multiple scrolling listeners as well as clear out behavior if user pauses
    * @private
    */
+  /*
   _removeAllScrollingListeners: function() {
     //TODO: do something
     const holder = this.instance.holder;
@@ -219,9 +228,12 @@ ChantAutoScroll = {
     holder.addEventListener("ontouchstart",this.handlers.touchStartHandler, {passive:true})
     holder.addEventListener("wheel", this.handlers.wheelHandler, {passive:true})
   }
+  */
 
 }
 
+/*
+// TODO: remove this commented-out code
 //init handlers with "this" attached
 ChantAutoScroll.handlers = (function(chantAutoScroll) {
   //once we've started scrolling, we should stop if user scrolls or touches
@@ -255,3 +267,4 @@ ChantAutoScroll.handlers = (function(chantAutoScroll) {
     wheelHandler: wheelHandler,
   }
 })(ChantAutoScroll)
+*/
