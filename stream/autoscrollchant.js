@@ -215,7 +215,7 @@ ChantAutoScroll = {
     }
 
     holder.removeEventListener("ontouchstart",this.handlers.touchStartHandler);
-    holder.removeEventListener("wheel", this.handlers.wheelHandler);
+    holder.removeEventListener("wheel touchmove", this.handlers.wheelHandler);
     holder.removeEventListener("ontouchend", this.handlers.touchEndListener);
     console.log("removed all listeners. ");
     //if(getEventListeners && typeof getEventListeners === "function") console.log(getEventListeners(holder));
@@ -226,7 +226,7 @@ ChantAutoScroll = {
 
     const holder = this.instance.holder;
     holder.addEventListener("ontouchstart",this.handlers.touchStartHandler, {passive:true})
-    holder.addEventListener("wheel", this.handlers.wheelHandler, {passive:true})
+    holder.addEventListener("wheel touchmove", this.handlers.wheelHandler, {passive:true})
   }
 
 
@@ -256,7 +256,7 @@ ChantAutoScroll.handlers = (function(chantAutoScroll) {
     thisInstance.stopAutoScrolling("wheeled element")
     clearTimeout(resumeFunction)
     resumeFunction = setTimeout(function () {
-      thisInstance.instance.holder.removeEventListener("wheel",wheelHandler)
+      thisInstance.instance.holder.removeEventListener("wheel touchmove",wheelHandler)
       thisInstance.startAutoScrolling()
     }, 100)
   }
