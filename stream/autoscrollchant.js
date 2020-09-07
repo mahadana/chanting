@@ -207,7 +207,6 @@ ChantAutoScroll = {
    */
 
   _removeAllScrollingListeners: function() {
-    //TODO: do something
     const holder = this.instance.holder;
     if(!holder) {
       console.log("no holder element, so can't remove listeners")
@@ -215,18 +214,21 @@ ChantAutoScroll = {
     }
 
     holder.removeEventListener("ontouchstart",this.handlers.touchStartHandler);
-    holder.removeEventListener("wheel touchmove", this.handlers.wheelHandler);
+    holder.removeEventListener("wheel", this.handlers.wheelHandler);
+    holder.removeEventListener("touchmove", this.handlers.wheelHandler);
     holder.removeEventListener("ontouchend", this.handlers.touchEndListener);
     console.log("removed all listeners. ");
     //if(getEventListeners && typeof getEventListeners === "function") console.log(getEventListeners(holder));
   },
 
   _startListeningForUserScrollEvents: function () {
+    console.log("start listening for scroll")
     this._removeAllScrollingListeners();
 
     const holder = this.instance.holder;
     holder.addEventListener("ontouchstart",this.handlers.touchStartHandler, {passive:true})
-    holder.addEventListener("wheel touchmove", this.handlers.wheelHandler, {passive:true})
+    holder.addEventListener("wheel", this.handlers.wheelHandler, {passive:true})
+    holder.addEventListener("touchmove", this.handlers.wheelHandler, {passive:true})
   }
 
 
@@ -236,6 +238,7 @@ ChantAutoScroll = {
 // TODO: remove this commented-out code
 //init handlers with "this" attached
 ChantAutoScroll.handlers = (function(chantAutoScroll) {
+  console.log("initializing handlers")
   //once we've started scrolling, we should stop if user scrolls or touches
   let touchStartHandler, touchEndListener, wheelHandler;
   const thisInstance = chantAutoScroll;
@@ -252,11 +255,12 @@ ChantAutoScroll.handlers = (function(chantAutoScroll) {
   }
   let resumeFunction;
   wheelHandler = function(e) {
-    console.log("wheel touchmove", e)
+    console.log("wheel or touchmove", e)
     thisInstance.stopAutoScrolling("wheeled element")
     clearTimeout(resumeFunction)
     resumeFunction = setTimeout(function () {
-      thisInstance.instance.holder.removeEventListener("wheel touchmove",wheelHandler)
+      thisInstance.instance.holder.removeEventListener("wheel",wheelHandler)
+      thisInstance.instance.holder.removeEventListener("touchmove",wheelHandler)
       thisInstance.startAutoScrolling()
     }, 100)
   }
