@@ -48,7 +48,8 @@
 	#id01 { height: 95% }
 	
 	/* make close button larger and gray */
-	.close-button { font-size: 20pt; color: rgb(186, 181, 181); }
+	.pause-button, .close-button { font-size: 20pt; color: rgb(186, 181, 181); }
+	.pause-button { margin-right: 30px }
 	
 	/* scroll within the popup, max height at 100% so overflow will scroll. Padding for the X button */
 	.main-content { overflow-y: scroll; padding-top: 40px; height: 100% } 
@@ -108,21 +109,10 @@
     -->
 
 	<script src="schedule.js"></script>
+	<script src="autoscrollchant.js"></script>
 	<script src="pageDataBook1.js"></script>
 	<script src="pageDataBook2.js"></script>
     <script>
-    function BlockElasticScroll(event) {
-        //event.preventDefault() ;
-    }
-
-    // In JavaScript, you can use "window.navigator.standalone" to detect wether
-    // the page is being viewed on your website, or as a standalone application.
-
-    // You can also the detect the device the user is using.
-    // var isIPhone = navigator.userAgent.indexOf("iPhone") != -1 ;
-    // var isIPod = navigator.userAgent.indexOf("iPod") != -1 ;
-    // var isIPad = navigator.userAgent.indexOf("iPad") != -1 ;
-    // var isIOs = isIPhone || isIPod || isIPad ;
     
     function loadVideo() {
     	const videoIframe = document.getElementById("real-video");
@@ -236,106 +226,45 @@
     	const pages = chantInfo.pages;
     	const holder = document.getElementById('book'+bookNum+'images')
     	
-    	//hideAll images for book
-    	
+    	//hideAll images for book (some may already be displayed if they previously had a chant open)
     	for(const element of holder.childNodes) if(element.style) element.style.display = "none"
     	
     	
-    	//show only relevant ones
+    	//unhide only the relevant pages
     	pages.forEach(pageNum => document.getElementById(bookNum+"-"+pageNum).style.display = "block")
-    	
-    	//jump to that ID
-    	document.getElementById(bookNum+"-"+pages[0]).scrollIntoView(true)
 
-		startAutoScrolling(holder.parentElement.scrollTop, holder.parentElement, chantInfo.pageScrollData)
+		//scroll the view to that ID
+		const startPageNum = pages[0];
+		document.getElementById(bookNum+"-"+startPageNum).scrollIntoView(true)
+
+		// AUTOSCROLL!!!
+		// When a user loads a chant, we start autoScrolling (with a delay) because we assume that
+		//  they are chanting, beginning as soon as they clicked that item.
+		//  It's not quite perfect, but the user can scroll to adjust if it starts scrolling
+		//  before they actually started chanting.
+		ChantAutoScroll.configure({
+			bookNum: bookNum,
+			startPageNum: startPageNum,
+			scrollData: chantInfo.pageScrollData,
+		})
+		ChantAutoScroll.startAutoScrollingFromStart();
     }
 
-
-
-    function startAutoScrolling(startHeight, holder, scrollData) {
-    	/*const listeningFunc = function (e) {
-			console.log("caught scrolling! ;)")
+    // Refresh the page if it hasn't been refreshed since yesterday.
+	// This is a simple hack to make sure that if someone stays on the page for more than a day
+	//  that it won't keep showing yesterday's livestream.
+	const pageLoadTime = new Date();
+    window.onfocus = function() {
+    	const now = new Date();
+    	if(pageLoadTime.getDate() != now.getDate()) {
+			location.reload();
 		}
-    	holder.addEventListener("scroll", listeningFunc)
-		*/
-		console.log("startHeight", startHeight)
-		const currentPageNumber = function (currentHeight) {
-			return Math.floor((currentHeight - startHeight) / fullPageHeight);
-		}
-
-		const heightWithinCurrentPage = function (currentHeight) {
-			return (currentHeight - startHeight) % fullPageHeight;
-		}
-
-		const maxHeightForPage = function (pageNumber) {
-			return (scrollData[pageNumber].trueEndHeight || 1) * fullPageHeight;
-		}
-
-		const marginHeightTopConstant = 20;
-		const marginHeightBottomConstant = 30;
-		const fullPageHeight = 753; //not sure if this is right
-		// this is where we assume the user's eye should be on the first page before we start scroll
-		const autoScrollStartOffsetFactor = 0.5;
-		// truehight is the assumption of where the user's eye will be at any given time
-		let trueHeight = (startHeight || 0) + marginHeightTopConstant;
-
-		let isCurrentlyInMargin = true; //starts inside margin
-		const marginScrollMultiplier = 2; // scroll this many times faster in the margin
-
-		//assume page 0 for start
-		let currentScrollRateInPx = scrollData[0].scrollRate;
-		let currentPageMaxHeight = maxHeightForPage(0);
-		const scrollingIntervalInMilliseconds = 10;
-
-
-		const intervalFunctionId = setInterval(function () {
-			// scroll 2x speed if in margin
-			trueHeight += currentScrollRateInPx * (isCurrentlyInMargin ? marginScrollMultiplier : 1);
-			//console.log("trueHeight", trueHeight)
-
-			//check if we have left the margin
-			const heightInCurrentPage = heightWithinCurrentPage(trueHeight);
-			isCurrentlyInMargin = heightInCurrentPage < marginHeightTopConstant
-					|| heightInCurrentPage > (fullPageHeight - marginHeightBottomConstant);
-
-			//we have passed the end of this page. Let's see what to do next
-			if(heightInCurrentPage > currentPageMaxHeight) {
-				//try to get next page.
-				const nextPageNumber = currentPageNumber(trueHeight) + 1
-				const nextPageInfo = scrollData[nextPageNumber];
-				if(nextPageInfo) {
-					//there's another page. Update scroll constants, etc
-					currentScrollRateInPx = nextPageInfo.scrollRate;
-					currentPageMaxHeight = maxHeightForPage(nextPageNumber);
-				} else {
-					//we've reached the end. Stop here!
-					console.log("done scrolling due to trueEnd on last page")
-					clearInterval(intervalFunctionId);
-				}
-			}
-
-			//actually scroll
-			const browserScrollHeight = trueHeight - autoScrollStartOffsetFactor * holder.clientHeight;
-			//console.log("browserScrollHeight", browserScrollHeight)
-			if(browserScrollHeight > startHeight) {
-				holder.scrollTo(0, browserScrollHeight);
-			}
-
-
-
-
-			//stop scrolling if we're at the bottom
-			if(browserScrollHeight > holder.scrollHeight - holder.clientHeight) {
-				console.log("done scrolling due to absolute bottom of holder elemnt")
-				clearInterval(intervalFunctionId);
-			}
-		}, scrollingIntervalInMilliseconds)
 	}
     
     function showAllPagesForBook(bookNum) {
     	const holder = document.getElementById('book'+bookNum+'images')
     	
-    	//hideAll images for book
+    	//show images for book
     	for(const element of holder.childNodes) if(element.style) element.style.display = "block"
     }
     
@@ -343,7 +272,8 @@
     	document.getElementById('real-video').style.display='none';	
     	document.getElementById('demo-buttons').style.display='none';
     }
-    
+
+    //TODO: not ideal that this is hardcoded here. Sholud prob be in book data, stored per-book...
     const START_PAGE_OFFSET = 9;
     
 	//TODO: blah globals
@@ -353,6 +283,8 @@
 	}
 	pageDataBook1.sort(startPageSort);
 	pageDataBook2.sort(startPageSort);
+
+
 
     </script>
 
@@ -395,7 +327,7 @@
 	  <div id="dhamma-of-the-day" class="w3-modal" style="display: none;"> <!-- block display for now --> 
 	    <div class="w3-modal-content">
 	      <div class="w3-container">
-	        <span class="close-button" onclick="document.getElementById('dhamma-of-the-day').style.display='none'" class="w3-button w3-display-topright">&times;</span>
+			  <span class="close-button" onclick="document.getElementById('dhamma-of-the-day').style.display='none'" class="w3-button w3-display-topright">&times;</span>
 	        <div class="main-content">
 	        	<img id="dhamma-image-1" class="chant-image" src="" >
 	        	<img id="dhamma-image-2" class="chant-image" src="" >
@@ -410,7 +342,9 @@
 	  <div id="id02" class="w3-modal">
 	    <div class="w3-modal-content">
 	      <div class="w3-container">
-	        <span class="close-button" onclick="document.getElementById('toc-2').scrollIntoView(true); document.getElementById('id02').style.display='none'; showAllPagesForBook(2)" class="w3-button w3-display-topright">&times;</span>
+		  	<span id="stop-scrolling-button2" style="display:none" onclick="ChantAutoScroll.userHitPause()" class="w3-button w3-display-topright pause-button">(pause)</span>
+			  &nbsp;&nbsp;
+	        <span onclick="document.getElementById('toc-2').scrollIntoView(true); document.getElementById('id02').style.display='none'; showAllPagesForBook(2)" class="close-button w3-button w3-display-topright">&times;</span>
 	        <div class="main-content">	        
 	        	<div id="toc-2" class="toc">
 	        		<!-- filled in by loadTOC -->
@@ -431,7 +365,9 @@
 	  <div id="id01" class="w3-modal">
 	    <div class="w3-modal-content">
 	      <div class="w3-container">
-	        <span id="close-button" onclick="document.getElementById('toc-1').scrollIntoView(true); document.getElementById('id01').style.display='none'; showAllPagesForBook(1)" class="w3-button w3-display-topright">&times;</span>
+			  <span id="stop-scrolling-button1" style="display:none" onclick="ChantAutoScroll.userHitPause()" class="w3-button w3-display-topright pause-button">(pause)</span>
+			  &nbsp;&nbsp;
+	        <span onclick="document.getElementById('toc-1').scrollIntoView(true); document.getElementById('id01').style.display='none'; showAllPagesForBook(1)" class="close-button w3-button w3-display-topright">&times;</span>
 	        <div class="main-content">
 			    <div id="toc-1" class="toc">
 					<!-- filled in by loadTOC -->
@@ -453,7 +389,14 @@
 
 
 
-
+	<script type="text/javascript">
+		document.getElementById("body").addEventListener("ontouchstart",function (e) {
+			console.log("touch started", e)
+		})
+		document.getElementById("body").addEventListener("wheel",function (e) {
+			console.log("wheel", e)
+		})
+	</script>
 
 	
 
