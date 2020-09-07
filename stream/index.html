@@ -113,6 +113,8 @@
 	<script src="pageDataBook1.js"></script>
 	<script src="pageDataBook2.js"></script>
     <script>
+
+	// ======== ON PAGE LOAD STUFF. SETUP =====================================
     
     function loadVideo() {
     	const videoIframe = document.getElementById("real-video");
@@ -155,32 +157,6 @@
 
 		}
 	}
-
-	function displayVideoInfoDivWithMessage(message) {
-		const videoIframe = document.getElementById("real-video");
-		videoIframe.style.display = "none";
-		const infoDiv = document.getElementById("livestream-not-started");
-		infoDiv.style.display = "block";
-		infoDiv.innerText= message;
-	}
-
-    function loadDhamma() {
-    	const startPage = 9;
-    	const endPage = 111;
-    	const totalPages = endPage - startPage + 1;
-
-    	const selectedOddPagesFromStart = 2 * Math.ceil(Math.random()*totalPages / 2) - 1; //want odd start page
-
-    	let pageNum = selectedOddPagesFromStart - 1 + startPage;
-
-    	
-    	
-    	
-    	const prefix = "dhamma/dpr2-";
-    	const suffix = ".png";
-    	document.getElementById('dhamma-image-1').src = prefix + (""+pageNum).padStart(3, "0") + suffix;
-    	document.getElementById('dhamma-image-2').src = prefix + (""+(pageNum + 1)).padStart(3, "0") + suffix;
-    }
     
     function loadImages() {
     	loadImageSet(1,155); //155 pages in book 1, 89  in book 2
@@ -221,6 +197,39 @@
     	})	
     	
     }
+
+	// Refresh the page if it hasn't been refreshed since yesterday.
+	// This is a simple hack to make sure that if someone stays on the page for more than a day
+	//  that it won't keep showing yesterday's livestream.
+	const pageLoadTime = new Date();
+	window.onfocus = function() {
+		const now = new Date();
+		if(pageLoadTime.getDate() != now.getDate()) {
+			location.reload();
+		}
+	}
+
+	//TODO: not ideal that this is hardcoded here. Sholud prob be in book data, stored per-book...
+	const START_PAGE_OFFSET = 9;
+
+	//TODO: blah globals
+	//sort, since data comes out of order...
+	const startPageSort = function(a, b) {
+		return a.startPage - b.startPage;
+	}
+	pageDataBook1.sort(startPageSort);
+	pageDataBook2.sort(startPageSort);
+
+	
+    // ================== HELPER FUNCTIONS ETC =================================
+
+	function displayVideoInfoDivWithMessage(message) {
+		const videoIframe = document.getElementById("real-video");
+		videoIframe.style.display = "none";
+		const infoDiv = document.getElementById("livestream-not-started");
+		infoDiv.style.display = "block";
+		infoDiv.innerText= message;
+	}
     
     function showPages(bookNum, chantInfo) {
     	const pages = chantInfo.pages;
@@ -250,16 +259,7 @@
 		ChantAutoScroll.startAutoScrollingFromStart();
     }
 
-    // Refresh the page if it hasn't been refreshed since yesterday.
-	// This is a simple hack to make sure that if someone stays on the page for more than a day
-	//  that it won't keep showing yesterday's livestream.
-	const pageLoadTime = new Date();
-    window.onfocus = function() {
-    	const now = new Date();
-    	if(pageLoadTime.getDate() != now.getDate()) {
-			location.reload();
-		}
-	}
+
     
     function showAllPagesForBook(bookNum) {
     	const holder = document.getElementById('book'+bookNum+'images')
@@ -272,17 +272,6 @@
     	document.getElementById('real-video').style.display='none';	
     	document.getElementById('demo-buttons').style.display='none';
     }
-
-    //TODO: not ideal that this is hardcoded here. Sholud prob be in book data, stored per-book...
-    const START_PAGE_OFFSET = 9;
-    
-	//TODO: blah globals
-	//sort, since data comes out of order...
-	const startPageSort = function(a, b) {
-		return a.startPage - b.startPage;
-	}
-	pageDataBook1.sort(startPageSort);
-	pageDataBook2.sort(startPageSort);
 
 
 
@@ -297,7 +286,7 @@
 	
 	
 	
-
+	<!-- youtube video holder -->
 
 	<div class='embed-container'>
 		<div id="livestream-not-started" style="display: none"></div>
@@ -314,6 +303,8 @@
 
 	<div class="w3-container">
 
+		<!-- buttons -->
+
 	  <button onclick="document.getElementById('id01').style.display='block'" class="w3-button w3-black">Chanting Book 1</button>
 	  <button onclick="document.getElementById('id02').style.display='block'" class="w3-button w3-black">Chanting Book 2</button>
 		<div class="counter-holder">	Sangha online: <script type="text/javascript" src="//livecounter.theyosh.nl/3666.js"></script></div>
@@ -321,20 +312,7 @@
 	  	<button class="w3-button w3-black" onclick="document.getElementById('demo-video').style.display='block'; hideDemoStuff()">(video demo)</button><br>
 	  	<button class="w3-button w3-black" onclick="document.getElementById('demo-audio').style.display='block'; hideDemoStuff()">(audio demo)</button>
 	  </div>
-	  
-	  
-	  <!-- dhamma of the day ---> 
-	  <div id="dhamma-of-the-day" class="w3-modal" style="display: none;"> <!-- block display for now --> 
-	    <div class="w3-modal-content">
-	      <div class="w3-container">
-			  <span class="close-button" onclick="document.getElementById('dhamma-of-the-day').style.display='none'" class="w3-button w3-display-topright">&times;</span>
-	        <div class="main-content">
-	        	<img id="dhamma-image-1" class="chant-image" src="" >
-	        	<img id="dhamma-image-2" class="chant-image" src="" >
-	       	</div>
-	      </div>
-	    </div>
-	  </div>
+
 	  
 	  
 	  <!-- CHANTING BOOK 2 ---> 
