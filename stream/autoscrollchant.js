@@ -157,6 +157,10 @@ ChantAutoScroll = {
 
   },
   _scrollingIntervalFunction:function () {
+    if(this.isManualScrolling) {
+      console.log("currently scrolling! Should not be. But let's pause")
+      return;
+    }
     // we assume that the user is starting with their eye in the middle of the page. Scroll from there.
     let trueHeightInPx = this.instance._currentHolderScrollPosition() + this.instance._startHeightOffset();
     const pageNum = this.instance._currentPageNumber(trueHeightInPx);
@@ -222,7 +226,6 @@ ChantAutoScroll = {
   },
 
   _startListeningForUserScrollEvents: function () {
-    console.log("start listening for scroll")
     this._removeAllScrollingListeners();
 
     const holder = this.instance.holder;
@@ -257,8 +260,11 @@ ChantAutoScroll.handlers = (function(chantAutoScroll) {
   wheelHandler = function(e) {
     console.log("wheel or touchmove", e)
     thisInstance.stopAutoScrolling("wheeled element")
+    thisInstance.isManualScrolling = true;
     clearTimeout(resumeFunction)
     resumeFunction = setTimeout(function () {
+      console.log("done scrolling, resume autoscroll")
+      thisInstance.isManualScrolling = false;
       thisInstance.instance.holder.removeEventListener("wheel",wheelHandler)
       thisInstance.instance.holder.removeEventListener("touchmove",wheelHandler)
       thisInstance.startAutoScrolling()
