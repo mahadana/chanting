@@ -62,7 +62,7 @@ ChantAutoScroll = {
 
   constants:{
     presumedEyeHeightAsFractionOfPage: 0.5,
-    scrollingIntervalInMilliseconds: 10,
+    scrollingIntervalInMilliseconds: 50,
     marginHeightTopConstant: 0.045,
     marginHeightBottomConstant: 0.045,
     marginScrollMultiplier: 2, // scroll this many times faster in the margin
