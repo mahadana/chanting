@@ -62,7 +62,7 @@ ChantAutoScroll = {
 
   constants:{
     presumedEyeHeightAsFractionOfPage: 0.5,
-    scrollingIntervalInMilliseconds: 50,
+    scrollingIntervalInMilliseconds: 20,
     marginHeightTopConstant: 0.045,
     marginHeightBottomConstant: 0.045,
     marginScrollMultiplier: 2, // scroll this many times faster in the margin
@@ -82,7 +82,7 @@ ChantAutoScroll = {
    * @param optionalReasonString
    */
   cancelAutoScrolling: function(optionalReasonString){
-    this._removeAllScrollingListeners(); //todo: remove. And now cancel is redundant as there is no longer any "resume" functionality
+    //this._removeAllScrollingListeners(); //todo: remove. And now cancel is redundant as there is no longer any "resume" functionality
     this.stopAutoScrolling(optionalReasonString);
   },
 
@@ -134,9 +134,9 @@ ChantAutoScroll = {
     clearInterval(this.autoScrollingIntervalFunctionId);
 
     this.isAutoScrolling = true;
-    //TODO: remove
+    //TODO: remove unless we can figure out a way to get around shitty iOS scrolling
     // if the user scrolls, we need to stop autoscrolling, and then resume from wherever they stop.
-    this._startListeningForUserScrollEvents();
+    //this._startListeningForUserScrollEvents();
 
     if(this.instance._currentHolderScrollPosition() - this.instance.originalStartHeightInPx >= 0) {
       // we are within the actual chant (not the index). Proceed
@@ -157,10 +157,6 @@ ChantAutoScroll = {
 
   },
   _scrollingIntervalFunction:function () {
-    if(this.isManualScrolling) {
-      console.log("currently scrolling! Should not be. But let's pause")
-      return;
-    }
     // we assume that the user is starting with their eye in the middle of the page. Scroll from there.
     let trueHeightInPx = this.instance._currentHolderScrollPosition() + this.instance._startHeightOffset();
     const pageNum = this.instance._currentPageNumber(trueHeightInPx);
@@ -205,11 +201,12 @@ ChantAutoScroll = {
     }
   },
 
+
   /**
    * To avoid the addition of multiple scrolling listeners as well as clear out behavior if user pauses
    * @private
    */
-
+/*
   _removeAllScrollingListeners: function() {
     const holder = this.instance.holder;
     if(!holder) {
@@ -229,12 +226,13 @@ ChantAutoScroll = {
     holder.addEventListener("wheel", this.handlers.wheelHandler, {passive:true})
     holder.addEventListener("touchmove", this.handlers.touchMoveHandler, {passive:true})
   }
-
+*/
 
 }
 
 
-// TODO: remove this commented-out code
+// TODO: remove this commented-out code. And iOS SUCKS. Scrolling makes no sense.
+/*
 //init handlers with "this" attached
 ChantAutoScroll.handlers = (function(chantAutoScroll) {
   console.log("initializing handlers")
@@ -271,3 +269,4 @@ ChantAutoScroll.handlers = (function(chantAutoScroll) {
     wheelHandler: wheelHandler,
   }
 })(ChantAutoScroll)
+ */
