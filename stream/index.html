@@ -43,7 +43,6 @@
 	#demo-buttons button.w3-black { color:gray!important }
 	
 	/*keep a little margin at bottom below popup*/
-	#dhamma-of-the-day { height: 95% }
 	#id02 { height: 95% }
 	#id01 { height: 95% }
 	
@@ -57,9 +56,6 @@
 	
 	/* don't let the images get wider than popup. Auto scale height accordingly */
 	.chant-image { width: 100%; }
-	
-	/* a little too much space taken up by the dhamma of the day images. Chop off the page numbers too */
-	#dhamma-image-2, #dhamma-image-1 { margin-top: -40px }
 	
 </style>
 
@@ -220,7 +216,7 @@
 	pageDataBook1.sort(startPageSort);
 	pageDataBook2.sort(startPageSort);
 
-	
+
     // ================== HELPER FUNCTIONS ETC =================================
 
 	function displayVideoInfoDivWithMessage(message) {
@@ -281,7 +277,7 @@
     <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
 
 </head>
-<!-- document.getElementById('dhamma-of-the-day').style.display='block'; loadDhamma; -->
+
 <body id=body onload="loadImages(); loadTOCs(); loadVideo();">
 	
 	
