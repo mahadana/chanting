@@ -115,7 +115,7 @@ ChantAutoScroll = {
     // If the user manually scrolls WHILE WE ARE WAITING TO START, we should cancel this timeout
     //  and resume scrolling from whereever they scroll to
     const scrollStartPosition = this.instance._currentHolderScrollPosition();
-    this.instance.holder.addEventListener("ontouchend wheel",function () {
+    this.instance.holder.addEventListener("touchmove wheel",function () {
       if(scrollStartPosition !== thisInstance.instance._currentHolderScrollPosition()) {
         //if they did indeed scroll, cancel the delay, and immediately start scrolling from there
         if(!thisInstance.isAutoScrolling) {
@@ -216,11 +216,8 @@ ChantAutoScroll = {
       console.log("no holder element, so can't remove listeners")
       return;
     }
-
-    holder.removeEventListener("ontouchstart",this.handlers.touchStartHandler);
     holder.removeEventListener("wheel", this.handlers.wheelHandler);
-    holder.removeEventListener("touchmove", this.handlers.wheelHandler);
-    holder.removeEventListener("ontouchend", this.handlers.touchEndListener);
+    holder.removeEventListener("touchmove", this.handlers.touchMoveHandler);
     console.log("removed all listeners. ");
     //if(getEventListeners && typeof getEventListeners === "function") console.log(getEventListeners(holder));
   },
@@ -229,9 +226,8 @@ ChantAutoScroll = {
     this._removeAllScrollingListeners();
 
     const holder = this.instance.holder;
-    holder.addEventListener("ontouchstart",this.handlers.touchStartHandler, {passive:true})
     holder.addEventListener("wheel", this.handlers.wheelHandler, {passive:true})
-    holder.addEventListener("touchmove", this.handlers.wheelHandler, {passive:true})
+    holder.addEventListener("touchmove", this.handlers.touchMoveHandler, {passive:true})
   }
 
 
@@ -243,37 +239,35 @@ ChantAutoScroll = {
 ChantAutoScroll.handlers = (function(chantAutoScroll) {
   console.log("initializing handlers")
   //once we've started scrolling, we should stop if user scrolls or touches
-  let touchStartHandler, touchEndListener, wheelHandler;
+  let touchMoveHandler, wheelHandler;
   const thisInstance = chantAutoScroll;
-  touchStartHandler = function (e) {
-    console.log("you touched!", e)
-    thisInstance.stopAutoScrolling("touched element")
-    thisInstance.instance.holder.removeEventListener("ontouchstart",touchStartHandler)
-    thisInstance.instance.holder.addEventListener("ontouchend",touchEndListener, {passive:true})
-  }
-  touchEndListener = function(e) {
-    console.log("touch ended. Resume!", e)
-    thisInstance.startAutoScrolling()
-    thisInstance.instance.holder.removeEventListener("ontouchend", touchEndListener);
-  }
   let resumeFunction;
   wheelHandler = function(e) {
-    console.log("wheel or touchmove", e)
+    console.log("wheel", e)
     thisInstance.stopAutoScrolling("wheeled element")
-    thisInstance.isManualScrolling = true;
     clearTimeout(resumeFunction)
     resumeFunction = setTimeout(function () {
-      console.log("done scrolling, resume autoscroll")
-      thisInstance.isManualScrolling = false;
-      thisInstance.instance.holder.removeEventListener("wheel",wheelHandler)
-      thisInstance.instance.holder.removeEventListener("touchmove",wheelHandler)
+      console.log("100ms without wheel, resume autoscroll")
       thisInstance.startAutoScrolling()
     }, 100)
   }
 
+  touchMoveHandler = function (e) {
+    console.log("touchmove", e)
+    thisInstance.stopAutoScrolling("touchmove element")
+    thisInstance.isManualScrolling = true;
+    let resumeListener;
+    resumeListener = function () {
+      console.log("done scrolling, resume autoscroll")
+      thisInstance.isManualScrolling = false;
+      thisInstance.instance.holder.removeEventListener("scroll",resumeListener)
+      thisInstance.startAutoScrolling()
+    };
+    thisInstance.instance.holder.addEventListener("scroll",resumeListener)
+  }
+
   return {
-    touchStartHandler: touchStartHandler,
-    touchEndListener: touchEndListener,
+    touchMoveHandler: touchMoveHandler,
     wheelHandler: wheelHandler,
   }
 })(ChantAutoScroll)
