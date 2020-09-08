@@ -112,32 +112,32 @@ const pageDataBook1 = [
       {
         "pageNum": 27,
         "pageTimeInSeconds": 132,
-        "trueEndHeight": 0.7
+        "trueEndHeight": 0.6
       },
       {
         "pageNum": 29,
         "pageTimeInSeconds":99,
-        "trueEndHeight": 0.6
+        "trueEndHeight": 0.5
       },
       {
         "pageNum": 31,
         "pageTimeInSeconds": 153,
-        "trueEndHeight": 0.9
+        "trueEndHeight": 0.8
       },
       {
         "pageNum": 33,
         "pageTimeInSeconds": 161,
-        "trueEndHeight": 0.9
+        "trueEndHeight": 0.8
       },
       {
         "pageNum": 35,
         "pageTimeInSeconds": 146,
-        "trueEndHeight": 1
+        "trueEndHeight": 0.9
       },
       {
         "pageNum": 37,
         "pageTimeInSeconds":92,
-        "trueEndHeight": 0.7
+        "trueEndHeight": 0.6
       }
     ]
   },
