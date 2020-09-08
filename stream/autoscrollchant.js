@@ -7,6 +7,7 @@ ChantAutoScroll = {
     const constants = this.constants;
 
     this.instance = {
+      _currentScrollIncrementValue:0, //this is necessary because browsers don't do fractional scrollTop. They round.
       bookNum: bookNum, //current book num we are on
       startPageNum: startPageNum, //the start page for this chant
       scrollData: scrollData,//the scroll data for the chant
@@ -45,12 +46,33 @@ ChantAutoScroll = {
       },
 
       _currentHolderScrollPosition: function() {
-        return holder.scrollTop;
+        return this.holder.scrollTop;
       },
 
-      _scrollRateInPercentageOfPagePerIntervalForPage: function(pageNum) {
-        // scrollRate is a number 0 to 100, so convert from percentage to ratio by dividing by 100
-        return scrollData[0].scrollRate / 100;
+      _fractionOfPageToScrollPerIntervalForPage: function(pageNum) {
+        const timeToSpendOnPageInSeconds = this.scrollData[pageNum].pageTimeInSeconds || constants.defaultPageTimeInSeconds;
+        //trueEndHeight is the fraction of the page that we need to scroll through to reach the end.
+        //  Some pages end early, so if a chant only occupies 1/2 of a page, the value = 0.5
+        const numberOfIntervalsForFullPage = (timeToSpendOnPageInSeconds * 1000 / constants.scrollingIntervalInMilliseconds)
+
+        // The visible page is the part of the page actually visible to user.
+        // Ex:
+        // If the element height is 50px, but the images are 100px, then the intervals per VISIBLE page will be 1/2 of the full page
+        const numberOfIntervalsForVisiblePage = numberOfIntervalsForFullPage * (holder.clientHeight / this._getCurrentImageHeight());
+        //divide into X intervals per page. This is the fraction of the page that must be scrolled per interval
+        return 1/numberOfIntervalsForVisiblePage;
+      },
+      scrollTo: function (scrollToValue) {
+        const scrollByValue = scrollToValue - this._currentHolderScrollPosition();
+        if(Math.abs(scrollByValue) < constants.scrollIncrementMinimumThresholdInPx) {
+          this._currentScrollIncrementValue += scrollByValue;
+          if(Math.abs(this._currentScrollIncrementValue) >= constants.scrollIncrementMinimumThresholdInPx) {
+            this.holder.scrollTo(0,this._currentHolderScrollPosition() + this._currentScrollIncrementValue)
+            this._currentScrollIncrementValue = scrollByValue - constants.scrollIncrementMinimumThresholdInPx;
+          }
+        } else {
+          this.holder.scrollTo(0, scrollToValue);
+        }
       }
     }
     console.log("configured with instance data: ", this.instance)
@@ -61,12 +83,23 @@ ChantAutoScroll = {
 
 
   constants:{
+    scrollIncrementMinimumThresholdInPx: 1,
     presumedEyeHeightAsFractionOfPage: 0.5, //we assume the user's eye will want to be in the middle, not the top
     scrollingIntervalInMilliseconds: 20,
     marginHeightTopConstant: 0.045, //roughly measured using preview
     marginHeightBottomConstant: 0.045,
     marginScrollMultiplier: 2, // scroll this many times faster in the margin
+    defaultPageTimeInSeconds: 100, //very crude guess that each page takes ~100s to finish
   },
+
+  /*
+  scrollToStartOffset:function() {
+    const additionalScroll = this.instance.holder.clientHeight * this.constants.presumedEyeHeightAsFractionOfPage;
+    console.log("scroll UP by ",additionalScroll)
+    this.instance.originalStartHeightInPx -= additionalScroll;
+    this.instance.scrollTo(this.instance._currentHolderScrollPosition() - additionalScroll);
+  },
+   */
 
   /**
    * If the user hits pause, it should not resume scrolling later. Remove all listeners for scrolling
@@ -74,6 +107,32 @@ ChantAutoScroll = {
    */
   userHitPause: function(){
     this.cancelAutoScrolling('user hit pause');
+  },
+
+  userHitStart: function() {
+    //if before start, zoom to start
+    //TODO:
+    if(false) {
+      //blah blah
+    }
+    //toggle buttons
+    this.startAutoScrolling()
+  },
+
+  closeClicked:function(){
+    //cancel everything
+    console.log("close was clicked, clear it out")
+    clearTimeout(this._autoScrollingDelayTimeoutId);
+    this.cancelAutoScrolling("user clicked x");
+  },
+
+  toggleStartStopButtons:function() {
+    const stopButton = document.getElementById("stop-scrolling-button"+this.instance.bookNum);
+    const stopButtonCurrent = stopButton.style.display+"";
+    const startButton = document.getElementById("start-scrolling-button"+this.instance.bookNum)
+    const startButtonCurrent = startButton.style.display + "";
+    stopButton.style.display = startButtonCurrent;
+    startButton.style.display = stopButtonCurrent;
   },
 
   /**
@@ -96,19 +155,21 @@ ChantAutoScroll = {
     clearInterval(this.autoScrollingIntervalFunctionId);
 
     //hide the pause button
-    document.getElementById("stop-scrolling-button"+this.instance.bookNum).style.display = "none"
+    this.toggleStartStopButtons();
   },
 
   /**
    * When autoscrolling from start, we assume a delay for the user to reach halfway down the page
    * So, to keep things simple, we just compute the assumed delay in ms, and then fire of autoscroll from there
    */
+
+  _autoScrollingDelayTimeoutId:null,
   startAutoScrollingFromStart: function () {
     //start autscrolling once the user's eye has reached approximately middle of the page
-    const delayBeforeStartingInMilliseconds = this.constants.presumedEyeHeightAsFractionOfPage / this.instance._scrollRateInPercentageOfPagePerIntervalForPage(0);
-    console.log("delay in MS for starting scroll = "+delayBeforeStartingInMilliseconds+ ", scrollRate = "+this.instance._scrollRateInPercentageOfPagePerIntervalForPage(0));
+    const delayBeforeStartingInMilliseconds = (this.constants.presumedEyeHeightAsFractionOfPage * this.constants.scrollingIntervalInMilliseconds) / this.instance._fractionOfPageToScrollPerIntervalForPage(0);
+    console.log("delay in MS for starting scroll = "+delayBeforeStartingInMilliseconds+ ", scrollRate = "+this.instance._fractionOfPageToScrollPerIntervalForPage(0));
     const thisInstance = this;
-    const timeoutID = setTimeout(function () {
+    this._autoScrollingDelayTimeoutId = setTimeout(function () {
       thisInstance.startAutoScrolling();
     }, delayBeforeStartingInMilliseconds)
 
@@ -120,15 +181,25 @@ ChantAutoScroll = {
         //if they did indeed scroll, cancel the delay, and immediately start scrolling from there
         if(!thisInstance.isAutoScrolling) {
           console.log("user scrolled while we were waiting to start scrolling. Cancel timeout and start scrolling")
-          clearTimeout(timeoutID);
+          clearTimeout(thisInstance._autoScrollingDelayTimeoutId);
           thisInstance.startAutoScrolling();
         }
       }
     }, {passive:true})
   },
 
+
+  _logStartOfAutoscroll: function() {
+    const trueHeightInPx = this.instance._currentHolderScrollPosition() + this.instance._startHeightOffset();
+    const pageNum = this.instance._currentPageNumber(trueHeightInPx);
+    console.log("Scrolling, scrollPos = "+this.instance._currentHolderScrollPosition()+", trueheight = "+trueHeightInPx+" pageNum = "+pageNum);
+  },
+
   startAutoScrolling: function ()
   {
+    this.toggleStartStopButtons();
+    this._logStartOfAutoscroll()
+
     //cancel any existing intervals, in case they are happening.
     // This probably shouldn't be necessary because if it is there's a bug in my code
     clearInterval(this.autoScrollingIntervalFunctionId);
@@ -158,7 +229,7 @@ ChantAutoScroll = {
   },
   _scrollingIntervalFunction:function () {
     // we assume that the user is starting with their eye in the middle of the page. Scroll from there.
-    let trueHeightInPx = this.instance._currentHolderScrollPosition() + this.instance._startHeightOffset();
+    const trueHeightInPx = this.instance._currentHolderScrollPosition() + this.instance._startHeightOffset();
     const pageNum = this.instance._currentPageNumber(trueHeightInPx);
     console.log("Scrolling, scrollPos = "+this.instance._currentHolderScrollPosition()+", trueheight = "+trueHeightInPx+" pageNum = "+pageNum);
 
@@ -177,16 +248,32 @@ ChantAutoScroll = {
 
     }
 
+    const scrollIncrement = this.instance._fractionOfPageToScrollPerIntervalForPage(pageNum) * this.instance._getCurrentImageHeight();;
+
+    /*
+    STUPID BROKEN MARGIN CODE
+
     //if we've reached here, the page exists. Proceed
     //check if we are currently in the margin
     const heightInCurrentPage = this.instance._heightWithinCurrentPage(trueHeightInPx);
-    const isCurrentlyInMargin = heightInCurrentPage < this.constants.marginHeightTopConstant * this.instance._getCurrentImageHeight()
-      || heightInCurrentPage > (1 - this.constants.marginHeightBottomConstant) * this.instance._getCurrentImageHeight();
+    let scrollIncrement;
 
-    // scroll 2x speed if in margin
-    const scrollIncrement = this.instance._scrollRateInPercentageOfPagePerIntervalForPage(pageNum) * this.instance._getCurrentImageHeight()
-      * (isCurrentlyInMargin ? this.constants.marginScrollMultiplier : 1);
-    //console.log("scrollIncrement", scrollIncrement)
+    const topMarginInPx = this.constants.marginHeightTopConstant * this.instance._getCurrentImageHeight();
+    const bottomMarginInPx = this.constants.marginHeightBottomConstant * this.instance._getCurrentImageHeight();
+    if(heightInCurrentPage < topMarginInPx) {
+      //scroll to bottom of top margin if in top margin
+      scrollIncrement = topMarginInPx - heightInCurrentPage;
+      console.log("in top margin", topMarginInPx, heightInCurrentPage)
+    } else if(heightInCurrentPage > this.instance._getCurrentImageHeight() - bottomMarginInPx) {
+      //scroll to the bottom of the page if we are at the bottom
+      scrollIncrement = this.instance._getCurrentImageHeight() - heightInCurrentPage;
+      console.log("in bottom margin")
+    } else {
+      scrollIncrement = this.instance._fractionOfPageToScrollPerIntervalForPage(pageNum) * this.instance._getCurrentImageHeight();
+    }
+    console.log("scrollIncrement", scrollIncrement)
+
+     */
 
     const newScrollPosition = this.instance._currentHolderScrollPosition() + scrollIncrement;
 
@@ -197,7 +284,7 @@ ChantAutoScroll = {
 
     } else {
       //actually scroll
-      this.instance.holder.scrollTo(0, newScrollPosition);
+      this.instance.scrollTo(newScrollPosition);
     }
   },
 

@@ -252,6 +252,12 @@
 			startPageNum: startPageNum,
 			scrollData: chantInfo.pageScrollData,
 		})
+
+		//scroll down to the point where it'd match where their eye is at
+		//TODO: broken shit
+		//ChantAutoScroll.scrollToStartOffset();
+		//ChantAutoScroll.startAutoScrolling();
+
 		ChantAutoScroll.startAutoScrollingFromStart();
     }
 
@@ -316,9 +322,10 @@
 	  <div id="id02" class="w3-modal">
 	    <div class="w3-modal-content">
 	      <div class="w3-container">
-		  	<span id="stop-scrolling-button2" style="display:none" onclick="ChantAutoScroll.userHitPause()" class="w3-button w3-display-topright pause-button">(pause)</span>
+		    <span id="start-scrolling-button2" style="display:block" onclick="ChantAutoScroll.userHitStart()" class="w3-button w3-display-topright pause-button">(scroll)</span>
+		  	<span id="stop-scrolling-button2" style="display:none" onclick="ChantAutoScroll.userHitPause()" class="w3-button w3-display-topright pause-button">(stop)</span>
 			  &nbsp;&nbsp;
-	        <span onclick="document.getElementById('toc-2').scrollIntoView(true); document.getElementById('id02').style.display='none'; showAllPagesForBook(2)" class="close-button w3-button w3-display-topright">&times;</span>
+	        <span onclick="document.getElementById('toc-2').scrollIntoView(true); document.getElementById('id02').style.display='none'; showAllPagesForBook(2); ChantAutoScroll.closeClicked()" class="close-button w3-button w3-display-topright">&times;</span>
 	        <div class="main-content">	        
 	        	<div id="toc-2" class="toc">
 	        		<!-- filled in by loadTOC -->
@@ -339,9 +346,10 @@
 	  <div id="id01" class="w3-modal">
 	    <div class="w3-modal-content">
 	      <div class="w3-container">
+			  <span id="start-scrolling-button1" style="display:block" onclick="ChantAutoScroll.userHitStart()" class="w3-button w3-display-topright pause-button">(scroll)</span>
 			  <span id="stop-scrolling-button1" style="display:none" onclick="ChantAutoScroll.userHitPause()" class="w3-button w3-display-topright pause-button">(pause)</span>
 			  &nbsp;&nbsp;
-	        <span onclick="document.getElementById('toc-1').scrollIntoView(true); document.getElementById('id01').style.display='none'; showAllPagesForBook(1)" class="close-button w3-button w3-display-topright">&times;</span>
+	        <span onclick="document.getElementById('toc-1').scrollIntoView(true); document.getElementById('id01').style.display='none'; showAllPagesForBook(1); ChantAutoScroll.closeClicked()" class="close-button w3-button w3-display-topright">&times;</span>
 	        <div class="main-content">
 			    <div id="toc-1" class="toc">
 					<!-- filled in by loadTOC -->

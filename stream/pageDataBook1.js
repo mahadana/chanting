@@ -111,33 +111,33 @@ const pageDataBook1 = [
     "pageScrollData": [
       {
         "pageNum": 27,
-        "scrollRate": 0.3,
-        "trueEndHeight": 1
+        "pageTimeInSeconds": 132,
+        "trueEndHeight": 0.7
       },
       {
         "pageNum": 29,
-        "scrollRate": 0.3,
-        "trueEndHeight": 1
+        "pageTimeInSeconds":99,
+        "trueEndHeight": 0.6
       },
       {
         "pageNum": 31,
-        "scrollRate": 0.3,
-        "trueEndHeight": 1
+        "pageTimeInSeconds": 153,
+        "trueEndHeight": 0.9
       },
       {
         "pageNum": 33,
-        "scrollRate": 0.3,
-        "trueEndHeight": 1
+        "pageTimeInSeconds": 161,
+        "trueEndHeight": 0.9
       },
       {
         "pageNum": 35,
-        "scrollRate": 0.3,
+        "pageTimeInSeconds": 146,
         "trueEndHeight": 1
       },
       {
         "pageNum": 37,
-        "scrollRate": 0.3,
-        "trueEndHeight": 1
+        "pageTimeInSeconds":92,
+        "trueEndHeight": 0.7
       }
     ]
   },
