@@ -68,6 +68,7 @@ LIVESTREAM = {
         }
 
        */
+      //TODO: 2qkcselCLKM
       sunday: "OcFwgx9aiE0",
       monday: "UmQVozHuAzE",
       tuesday: null,

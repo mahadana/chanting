@@ -88,6 +88,19 @@ ChantAutoScroll = {
        * @private
        */
       _fractionOfPageToScrollPerIntervalForPage: function(pageNum) {
+/*
+//TODO: old weird code, not sure if needed
+        const proportionOfPageToScrollPerInterval = this._fractionOfFullPageToScrollPerInterval(pageNum);
+        // The visible page is the part of the page actually visible to user.
+        // Ex:
+        // If the element height is 50px, but the images are 100px, then the intervals per VISIBLE page will be 1/2 of the full page
+        const proportionOfVisiblePageToScrollPerInterval = proportionOfPageToScrollPerInterval * this._getCurrentImageHeight()  / holder.clientHeight;
+        return proportionOfVisiblePageToScrollPerInterval;
+      },
+
+      _fractionOfFullPageToScrollPerInterval: function(pageNum) {
+
+ */
         //this is the stopwatch time for start and stop of a particular page
         let timeToSpendOnPageInSeconds = this.scrollData[pageNum].pageTimeInSeconds || constants.defaultPageTimeInSeconds;
 
@@ -96,7 +109,10 @@ ChantAutoScroll = {
         // to get to the middle of the page by the time the 1st page should be complete.
         if( pageNum === 0) {
           //add an extra "half page" worth of intervals
-          const slowDownFactor = (holder.clientHeight * constants.presumedEyeHeightAsFractionOfPage / this._getCurrentImageHeight()) + 1;
+          //TODO: need to work on this to get first page rate correct
+          // the problem: it needs to account for the fact that eyeHeight% of the TEXT needs to slow scroll,
+          // and the remaining margin at bottom is what's left. So need to do a smarter calculation
+          const slowDownFactor = (holder.clientHeight * constants.presumedEyeHeightAsFractionOfPage / this._getCurrentImageHeight()) + 1.2; //extra 0.1 for top margin
           timeToSpendOnPageInSeconds *= slowDownFactor;
         }
 
@@ -110,22 +126,22 @@ ChantAutoScroll = {
         const proportionOfPageToScrollPerSecond = proportionOfTotalPageThatIsText / timeToSpendInTextPortionOfPageInSeconds;
 
         //textSpeedInProportionOfPagePerInterval = textSpeed * (intervalLengthInMs / 1000ms/s)
-        const proportionOfPageToScrollPerInterval = proportionOfPageToScrollPerSecond * constants.scrollingIntervalInMilliseconds / 1000;
+        return proportionOfPageToScrollPerSecond * constants.scrollingIntervalInMilliseconds / 1000;
 
-        // The visible page is the part of the page actually visible to user.
-        // Ex:
-        // If the element height is 50px, but the images are 100px, then the intervals per VISIBLE page will be 1/2 of the full page
-        const proportionOfVisiblePageToScrollPerInterval = proportionOfPageToScrollPerInterval * this._getCurrentImageHeight()  / holder.clientHeight;
-        return proportionOfVisiblePageToScrollPerInterval;
       },
+
       scrollTo: function (scrollToValue) {
+        //dumb code we have to write because the browser doesn't like fractional scroll positions.
+        // The increments are too small and it won't scroll. So we accumulate before scrolling
         const scrollByValue = scrollToValue - this._currentHolderScrollPosition();
         if(Math.abs(scrollByValue) < constants.scrollIncrementMinimumThresholdInPx) {
+          //console.log(["current = "+this._currentScrollIncrementValue, "scrollBy = "+scrollByValue].join("\n"))
           this._currentScrollIncrementValue += scrollByValue;
+
           if(Math.abs(this._currentScrollIncrementValue) >= constants.scrollIncrementMinimumThresholdInPx) {
             //console.log("scrolling aggregated increments:", scrollByValue,this._currentScrollIncrementValue)
             this.holder.scrollTo(0,this._currentHolderScrollPosition() + this._currentScrollIncrementValue)
-            this._currentScrollIncrementValue = scrollByValue - constants.scrollIncrementMinimumThresholdInPx;
+            this._currentScrollIncrementValue  -= constants.scrollIncrementMinimumThresholdInPx;
           }
         } else {
           this.holder.scrollTo(0, scrollToValue);
@@ -268,18 +284,23 @@ ChantAutoScroll = {
     const trueHeightInPx = this.instance._currentHolderScrollPosition() + this.instance._startHeightOffset();
     const pageNum = this.instance._currentPageNumber(trueHeightInPx);
     if(pageNum !== this._debugLastPageNum) {
+      const fractionOfPage = this.instance._fractionOfPageToScrollPerIntervalForPage(pageNum);
       console.log("changing page from x to y:",this._debugLastPageNum, pageNum);
-      console.log("_currentHolderScrollPosition: "+this.instance._currentHolderScrollPosition()+
-        ", image height: "+this.instance._getCurrentImageHeight()+
-        ", clientHeight: "+this.instance.holder.clientHeight+
-        ", heightWithinPage (trueHeight): "+this.instance._heightWithinCurrentPage(trueHeightInPx)+
-        ", trueHeight: "+trueHeightInPx+
-        ", originalHeight: "+this.instance.originalStartHeightInPx+
-        ", heightWithinPage (topHeight): "+this.instance._heightWithinCurrentPage(this.instance._currentHolderScrollPosition())
-      )
+      console.log(["_currentHolderScrollPosition: "+this.instance._currentHolderScrollPosition(),
+        "image height: "+this.instance._getCurrentImageHeight(),
+        "clientHeight: "+this.instance.holder.clientHeight,
+        "heightWithinPage (trueHeight): "+this.instance._heightWithinCurrentPage(trueHeightInPx),
+        "trueHeight: "+trueHeightInPx,
+        "originalHeight: "+this.instance.originalStartHeightInPx,
+        "heightWithinPage (topHeight): "+this.instance._heightWithinCurrentPage(this.instance._currentHolderScrollPosition()),
+        "fractionOfPage "+fractionOfPage,
+        //"fractionOfFullPage: "+this.instance._fractionOfFullPageToScrollPerInterval(pageNum),
+        "num intervals required for this page to pass: "+1 / fractionOfPage,
+        "computed total page time: "+ (this.constants.scrollingIntervalInMilliseconds / 1000 / fractionOfPage)
+      ].join(",\n"))
       this._debugLastPageNum = pageNum;
     }
-    //console.log("Scrolling, scrollPos = "+this.instance._currentHolderScrollPosition()+", trueheight = "+trueHeightInPx+" pageNum = "+pageNum);
+
 
     //make sure this page exists. If not, it means we have scrolled off the edge
     if(!this.instance._doesPageExistInScrollData(pageNum)) {
@@ -333,6 +354,15 @@ ChantAutoScroll = {
      */
 
     const newScrollPosition = this.instance._currentHolderScrollPosition() + scrollIncrement;
+
+    /*
+    console.log(["Scrolling",
+      "scrollPos = "+this.instance._currentHolderScrollPosition(),
+      "trueheight = "+trueHeightInPx,
+      "pageNum = "+pageNum,
+      "increment = "+scrollIncrement,
+      "newScrollPosition = "+newScrollPosition,
+    ].join("\n"));*/
 
     //NOTE: I think either this or the check up top might be unnecessary
     if(newScrollPosition > this.instance.holder.scrollHeight - this.instance.holder.clientHeight) {
@@ -389,9 +419,7 @@ ChantAutoScroll.controls = (function (thisInstance) {
 
     userHitStart: function() {
       //if before start, zoom to start
-      //TODO:
       if(thisInstance.instance._currentHolderScrollPosition() < thisInstance.instance.originalStartHeightInPx) {
-        //blah blah
         thisInstance.instance.scrollTo(thisInstance.instance.originalStartHeightInPx);
       }
       //toggle buttons
