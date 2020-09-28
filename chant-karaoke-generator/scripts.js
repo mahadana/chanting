@@ -128,26 +128,37 @@ function recombineWordsAndTokensIntoSpanWrappedHTMLWithCallbackInDiv(words, spli
 //returns [words, splitTokens]
 // basically think of it as a zipper, starting with words[0], and then alternating to splitToken[0], words[1], etc
 function getWordsAndSplitTokens(text) {
-		//load chant text, after wrapping in spans
-	const wordsBySpace = text.split(" ")
-	//handle line breaks
+
+	const isWhiteSpace = function(character) {
+		return character === " " || character === "\n";
+	}
+
+	let positionInString = 0;
 	const words = [];
 	const splitTokens = [];
-	//get the things we want (regex on word boundary)
-	//wrap in spans / create list
-	//rebuild html
+	while (positionInString < text.length) {
+		let currentWord = "";
+		let currentWhiteSpace = "";
 
-	for(let spaceWord of wordsBySpace) {
-		const splitByLine = spaceWord.split("\n");
-		for(let i = 1; i < splitByLine.length; i++) {
-			splitTokens.push("\n")
+		//capture words
+		while(positionInString < text.length && !isWhiteSpace(text.charAt(positionInString))) {
+			currentWord += text.charAt(positionInString);
+			positionInString++;
 		}
-		words.push(splitByLine);
-		
-		splitTokens.push(" ");
+
+		//capture white space
+		while(positionInString < text.length && isWhiteSpace(text.charAt(positionInString))) {
+			currentWhiteSpace += text.charAt(positionInString);
+			positionInString++;
+		}
+
+		words.push(currentWord);
+		splitTokens.push(currentWhiteSpace);
 	}
-	if(splitTokens.length > 0) splitTokens.pop() // pop off the extra space
-	return [words.flat(), splitTokens]
+
+	if(splitTokens.length > 0 && splitTokens[splitTokens.length - 1] === "") splitTokens.pop() // pop off the extra space at the end
+
+	return [words, splitTokens]
 }
 
 
