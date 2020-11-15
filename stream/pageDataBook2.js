@@ -63,37 +63,37 @@ const pageDataBook2 = [
     "pageScrollData": [
       {
         "pageNum": 12,
-        "trueEndHeight": 1,
+        "trueEndHeight": 0.85,
         "charactersPerSecond": 6.5,
         "charactersOnPage": 1027
       },
       {
         "pageNum": 14,
-        "trueEndHeight": 1,
+        "trueEndHeight": 0.95,
         "charactersPerSecond": 6.5,
         "charactersOnPage": 1230
       },
       {
         "pageNum": 16,
-        "trueEndHeight": 1,
+        "trueEndHeight": 0.9,
         "charactersPerSecond": 6.5,
         "charactersOnPage": 1290
       },
       {
         "pageNum": 18,
-        "trueEndHeight": 1,
+        "trueEndHeight": 0.9,
         "charactersPerSecond": 6.5,
         "charactersOnPage": 1261
       },
       {
         "pageNum": 20,
-        "trueEndHeight": 1,
+        "trueEndHeight": 0.9,
         "charactersPerSecond": 6.5,
         "charactersOnPage": 1058
       },
       {
         "pageNum": 22,
-        "trueEndHeight": 1,
+        "trueEndHeight": 0.3,
         "charactersPerSecond": 6.5,
         "charactersOnPage": 442
       }
@@ -112,31 +112,31 @@ const pageDataBook2 = [
     "pageScrollData": [
       {
         "pageNum": 23,
-        "trueEndHeight": 1,
+        "trueEndHeight": 0.85,
         "charactersPerSecond": 12,
         "charactersOnPage": 1339
       },
       {
         "pageNum": 25,
-        "trueEndHeight": 1,
+        "trueEndHeight": 0.95, //lazy
         "charactersPerSecond": 12,
         "charactersOnPage": 1519
       },
       {
         "pageNum": 27,
-        "trueEndHeight": 1,
+        "trueEndHeight": 0.95, //lazy
         "charactersPerSecond": 12,
         "charactersOnPage": 991
       },
       {
         "pageNum": 29,
-        "trueEndHeight": 1,
+        "trueEndHeight": 0.85,
         "charactersPerSecond": 12,
         "charactersOnPage": 1319
       },
       {
         "pageNum": 31,
-        "trueEndHeight": 1,
+        "trueEndHeight": 0.55,
         "charactersPerSecond": 12,
         "charactersOnPage": 1051
       }
@@ -202,7 +202,7 @@ const pageDataBook2 = [
       },
       {
         "pageNum": 35,
-        "trueEndHeight": 1,
+        "trueEndHeight": 0.9,
         "charactersPerSecond": 12,
         "charactersOnPage": 1722
       },
@@ -225,7 +225,7 @@ const pageDataBook2 = [
     "pageScrollData": [
       {
         "pageNum": 34,
-        "trueEndHeight": 1,
+        "trueEndHeight": 0.9,
         "charactersPerSecond": 6.5,
         "charactersOnPage": 1177
       },
@@ -273,7 +273,7 @@ const pageDataBook2 = [
     "pageScrollData": [
       {
         "pageNum": 41,
-        "trueEndHeight": 1,
+        "trueEndHeight": 0.7,
         "charactersPerSecond": 6.5,
         "charactersOnPage": 533
       },
@@ -417,25 +417,25 @@ const pageDataBook2 = [
     "pageScrollData": [
       {
         "pageNum": 63,
-        "trueEndHeight": 1,
+        "trueEndHeight": 0.85,
         "charactersPerSecond": 12,
         "charactersOnPage": 1077
       },
       {
         "pageNum": 65,
-        "trueEndHeight": 1,
+        "trueEndHeight": 0.9,
         "charactersPerSecond": 12,
         "charactersOnPage": 1186
       },
       {
         "pageNum": 67,
-        "trueEndHeight": 1,
+        "trueEndHeight": 0.95,
         "charactersPerSecond": 12,
         "charactersOnPage": 1112
       },
       {
         "pageNum": 69,
-        "trueEndHeight": 1,
+        "trueEndHeight": 0.85,
         "charactersPerSecond": 12,
         "charactersOnPage": 1067
       }
@@ -453,25 +453,25 @@ const pageDataBook2 = [
     "pageScrollData": [
       {
         "pageNum": 64,
-        "trueEndHeight": 1,
+        "trueEndHeight": 0.85,
         "charactersPerSecond": 6.5,
         "charactersOnPage": 808
       },
       {
         "pageNum": 66,
-        "trueEndHeight": 1,
+        "trueEndHeight": 0.9,
         "charactersPerSecond": 6.5,
         "charactersOnPage": 863
       },
       {
         "pageNum": 68,
-        "trueEndHeight": 1,
+        "trueEndHeight": 0.95,
         "charactersPerSecond": 6.5,
         "charactersOnPage": 1015
       },
       {
         "pageNum": 70,
-        "trueEndHeight": 1,
+        "trueEndHeight": 0.85,
         "charactersPerSecond": 6.5,
         "charactersOnPage": 805
       }
