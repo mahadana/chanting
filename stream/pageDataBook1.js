@@ -1238,26 +1238,4 @@ const pageDataBook1 = [
   }
 ]
 
-/*
-//TODO: add charactersPerSecond array for all data
-//TODO: add charactersOnPage for all data
-const charsOnPage = [0,0,36,1025,587,804,803,647,905,556,56,849,683,684,570,510,659,326,802,957,632,622,555,958,607,451,57,599,730,456,547,866,1044,912,1071,857,1073,851,993,37,66,805,1113,849,459,632,789,556,707,602,873,914,1143,336,403,763,908,460,817,579,602,542,1287,563,781,444,902,1098,972,594,516,581,581,583,610,533,377,413,747,477,761,766,786,570,776,303,776,507,553,454,592,397,707,414,816,690,1011,1065,959,881,405,584,581,726,968,888,716,888,691,437,534,547,423,441,398,670,507,453,463,788,842,759,1011,483,585,565,812,817,566,750,516,38,57,857,786,695,843,877,695,608,697,847,877,705,794,563,51,1072,1106,1482,1600,1616,1463,38,343]
-pageDataBook1.forEach(obj => {
 
-  const hasPali = obj.name.includes("Pali")
-  const hasEnglish = obj.name.includes("English")
-  let charactersPerSecond = 9; //average of pali + english combo chants. For some reason these are faster
-  if(hasPali) {
-    charactersPerSecond = 7; //pali is a bit slower
-  } else if(hasEnglish) {
-    charactersPerSecond = 8.2;
-  }
-  obj.pageScrollData.forEach(scrollDataForPage => {
-    delete scrollDataForPage.scrollRate;
-    if(!scrollDataForPage.pageTimeInSeconds) {
-      scrollDataForPage.charactersPerSecond = charactersPerSecond;
-    }
-    scrollDataForPage.charactersOnPage = charsOnPage[scrollDataForPage.pageNum];
-  })
-})
-*/

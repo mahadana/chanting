@@ -529,20 +529,3 @@ const pageDataBook2 = [
   }
 ]
 
-/*
-const charsOnPage = [0,181,40,998,588,850,380,901,515,43,62,1182,1027,1404,1230,1481,1290,1360,1261,1343,1058,547,442,1339,1064,1519,1133,991,753,1319,1110,1051,781,1413,1177,1722,1486,1737,1379,41,54,533,478,724,380,615,376,522,465,639,716,618,577,590,618,750,732,682,739,925,818,544,330,1077,808,1186,863,1112,1015,1067,805,41,61,671,549,701,928,1154,333,41,54,1074,1108,1484,1602,1618,1465,41,346,1243]
-pageDataBook2.forEach(obj => {
-
-
-  const isEnglish = obj.name.toLocaleLowerCase().includes("the")
-  const charactersPerSecond = isEnglish ? 12 : 6.5;
-
-  obj.pageScrollData.forEach(scrollDataForPage => {
-    delete scrollDataForPage.scrollRate;
-    if(!scrollDataForPage.pageTimeInSeconds) {
-      scrollDataForPage.charactersPerSecond = charactersPerSecond;
-    }
-    scrollDataForPage.charactersOnPage = charsOnPage[scrollDataForPage.pageNum];
-  })
-})
- */

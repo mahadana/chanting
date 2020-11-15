@@ -25,8 +25,13 @@ ChantAutoScroll = {
       _getCurrentImageHeight: function() {
         return this.firstImageElement.scrollHeight;
       },
+
+      _heightFromFirstImageTop: function(scrollHeight) {
+        return (scrollHeight - this.originalStartHeightInPx - this._startHeightOffset());
+      },
+
       _currentPageNumber: function (scrollHeight) {
-        return Math.floor((scrollHeight - this.originalStartHeightInPx) / this._getCurrentImageHeight());
+        return Math.floor(this._heightFromFirstImageTop(scrollHeight) / this._getCurrentImageHeight());
       },
 
       _startHeightOffset: function() {
@@ -38,7 +43,7 @@ ChantAutoScroll = {
       },
 
       _heightWithinCurrentPage: function (scrollHeight) {
-        return (scrollHeight - this.originalStartHeightInPx) % this._getCurrentImageHeight();
+        return this._heightFromFirstImageTop(scrollHeight) % this._getCurrentImageHeight();
       },
 
       _currentHolderScrollPosition: function() {
@@ -91,18 +96,6 @@ ChantAutoScroll = {
         // In this case, I've filled in the data with a default scroll rate, based on data
         let timeToSpendOnPageInSeconds = scrollDataForPage.pageTimeInSeconds || scrollDataForPage.charactersOnPage / scrollDataForPage.charactersPerSecond;
 
-        // WARNING: special hacky fix for the first page
-        // If it's the first page, we assume that we are going from the start, and want to give the user's eye enough time
-        // to get to the middle of the page by the time the 1st page should be complete.
-        if( pageNum === 0) {
-          //add an extra "half page" worth of intervals
-          //TODO: need to work on this to get first page rate correct
-          // the problem: it needs to account for the fact that eyeHeight% of the TEXT needs to slow scroll,
-          // and the remaining margin at bottom is what's left. So need to do a smarter calculation
-          // Either that, or we need to bring back the delay before scroll start (and all the UX problems that caused)
-          const slowDownFactor = (holder.clientHeight * constants.presumedEyeHeightAsFractionOfPage / (this._getCurrentImageHeight() * scrollDataForPage.trueEndHeight )) + 1.2;
-          timeToSpendOnPageInSeconds *= slowDownFactor;
-        }
 
         const proportionOfTotalPageThatIsText = this.proportionOfPageThatIsText(pageNum);
 
@@ -229,23 +222,7 @@ ChantAutoScroll = {
     // we assume that the user is starting with their eye in the middle of the page. Scroll from there.
     const trueHeightInPx = this.instance._currentHolderScrollPosition() + this.instance._startHeightOffset();
     const pageNum = this.instance._currentPageNumber(trueHeightInPx);
-    if(pageNum !== this._debugLastPageNum) {
-      const fractionOfPage = this.instance._fractionOfPageToScrollPerIntervalForPage(pageNum);
-      console.log("changing page from x to y:",this._debugLastPageNum, pageNum);
-      console.log(["_currentHolderScrollPosition: "+this.instance._currentHolderScrollPosition(),
-        "image height: "+this.instance._getCurrentImageHeight(),
-        "clientHeight: "+this.instance.holder.clientHeight,
-        "heightWithinPage (trueHeight): "+this.instance._heightWithinCurrentPage(trueHeightInPx),
-        "trueHeight: "+trueHeightInPx,
-        "originalHeight: "+this.instance.originalStartHeightInPx,
-        "heightWithinPage (topHeight): "+this.instance._heightWithinCurrentPage(this.instance._currentHolderScrollPosition()),
-        "fractionOfPageToScrollPerInterv (when in text) "+fractionOfPage,
-        //"fractionOfFullPage: "+this.instance._fractionOfFullPageToScrollPerInterval(pageNum),
-        "num intervals required for text to pass: "+ (this.instance.scrollData[pageNum].trueEndHeight || 1) / fractionOfPage,
-        "computed total text time: "+ ((this.instance.scrollData[pageNum].trueEndHeight || 1) * this.constants.scrollingIntervalInMilliseconds / 1000 / fractionOfPage)
-      ].join(",\n"))
-      this._debugLastPageNum = pageNum;
-    }
+
 
 
     //make sure this page exists. If not, it means we have scrolled off the edge
@@ -263,6 +240,24 @@ ChantAutoScroll = {
         return;
       }
 
+    }
+
+    if(pageNum !== this._debugLastPageNum) {
+      const fractionOfPage = this.instance._fractionOfPageToScrollPerIntervalForPage(pageNum);
+      console.log("changing page from x to y:",this._debugLastPageNum, pageNum);
+      console.log(["_currentHolderScrollPosition: "+this.instance._currentHolderScrollPosition(),
+        "image height: "+this.instance._getCurrentImageHeight(),
+        "clientHeight: "+this.instance.holder.clientHeight,
+        "heightWithinPage (trueHeight): "+this.instance._heightWithinCurrentPage(trueHeightInPx),
+        "trueHeight: "+trueHeightInPx,
+        "originalHeight: "+this.instance.originalStartHeightInPx,
+        "heightWithinPage (topHeight): "+this.instance._heightWithinCurrentPage(this.instance._currentHolderScrollPosition()),
+        "fractionOfPageToScrollPerInterv (when in text) "+fractionOfPage,
+        //"fractionOfFullPage: "+this.instance._fractionOfFullPageToScrollPerInterval(pageNum),
+        "num intervals required for text to pass: "+ (this.instance.scrollData[pageNum].trueEndHeight || 1) / fractionOfPage,
+        "computed total text time: "+ ((this.instance.scrollData[pageNum].trueEndHeight || 1) * this.constants.scrollingIntervalInMilliseconds / 1000 / fractionOfPage)
+      ].join(",\n"))
+      this._debugLastPageNum = pageNum;
     }
 
     let scrollIncrementAsProportionOfPage = this.instance._fractionOfPageToScrollPerIntervalForPage(pageNum);

@@ -235,15 +235,17 @@
     	const holder = document.getElementById('book'+bookNum+'images')
     	
     	//hideAll images for book (some may already be displayed if they previously had a chant open)
-    	for(const element of holder.childNodes) if(element.style) element.style.display = "none"
+    	for(const element of holder.childNodes) if(element.style && element.nodeName === "IMG") element.style.display = "none"
     	
     	
     	//unhide only the relevant pages
     	pages.forEach(pageNum => document.getElementById(bookNum+"-"+pageNum).style.display = "block")
 
-		//scroll the view to that ID
-		const startPageNum = pages[0];
-		document.getElementById(bookNum+"-"+startPageNum).scrollIntoView(true)
+		// scroll to the right spot
+		document.getElementById("spacer"+bookNum).style.height =
+				Math.round(holder.parentElement.clientHeight * ChantAutoScroll.constants.presumedEyeHeightAsFractionOfPage)+"px";
+		document.getElementById("spacer"+bookNum).scrollIntoView(true);
+
 
 		// AUTOSCROLL!!!
 		// When a user loads a chant, we start autoScrolling (with a delay) because we assume that
@@ -252,9 +254,11 @@
 		//  before they actually started chanting.
 		ChantAutoScroll.configure({
 			bookNum: bookNum,
-			startPageNum: startPageNum,
+			startPageNum: pages[0],
 			scrollData: chantInfo.pageScrollData,
 		})
+
+
 
 		//scroll down to the point where it'd match where their eye is at
 		//TODO: broken shit
@@ -341,6 +345,7 @@
 			    </div><!-- end TOC -->
 			    
 			    <div id="book2images" class="image-holder">
+					<div id="spacer2"></div>
 			    	<!-- onload, insert images here -->
 			    	<!-- <img id="2-1" class="chant-image" src="chanting-book-2/1.png"> -->
 			    </div>
@@ -365,6 +370,7 @@
 			    </div><!-- end TOC -->
 			    
 			    <div id="book1images" class="image-holder">
+					<div id="spacer1"></div>
 					<!--loaded by loadImages: <img id="1-1" class="chant-image" src="chanting-book-1/1.png">-->
 				
 			    </div><!-- end image holder -->
