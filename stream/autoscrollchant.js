@@ -86,7 +86,10 @@ ChantAutoScroll = {
       _fractionOfPageToScrollPerIntervalForPage: function(pageNum) {
 
         //this is the stopwatch time for start and stop of a particular page
-        let timeToSpendOnPageInSeconds = this.scrollData[pageNum].pageTimeInSeconds || constants.defaultPageTimeInSeconds;
+        const scrollDataForPage = this.scrollData[pageNum];
+        //if I didn't manage to find a recording to make accurate data, then pageTimeInSeconds will be null
+        // In this case, I've filled in the data with a default scroll rate, based on data
+        let timeToSpendOnPageInSeconds = scrollDataForPage.pageTimeInSeconds || scrollDataForPage.charactersOnPage / scrollDataForPage.charactersPerSecond;
 
         // WARNING: special hacky fix for the first page
         // If it's the first page, we assume that we are going from the start, and want to give the user's eye enough time
@@ -97,7 +100,7 @@ ChantAutoScroll = {
           // the problem: it needs to account for the fact that eyeHeight% of the TEXT needs to slow scroll,
           // and the remaining margin at bottom is what's left. So need to do a smarter calculation
           // Either that, or we need to bring back the delay before scroll start (and all the UX problems that caused)
-          const slowDownFactor = (holder.clientHeight * constants.presumedEyeHeightAsFractionOfPage / (this._getCurrentImageHeight() * this.scrollData[pageNum].trueEndHeight )) + 1.2;
+          const slowDownFactor = (holder.clientHeight * constants.presumedEyeHeightAsFractionOfPage / (this._getCurrentImageHeight() * scrollDataForPage.trueEndHeight )) + 1.2;
           timeToSpendOnPageInSeconds *= slowDownFactor;
         }
 
@@ -147,7 +150,6 @@ ChantAutoScroll = {
     marginHeightTopConstant: 0.045, //roughly measured using preview
     marginHeightBottomConstant: 0.045,
     marginScrollMultiplier: 20, // scroll this many times faster in the margin
-    defaultPageTimeInSeconds: 100, //very crude guess that each page takes ~100s to finish
   },
 
 
@@ -190,6 +192,7 @@ ChantAutoScroll = {
   _logStartOfAutoscroll: function() {
     const trueHeightInPx = this.instance._currentHolderScrollPosition() + this.instance._startHeightOffset();
     const pageNum = this.instance._currentPageNumber(trueHeightInPx);
+    console.log("scroll data", this.instance.scrollData)
     console.log("Scrolling, scrollPos = "+this.instance._currentHolderScrollPosition()+", trueheight = "+trueHeightInPx+" pageNum = "+pageNum);
     console.log("start")
   },

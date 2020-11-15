@@ -22,78 +22,93 @@ const pageDataBook1 = [
     "pageScrollData": [
       {
         "pageNum": 11,
-        "scrollRate": 0.3,
-        "trueEndHeight": 1
+        "pageTimeInSeconds": 119,
+        "trueEndHeight": 0.9,
+        "charactersOnPage": 849
       },
       {
         "pageNum": 12,
-        "scrollRate": 0.3,
-        "trueEndHeight": 1
+        "pageTimeInSeconds": 117,
+        "trueEndHeight": 1,
+        "charactersOnPage": 683
       },
       {
         "pageNum": 13,
-        "scrollRate": 0.3,
-        "trueEndHeight": 1
+        "pageTimeInSeconds": 82,
+        "trueEndHeight": 1,
+        "charactersOnPage": 684
       },
       {
         "pageNum": 14,
-        "scrollRate": 0.3,
-        "trueEndHeight": 1
+        "pageTimeInSeconds": 71,
+        "trueEndHeight": 0.55,
+        "charactersOnPage": 570
       },
       {
         "pageNum": 15,
-        "scrollRate": 0.3,
-        "trueEndHeight": 1
+        "pageTimeInSeconds": 63,
+        "trueEndHeight": 0.85,
+        "charactersOnPage": 510
       },
       {
         "pageNum": 16,
-        "scrollRate": 0.3,
-        "trueEndHeight": 1
+        "pageTimeInSeconds": 79,
+        "trueEndHeight": 0.9,
+        "charactersOnPage": 659
       },
       {
         "pageNum": 17,
-        "scrollRate": 0.3,
-        "trueEndHeight": 1
+        "pageTimeInSeconds": 48,
+        "trueEndHeight": 0.5,
+        "charactersOnPage": 326
       },
       {
         "pageNum": 18,
-        "scrollRate": 0.3,
-        "trueEndHeight": 1
+        "pageTimeInSeconds": 86,
+        "trueEndHeight": 0.95,
+        "charactersOnPage": 802
       },
       {
         "pageNum": 19,
-        "scrollRate": 0.3,
-        "trueEndHeight": 1
+        "pageTimeInSeconds": 119,
+        "trueEndHeight": 0.95,
+        "charactersOnPage": 957
       },
       {
         "pageNum": 20,
-        "scrollRate": 0.3,
-        "trueEndHeight": 1
+        "pageTimeInSeconds": 75,
+        "trueEndHeight": 1,
+        "charactersOnPage": 632
       },
       {
         "pageNum": 21,
-        "scrollRate": 0.3,
-        "trueEndHeight": 1
+        "pageTimeInSeconds": 75,
+        "trueEndHeight": 0.95,
+        "charactersOnPage": 622
       },
       {
         "pageNum": 22,
-        "scrollRate": 0.3,
-        "trueEndHeight": 1
+        "pageTimeInSeconds": 66,
+        "trueEndHeight": 1,
+        "charactersOnPage": 555
       },
       {
         "pageNum": 23,
-        "scrollRate": 0.3,
-        "trueEndHeight": 1
+        "pageTimeInSeconds": 159,
+        "trueEndHeight": 0.33,
+        "charactersOnPage": 958
       },
       {
         "pageNum": 24,
-        "scrollRate": 0.3,
-        "trueEndHeight": 1
+        "pageTimeInSeconds": 57,
+        "trueEndHeight": 0.6,
+        "charactersOnPage": 607
       },
       {
         "pageNum": 25,
-        "scrollRate": 0.3,
-        "trueEndHeight": 1
+        "pageTimeInSeconds": 60,
+        "trueEndHeight": 0.7,
+        "charactersOnPage": 451
       }
     ]
   },
@@ -112,32 +127,38 @@ const pageDataBook1 = [
       {
         "pageNum": 27,
         "pageTimeInSeconds": 132,
-        "trueEndHeight": 0.6
+        "trueEndHeight": 0.6,
+        "charactersOnPage": 599
       },
       {
         "pageNum": 29,
-        "pageTimeInSeconds":99,
-        "trueEndHeight": 0.5
+        "pageTimeInSeconds": 99,
+        "trueEndHeight": 0.5,
+        "charactersOnPage": 456
       },
       {
         "pageNum": 31,
         "pageTimeInSeconds": 153,
-        "trueEndHeight": 0.8
+        "trueEndHeight": 0.8,
+        "charactersOnPage": 866
       },
       {
         "pageNum": 33,
         "pageTimeInSeconds": 161,
-        "trueEndHeight": 0.8
+        "trueEndHeight": 0.8,
+        "charactersOnPage": 912
       },
       {
         "pageNum": 35,
         "pageTimeInSeconds": 146,
-        "trueEndHeight": 0.9
+        "trueEndHeight": 0.95,
+        "charactersOnPage": 857
       },
       {
         "pageNum": 37,
-        "pageTimeInSeconds":92,
-        "trueEndHeight": 0.6
+        "pageTimeInSeconds": 92,
+        "trueEndHeight": 0.6,
+        "charactersOnPage": 851
       }
     ]
   },
@@ -155,33 +176,39 @@ const pageDataBook1 = [
     "pageScrollData": [
       {
         "pageNum": 28,
-        "scrollRate": 0.3,
-        "trueEndHeight": 1
+        "pageTimeInSeconds": 92,
+        "trueEndHeight": 0.6,
+        "charactersOnPage": 730
       },
       {
         "pageNum": 30,
-        "scrollRate": 0.3,
-        "trueEndHeight": 1
+        "pageTimeInSeconds": 71,
+        "trueEndHeight": 0.5,
+        "charactersOnPage": 547
       },
       {
         "pageNum": 32,
-        "scrollRate": 0.3,
-        "trueEndHeight": 1
+        "pageTimeInSeconds": 122,
+        "trueEndHeight": 0.8,
+        "charactersOnPage": 1044
       },
       {
         "pageNum": 34,
-        "scrollRate": 0.3,
-        "trueEndHeight": 1
+        "pageTimeInSeconds": 130,
+        "trueEndHeight": 0.8,
+        "charactersOnPage": 1071
       },
       {
         "pageNum": 36,
-        "scrollRate": 0.3,
-        "trueEndHeight": 1
+        "pageTimeInSeconds": 113,
+        "trueEndHeight": 0.95,
+        "charactersOnPage": 1073
       },
       {
         "pageNum": 38,
-        "scrollRate": 0.3,
-        "trueEndHeight": 1
+        "pageTimeInSeconds": 71,
+        "trueEndHeight": 0.6,
+        "charactersOnPage": 993
       }
     ]
   },
@@ -194,8 +221,9 @@ const pageDataBook1 = [
     "pageScrollData": [
       {
         "pageNum": 41,
-        "scrollRate": 0.3,
-        "trueEndHeight": 1
+        "trueEndHeight": 1,
+        "charactersPerSecond": 7,
+        "charactersOnPage": 805
       }
     ]
   },
@@ -208,8 +236,9 @@ const pageDataBook1 = [
     "pageScrollData": [
       {
         "pageNum": 42,
-        "scrollRate": 0.3,
-        "trueEndHeight": 1
+        "pageTimeInSeconds": 137,
+        "trueEndHeight": 1,
+        "charactersOnPage": 1113
       }
     ]
   },
@@ -223,13 +252,15 @@ const pageDataBook1 = [
     "pageScrollData": [
       {
         "pageNum": 43,
-        "scrollRate": 0.3,
-        "trueEndHeight": 1
+        "trueEndHeight": 1,
+        "charactersPerSecond": 9,
+        "charactersOnPage": 849
       },
       {
         "pageNum": 44,
-        "scrollRate": 0.3,
-        "trueEndHeight": 1
+        "trueEndHeight": 1,
+        "charactersPerSecond": 9,
+        "charactersOnPage": 459
       }
     ]
   },
@@ -243,13 +274,15 @@ const pageDataBook1 = [
     "pageScrollData": [
       {
         "pageNum": 45,
-        "scrollRate": 0.3,
-        "trueEndHeight": 1
+        "trueEndHeight": 1,
+        "charactersPerSecond": 7,
+        "charactersOnPage": 632
       },
       {
         "pageNum": 47,
-        "scrollRate": 0.3,
-        "trueEndHeight": 1
+        "trueEndHeight": 1,
+        "charactersPerSecond": 7,
+        "charactersOnPage": 556
       }
     ]
   },
@@ -263,13 +296,15 @@ const pageDataBook1 = [
     "pageScrollData": [
       {
         "pageNum": 46,
-        "scrollRate": 0.3,
-        "trueEndHeight": 1
+        "trueEndHeight": 1,
+        "charactersPerSecond": 8.2,
+        "charactersOnPage": 789
       },
       {
         "pageNum": 48,
-        "scrollRate": 0.3,
-        "trueEndHeight": 1
+        "trueEndHeight": 1,
+        "charactersPerSecond": 8.2,
+        "charactersOnPage": 707
       }
     ]
   },
@@ -282,8 +317,9 @@ const pageDataBook1 = [
     "pageScrollData": [
       {
         "pageNum": 49,
-        "scrollRate": 0.3,
-        "trueEndHeight": 1
+        "pageTimeInSeconds": 81,
+        "trueEndHeight": 1,
+        "charactersOnPage": 602
       }
     ]
   },
@@ -296,8 +332,9 @@ const pageDataBook1 = [
     "pageScrollData": [
       {
         "pageNum": 50,
-        "scrollRate": 0.3,
-        "trueEndHeight": 1
+        "trueEndHeight": 1,
+        "charactersPerSecond": 8.2,
+        "charactersOnPage": 873
       }
     ]
   },
@@ -311,13 +348,15 @@ const pageDataBook1 = [
     "pageScrollData": [
       {
         "pageNum": 51,
-        "scrollRate": 0.3,
-        "trueEndHeight": 1
+        "trueEndHeight": 1,
+        "charactersPerSecond": 7,
+        "charactersOnPage": 914
       },
       {
         "pageNum": 53,
-        "scrollRate": 0.3,
-        "trueEndHeight": 1
+        "trueEndHeight": 1,
+        "charactersPerSecond": 7,
+        "charactersOnPage": 336
       }
     ]
   },
@@ -331,13 +370,15 @@ const pageDataBook1 = [
     "pageScrollData": [
       {
         "pageNum": 52,
-        "scrollRate": 0.3,
-        "trueEndHeight": 1
+        "pageTimeInSeconds": 140,
+        "trueEndHeight": 1,
+        "charactersOnPage": 1143
       },
       {
         "pageNum": 54,
-        "scrollRate": 0.3,
-        "trueEndHeight": 1
+        "pageTimeInSeconds": 48,
+        "trueEndHeight": 0.3,
+        "charactersOnPage": 403
       }
     ]
   },
@@ -352,18 +393,21 @@ const pageDataBook1 = [
     "pageScrollData": [
       {
         "pageNum": 55,
-        "scrollRate": 0.3,
-        "trueEndHeight": 1
+        "pageTimeInSeconds": 77,
+        "trueEndHeight": 0.85,
+        "charactersOnPage": 763
       },
       {
         "pageNum": 56,
-        "scrollRate": 0.3,
-        "trueEndHeight": 1
+        "pageTimeInSeconds": 96,
+        "trueEndHeight": 0.9,
+        "charactersOnPage": 908
       },
       {
         "pageNum": 57,
-        "scrollRate": 0.3,
-        "trueEndHeight": 1
+        "pageTimeInSeconds": 45,
+        "trueEndHeight": 1,
+        "charactersOnPage": 460
       }
     ]
   },
@@ -376,8 +420,9 @@ const pageDataBook1 = [
     "pageScrollData": [
       {
         "pageNum": 58,
-        "scrollRate": 0.3,
-        "trueEndHeight": 1
+        "trueEndHeight": 1,
+        "charactersPerSecond": 9,
+        "charactersOnPage": 817
       }
     ]
   },
@@ -392,18 +437,21 @@ const pageDataBook1 = [
     "pageScrollData": [
       {
         "pageNum": 59,
-        "scrollRate": 0.3,
-        "trueEndHeight": 1
+        "pageTimeInSeconds": 68,
+        "trueEndHeight": 0.95,
+        "charactersOnPage": 579
       },
       {
         "pageNum": 60,
-        "scrollRate": 0.3,
-        "trueEndHeight": 1
+        "pageTimeInSeconds": 70,
+        "trueEndHeight": 0.95,
+        "charactersOnPage": 602
       },
       {
         "pageNum": 61,
-        "scrollRate": 0.3,
-        "trueEndHeight": 1
+        "pageTimeInSeconds": 60,
+        "trueEndHeight": 1,
+        "charactersOnPage": 542
       }
     ]
   },
@@ -417,13 +465,15 @@ const pageDataBook1 = [
     "pageScrollData": [
       {
         "pageNum": 62,
-        "scrollRate": 0.3,
-        "trueEndHeight": 1
+        "pageTimeInSeconds": 159,
+        "trueEndHeight": 1,
+        "charactersOnPage": 1287
       },
       {
         "pageNum": 63,
-        "scrollRate": 0.3,
-        "trueEndHeight": 1
+        "pageTimeInSeconds": 58,
+        "trueEndHeight": 0.5,
+        "charactersOnPage": 563
       }
     ]
   },
@@ -437,13 +487,15 @@ const pageDataBook1 = [
     "pageScrollData": [
       {
         "pageNum": 64,
-        "scrollRate": 0.3,
-        "trueEndHeight": 1
+        "trueEndHeight": 1,
+        "charactersPerSecond": 9,
+        "charactersOnPage": 781
       },
       {
         "pageNum": 65,
-        "scrollRate": 0.3,
-        "trueEndHeight": 1
+        "trueEndHeight": 1,
+        "charactersPerSecond": 9,
+        "charactersOnPage": 444
       }
     ]
   },
@@ -458,18 +510,21 @@ const pageDataBook1 = [
     "pageScrollData": [
       {
         "pageNum": 66,
-        "scrollRate": 0.3,
-        "trueEndHeight": 1
+        "pageTimeInSeconds": 96,
+        "trueEndHeight": 0.95,
+        "charactersOnPage": 902
       },
       {
         "pageNum": 67,
-        "scrollRate": 0.3,
-        "trueEndHeight": 1
+        "pageTimeInSeconds": 141,
+        "trueEndHeight": 0.95,
+        "charactersOnPage": 1098
       },
       {
         "pageNum": 68,
-        "scrollRate": 0.3,
-        "trueEndHeight": 1
+        "pageTimeInSeconds": 112,
+        "trueEndHeight": 1,
+        "charactersOnPage": 972
       }
     ]
   },
@@ -483,13 +538,15 @@ const pageDataBook1 = [
     "pageScrollData": [
       {
         "pageNum": 69,
-        "scrollRate": 0.3,
-        "trueEndHeight": 1
+        "trueEndHeight": 1,
+        "charactersPerSecond": 9,
+        "charactersOnPage": 594
       },
       {
         "pageNum": 70,
-        "scrollRate": 0.3,
-        "trueEndHeight": 1
+        "trueEndHeight": 1,
+        "charactersPerSecond": 9,
+        "charactersOnPage": 516
       }
     ]
   },
@@ -506,28 +563,33 @@ const pageDataBook1 = [
     "pageScrollData": [
       {
         "pageNum": 71,
-        "scrollRate": 0.3,
-        "trueEndHeight": 1
+        "trueEndHeight": 1,
+        "charactersPerSecond": 9,
+        "charactersOnPage": 581
       },
       {
         "pageNum": 72,
-        "scrollRate": 0.3,
-        "trueEndHeight": 1
+        "trueEndHeight": 1,
+        "charactersPerSecond": 9,
+        "charactersOnPage": 581
       },
       {
         "pageNum": 73,
-        "scrollRate": 0.3,
-        "trueEndHeight": 1
+        "trueEndHeight": 1,
+        "charactersPerSecond": 9,
+        "charactersOnPage": 583
       },
       {
         "pageNum": 74,
-        "scrollRate": 0.3,
-        "trueEndHeight": 1
+        "trueEndHeight": 1,
+        "charactersPerSecond": 9,
+        "charactersOnPage": 610
       },
       {
         "pageNum": 75,
-        "scrollRate": 0.3,
-        "trueEndHeight": 1
+        "trueEndHeight": 1,
+        "charactersPerSecond": 9,
+        "charactersOnPage": 533
       }
     ]
   },
@@ -542,18 +604,21 @@ const pageDataBook1 = [
     "pageScrollData": [
       {
         "pageNum": 75,
-        "scrollRate": 0.3,
-        "trueEndHeight": 1
+        "pageTimeInSeconds": 35,
+        "trueEndHeight": 0.4,
+        "charactersOnPage": 533
       },
       {
         "pageNum": 76,
-        "scrollRate": 0.3,
-        "trueEndHeight": 1
+        "pageTimeInSeconds": 45,
+        "trueEndHeight": 1,
+        "charactersOnPage": 377
       },
       {
         "pageNum": 77,
-        "scrollRate": 0.3,
-        "trueEndHeight": 1
+        "pageTimeInSeconds": 38,
+        "trueEndHeight": 0.9,
+        "charactersOnPage": 413
       }
     ]
   },
@@ -567,13 +632,15 @@ const pageDataBook1 = [
     "pageScrollData": [
       {
         "pageNum": 78,
-        "scrollRate": 0.3,
-        "trueEndHeight": 1
+        "trueEndHeight": 1,
+        "charactersPerSecond": 9,
+        "charactersOnPage": 747
       },
       {
         "pageNum": 79,
-        "scrollRate": 0.3,
-        "trueEndHeight": 1
+        "trueEndHeight": 1,
+        "charactersPerSecond": 9,
+        "charactersOnPage": 477
       }
     ]
   },
@@ -586,8 +653,9 @@ const pageDataBook1 = [
     "pageScrollData": [
       {
         "pageNum": 80,
-        "scrollRate": 0.3,
-        "trueEndHeight": 1
+        "trueEndHeight": 1,
+        "charactersPerSecond": 9,
+        "charactersOnPage": 761
       }
     ]
   },
@@ -601,13 +669,15 @@ const pageDataBook1 = [
     "pageScrollData": [
       {
         "pageNum": 81,
-        "scrollRate": 0.3,
-        "trueEndHeight": 1
+        "trueEndHeight": 1,
+        "charactersPerSecond": 9,
+        "charactersOnPage": 766
       },
       {
         "pageNum": 82,
-        "scrollRate": 0.3,
-        "trueEndHeight": 1
+        "trueEndHeight": 1,
+        "charactersPerSecond": 9,
+        "charactersOnPage": 786
       }
     ]
   },
@@ -620,8 +690,9 @@ const pageDataBook1 = [
     "pageScrollData": [
       {
         "pageNum": 83,
-        "scrollRate": 0.3,
-        "trueEndHeight": 1
+        "trueEndHeight": 1,
+        "charactersPerSecond": 9,
+        "charactersOnPage": 570
       }
     ]
   },
@@ -635,13 +706,15 @@ const pageDataBook1 = [
     "pageScrollData": [
       {
         "pageNum": 84,
-        "scrollRate": 0.3,
-        "trueEndHeight": 1
+        "trueEndHeight": 1,
+        "charactersPerSecond": 9,
+        "charactersOnPage": 776
       },
       {
         "pageNum": 85,
-        "scrollRate": 0.3,
-        "trueEndHeight": 1
+        "trueEndHeight": 1,
+        "charactersPerSecond": 9,
+        "charactersOnPage": 303
       }
     ]
   },
@@ -655,13 +728,15 @@ const pageDataBook1 = [
     "pageScrollData": [
       {
         "pageNum": 86,
-        "scrollRate": 0.3,
-        "trueEndHeight": 1
+        "trueEndHeight": 1,
+        "charactersPerSecond": 9,
+        "charactersOnPage": 776
       },
       {
         "pageNum": 87,
-        "scrollRate": 0.3,
-        "trueEndHeight": 1
+        "trueEndHeight": 1,
+        "charactersPerSecond": 9,
+        "charactersOnPage": 507
       }
     ]
   },
@@ -675,13 +750,15 @@ const pageDataBook1 = [
     "pageScrollData": [
       {
         "pageNum": 88,
-        "scrollRate": 0.3,
-        "trueEndHeight": 1
+        "trueEndHeight": 1,
+        "charactersPerSecond": 9,
+        "charactersOnPage": 553
       },
       {
         "pageNum": 89,
-        "scrollRate": 0.3,
-        "trueEndHeight": 1
+        "trueEndHeight": 1,
+        "charactersPerSecond": 9,
+        "charactersOnPage": 454
       }
     ]
   },
@@ -695,13 +772,15 @@ const pageDataBook1 = [
     "pageScrollData": [
       {
         "pageNum": 90,
-        "scrollRate": 0.3,
-        "trueEndHeight": 1
+        "trueEndHeight": 1,
+        "charactersPerSecond": 9,
+        "charactersOnPage": 592
       },
       {
         "pageNum": 91,
-        "scrollRate": 0.3,
-        "trueEndHeight": 1
+        "trueEndHeight": 1,
+        "charactersPerSecond": 9,
+        "charactersOnPage": 397
       }
     ]
   },
@@ -714,8 +793,9 @@ const pageDataBook1 = [
     "pageScrollData": [
       {
         "pageNum": 92,
-        "scrollRate": 0.3,
-        "trueEndHeight": 1
+        "trueEndHeight": 1,
+        "charactersPerSecond": 9,
+        "charactersOnPage": 707
       }
     ]
   },
@@ -728,8 +808,9 @@ const pageDataBook1 = [
     "pageScrollData": [
       {
         "pageNum": 93,
-        "scrollRate": 0.3,
-        "trueEndHeight": 1
+        "trueEndHeight": 1,
+        "charactersPerSecond": 9,
+        "charactersOnPage": 414
       }
     ]
   },
@@ -747,33 +828,39 @@ const pageDataBook1 = [
     "pageScrollData": [
       {
         "pageNum": 94,
-        "scrollRate": 0.3,
-        "trueEndHeight": 1
+        "pageTimeInSeconds": 84,
+        "trueEndHeight": 0.95,
+        "charactersOnPage": 816
       },
       {
         "pageNum": 95,
-        "scrollRate": 0.3,
-        "trueEndHeight": 1
+        "pageTimeInSeconds": 75,
+        "trueEndHeight": 1,
+        "charactersOnPage": 690
       },
       {
         "pageNum": 96,
-        "scrollRate": 0.3,
-        "trueEndHeight": 1
+        "pageTimeInSeconds": 106,
+        "trueEndHeight": 1,
+        "charactersOnPage": 1011
       },
       {
         "pageNum": 97,
-        "scrollRate": 0.3,
-        "trueEndHeight": 1
+        "pageTimeInSeconds": 101,
+        "trueEndHeight": 1,
+        "charactersOnPage": 1065
       },
       {
         "pageNum": 98,
-        "scrollRate": 0.3,
-        "trueEndHeight": 1
+        "pageTimeInSeconds": 92,
+        "trueEndHeight": 1,
+        "charactersOnPage": 959
       },
       {
         "pageNum": 99,
-        "scrollRate": 0.3,
-        "trueEndHeight": 1
+        "pageTimeInSeconds": 82,
+        "trueEndHeight": 1,
+        "charactersOnPage": 881
       }
     ]
   },
@@ -795,53 +882,63 @@ const pageDataBook1 = [
     "pageScrollData": [
       {
         "pageNum": 100,
-        "scrollRate": 0.3,
-        "trueEndHeight": 1
+        "pageTimeInSeconds": 44,
+        "trueEndHeight": 1,
+        "charactersOnPage": 405
       },
       {
         "pageNum": 101,
-        "scrollRate": 0.3,
-        "trueEndHeight": 1
+        "pageTimeInSeconds": 62,
+        "trueEndHeight": 1,
+        "charactersOnPage": 584
       },
       {
         "pageNum": 102,
-        "scrollRate": 0.3,
-        "trueEndHeight": 1
+        "pageTimeInSeconds": 63,
+        "trueEndHeight": 1,
+        "charactersOnPage": 581
       },
       {
         "pageNum": 103,
-        "scrollRate": 0.3,
-        "trueEndHeight": 1
+        "pageTimeInSeconds": 79,
+        "trueEndHeight": 1,
+        "charactersOnPage": 726
       },
       {
         "pageNum": 104,
-        "scrollRate": 0.3,
-        "trueEndHeight": 1
+        "pageTimeInSeconds": 115,
+        "trueEndHeight": 0.95,
+        "charactersOnPage": 968
       },
       {
         "pageNum": 105,
-        "scrollRate": 0.3,
-        "trueEndHeight": 1
+        "pageTimeInSeconds": 102,
+        "trueEndHeight": 0.95,
+        "charactersOnPage": 888
       },
       {
         "pageNum": 106,
-        "scrollRate": 0.3,
-        "trueEndHeight": 1
+        "pageTimeInSeconds": 75,
+        "trueEndHeight": 1,
+        "charactersOnPage": 716
       },
       {
         "pageNum": 107,
-        "scrollRate": 0.3,
-        "trueEndHeight": 1
+        "pageTimeInSeconds": 90,
+        "trueEndHeight": 0.95,
+        "charactersOnPage": 888
       },
       {
         "pageNum": 108,
-        "scrollRate": 0.3,
-        "trueEndHeight": 1
+        "pageTimeInSeconds": 77,
+        "trueEndHeight": 1,
+        "charactersOnPage": 691
       },
       {
         "pageNum": 109,
-        "scrollRate": 0.3,
-        "trueEndHeight": 1
+        "pageTimeInSeconds": 40,
+        "trueEndHeight": 0.4,
+        "charactersOnPage": 437
       }
     ]
   },
@@ -867,73 +964,87 @@ const pageDataBook1 = [
     "pageScrollData": [
       {
         "pageNum": 110,
-        "scrollRate": 0.3,
-        "trueEndHeight": 1
+        "trueEndHeight": 1,
+        "charactersPerSecond": 9,
+        "charactersOnPage": 534
       },
       {
         "pageNum": 111,
-        "scrollRate": 0.3,
-        "trueEndHeight": 1
+        "trueEndHeight": 1,
+        "charactersPerSecond": 9,
+        "charactersOnPage": 547
       },
       {
         "pageNum": 112,
-        "scrollRate": 0.3,
-        "trueEndHeight": 1
+        "trueEndHeight": 1,
+        "charactersPerSecond": 9,
+        "charactersOnPage": 423
       },
       {
         "pageNum": 113,
-        "scrollRate": 0.3,
-        "trueEndHeight": 1
+        "trueEndHeight": 1,
+        "charactersPerSecond": 9,
+        "charactersOnPage": 441
       },
       {
         "pageNum": 114,
-        "scrollRate": 0.3,
-        "trueEndHeight": 1
+        "trueEndHeight": 1,
+        "charactersPerSecond": 9,
+        "charactersOnPage": 398
       },
       {
         "pageNum": 115,
-        "scrollRate": 0.3,
-        "trueEndHeight": 1
+        "trueEndHeight": 1,
+        "charactersPerSecond": 9,
+        "charactersOnPage": 670
       },
       {
         "pageNum": 116,
-        "scrollRate": 0.3,
-        "trueEndHeight": 1
+        "trueEndHeight": 1,
+        "charactersPerSecond": 9,
+        "charactersOnPage": 507
       },
       {
         "pageNum": 117,
-        "scrollRate": 0.3,
-        "trueEndHeight": 1
+        "trueEndHeight": 1,
+        "charactersPerSecond": 9,
+        "charactersOnPage": 453
       },
       {
         "pageNum": 118,
-        "scrollRate": 0.3,
-        "trueEndHeight": 1
+        "trueEndHeight": 1,
+        "charactersPerSecond": 9,
+        "charactersOnPage": 463
       },
       {
         "pageNum": 119,
-        "scrollRate": 0.3,
-        "trueEndHeight": 1
+        "trueEndHeight": 1,
+        "charactersPerSecond": 9,
+        "charactersOnPage": 788
       },
       {
         "pageNum": 120,
-        "scrollRate": 0.3,
-        "trueEndHeight": 1
+        "trueEndHeight": 1,
+        "charactersPerSecond": 9,
+        "charactersOnPage": 842
       },
       {
         "pageNum": 121,
-        "scrollRate": 0.3,
-        "trueEndHeight": 1
+        "trueEndHeight": 1,
+        "charactersPerSecond": 9,
+        "charactersOnPage": 759
       },
       {
         "pageNum": 122,
-        "scrollRate": 0.3,
-        "trueEndHeight": 1
+        "trueEndHeight": 1,
+        "charactersPerSecond": 9,
+        "charactersOnPage": 1011
       },
       {
         "pageNum": 123,
-        "scrollRate": 0.3,
-        "trueEndHeight": 1
+        "trueEndHeight": 1,
+        "charactersPerSecond": 9,
+        "charactersOnPage": 483
       }
     ]
   },
@@ -950,28 +1061,33 @@ const pageDataBook1 = [
     "pageScrollData": [
       {
         "pageNum": 124,
-        "scrollRate": 0.3,
-        "trueEndHeight": 1
+        "trueEndHeight": 1,
+        "charactersPerSecond": 9,
+        "charactersOnPage": 585
       },
       {
         "pageNum": 125,
-        "scrollRate": 0.3,
-        "trueEndHeight": 1
+        "trueEndHeight": 1,
+        "charactersPerSecond": 9,
+        "charactersOnPage": 565
       },
       {
         "pageNum": 126,
-        "scrollRate": 0.3,
-        "trueEndHeight": 1
+        "trueEndHeight": 1,
+        "charactersPerSecond": 9,
+        "charactersOnPage": 812
       },
       {
         "pageNum": 127,
-        "scrollRate": 0.3,
-        "trueEndHeight": 1
+        "trueEndHeight": 1,
+        "charactersPerSecond": 9,
+        "charactersOnPage": 817
       },
       {
         "pageNum": 128,
-        "scrollRate": 0.3,
-        "trueEndHeight": 1
+        "trueEndHeight": 1,
+        "charactersPerSecond": 9,
+        "charactersOnPage": 566
       }
     ]
   },
@@ -985,13 +1101,15 @@ const pageDataBook1 = [
     "pageScrollData": [
       {
         "pageNum": 129,
-        "scrollRate": 0.3,
-        "trueEndHeight": 1
+        "trueEndHeight": 1,
+        "charactersPerSecond": 9,
+        "charactersOnPage": 750
       },
       {
         "pageNum": 130,
-        "scrollRate": 0.3,
-        "trueEndHeight": 1
+        "trueEndHeight": 1,
+        "charactersPerSecond": 9,
+        "charactersOnPage": 516
       }
     ]
   },
@@ -1004,8 +1122,9 @@ const pageDataBook1 = [
     "pageScrollData": [
       {
         "pageNum": 133,
-        "scrollRate": 0.3,
-        "trueEndHeight": 1
+        "trueEndHeight": 1,
+        "charactersPerSecond": 9,
+        "charactersOnPage": 857
       }
     ]
   },
@@ -1018,8 +1137,9 @@ const pageDataBook1 = [
     "pageScrollData": [
       {
         "pageNum": 134,
-        "scrollRate": 0.3,
-        "trueEndHeight": 1
+        "trueEndHeight": 1,
+        "charactersPerSecond": 9,
+        "charactersOnPage": 786
       }
     ]
   },
@@ -1036,28 +1156,33 @@ const pageDataBook1 = [
     "pageScrollData": [
       {
         "pageNum": 135,
-        "scrollRate": 0.3,
-        "trueEndHeight": 1
+        "trueEndHeight": 1,
+        "charactersPerSecond": 9,
+        "charactersOnPage": 695
       },
       {
         "pageNum": 136,
-        "scrollRate": 0.3,
-        "trueEndHeight": 1
+        "trueEndHeight": 1,
+        "charactersPerSecond": 9,
+        "charactersOnPage": 843
       },
       {
         "pageNum": 137,
-        "scrollRate": 0.3,
-        "trueEndHeight": 1
+        "trueEndHeight": 1,
+        "charactersPerSecond": 9,
+        "charactersOnPage": 877
       },
       {
         "pageNum": 138,
-        "scrollRate": 0.3,
-        "trueEndHeight": 1
+        "trueEndHeight": 1,
+        "charactersPerSecond": 9,
+        "charactersOnPage": 695
       },
       {
         "pageNum": 139,
-        "scrollRate": 0.3,
-        "trueEndHeight": 1
+        "trueEndHeight": 1,
+        "charactersPerSecond": 9,
+        "charactersOnPage": 608
       }
     ]
   },
@@ -1075,34 +1200,64 @@ const pageDataBook1 = [
     "pageScrollData": [
       {
         "pageNum": 140,
-        "scrollRate": 0.3,
-        "trueEndHeight": 1
+        "trueEndHeight": 1,
+        "charactersPerSecond": 9,
+        "charactersOnPage": 697
       },
       {
         "pageNum": 141,
-        "scrollRate": 0.3,
-        "trueEndHeight": 1
+        "trueEndHeight": 1,
+        "charactersPerSecond": 9,
+        "charactersOnPage": 847
       },
       {
         "pageNum": 142,
-        "scrollRate": 0.3,
-        "trueEndHeight": 1
+        "trueEndHeight": 1,
+        "charactersPerSecond": 9,
+        "charactersOnPage": 877
       },
       {
         "pageNum": 143,
-        "scrollRate": 0.3,
-        "trueEndHeight": 1
+        "trueEndHeight": 1,
+        "charactersPerSecond": 9,
+        "charactersOnPage": 705
       },
       {
         "pageNum": 144,
-        "scrollRate": 0.3,
-        "trueEndHeight": 1
+        "trueEndHeight": 1,
+        "charactersPerSecond": 9,
+        "charactersOnPage": 794
       },
       {
         "pageNum": 145,
-        "scrollRate": 0.3,
-        "trueEndHeight": 1
+        "trueEndHeight": 1,
+        "charactersPerSecond": 9,
+        "charactersOnPage": 563
       }
     ]
   }
 ]
+
+/*
+//TODO: add charactersPerSecond array for all data
+//TODO: add charactersOnPage for all data
+const charsOnPage = [0,0,36,1025,587,804,803,647,905,556,56,849,683,684,570,510,659,326,802,957,632,622,555,958,607,451,57,599,730,456,547,866,1044,912,1071,857,1073,851,993,37,66,805,1113,849,459,632,789,556,707,602,873,914,1143,336,403,763,908,460,817,579,602,542,1287,563,781,444,902,1098,972,594,516,581,581,583,610,533,377,413,747,477,761,766,786,570,776,303,776,507,553,454,592,397,707,414,816,690,1011,1065,959,881,405,584,581,726,968,888,716,888,691,437,534,547,423,441,398,670,507,453,463,788,842,759,1011,483,585,565,812,817,566,750,516,38,57,857,786,695,843,877,695,608,697,847,877,705,794,563,51,1072,1106,1482,1600,1616,1463,38,343]
+pageDataBook1.forEach(obj => {
+
+  const hasPali = obj.name.includes("Pali")
+  const hasEnglish = obj.name.includes("English")
+  let charactersPerSecond = 9; //average of pali + english combo chants. For some reason these are faster
+  if(hasPali) {
+    charactersPerSecond = 7; //pali is a bit slower
+  } else if(hasEnglish) {
+    charactersPerSecond = 8.2;
+  }
+  obj.pageScrollData.forEach(scrollDataForPage => {
+    delete scrollDataForPage.scrollRate;
+    if(!scrollDataForPage.pageTimeInSeconds) {
+      scrollDataForPage.charactersPerSecond = charactersPerSecond;
+    }
+    scrollDataForPage.charactersOnPage = charsOnPage[scrollDataForPage.pageNum];
+  })
+})
+*/
