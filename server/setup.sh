@@ -17,10 +17,6 @@ function rand {
 
 test -d "$BASE_DIR" || git clone "$GIT_URL" "$BASE_DIR"
 
-cd "$BASE_DIR"
-
-test -f .env || echo "DB_PASSWORD=$(rand)" > .env
-
 if ! test -f /etc/webhook.conf.secret; then
   touch /etc/webhook.conf.secret
   chmod 600 /etc/webhook.conf.secret
