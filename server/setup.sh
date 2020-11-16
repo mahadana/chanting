@@ -29,7 +29,7 @@ cp server/webhook.conf "/etc/webhook.conf.$PROJECT"
 perl -pi -e "s/SECRET/$(cat /etc/webhook.conf.secret)/" "/etc/webhook.conf.$PROJECT"
 
 echo "Add the contents of /etc/webhook.conf.$PROJECT to /etc/webhook.conf"
-echo "GitHub Webhook URL: https://$DOMAIN/hooks/$PROJECT-github-deploy"
+echo "GitHub Webhook URL: https://pujas.live/hooks/$PROJECT-github-deploy"
 echo "GitHub Webhook Secret: $(cat /etc/webhook.conf.secret)"
 
 "$BASE_DIR/server/github-deploy.sh"
