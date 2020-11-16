@@ -1,0 +1,228 @@
+<html>
+<head>
+
+    <link rel="stylesheet" href="styles.css">
+    <style>
+
+
+
+        #livestream-not-started {
+            font-size: 24pt;
+            color: white;
+            margin-top: 10%;
+            padding: 30px;
+        }
+        .counter-holder {
+            color: white;
+            float: right;
+            position: relative;
+            padding: 8px;
+        }
+
+        /* youtube mobile embed styles. Taken from some guy's site */
+        .embed-container {
+            position: relative;
+            padding-bottom: 56.25%;
+            height: 0;
+            overflow: hidden;
+            max-width: 100%;
+        }
+        .embed-container iframe, .embed-container object, .embed-container embed, .embed-container audio { position: absolute; top: 0; left: 0; width: 100%; height: 100%; }
+
+        #demo-audio img {
+            height: 80%;
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        #demo-buttons button.w3-black { color:gray!important }
+
+
+    </style>
+    <meta http-equiv="content-type" content="text/html;charset=utf-8"/>
+
+    <!-- Set the viewport to show the page at a scale of 1.0, and make it non-scalable -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0"/>
+
+    <!-- Make it fullscreen / hide the browser URL bar -->
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+
+
+    <!--
+        Give the status bar another colour
+        Valid values for "content" are: "default" (white), "black" and "black-translucent"
+        If set to "default" or "black", the content is displayed below the status bar. If set to
+        "black-translucent", the content is displayed under the bar.
+    -->
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+
+
+
+    <!--
+        Add a Home icon.
+        By default, Mobile Safari searches for a file named "apple-touch-icon.png" in the root directory of your website.
+        If it can't find any image there, you can specify it using the code below. Make sure the image has a dimension
+        of 114x114 and is a PNG file. The glossy finish and resizing for the different devices will be done automatically.
+
+        In case you don't want the gloss applied, use "apple-touch-icon-precomposed" instead of "apple-touch-icon".
+    -->
+    <link rel="apple-touch-icon" href="apple-touch-icon.png" /> <!-- apple-touch-icon.png -->
+
+    <!--
+        Add a splash screen / startup image.
+        Take note this file exactly needs to be 320x460 for iPhone or 1004x768 for iPad, and is a PNG file.
+        Also, this only works if "apple-mobile-web-app-capable" is set to "yes".
+    -->
+    <link rel="apple-touch-startup-image" href="images/startup.png" />
+
+    <!--
+        Prevent the user from elastic scrolling / rubber banding. Sadly, doesn't always work properly.
+        For a more solid solution, check out ScrollFix ( https://github.com/joelambert/ScrollFix )
+    -->
+
+    <script src="schedule.js"></script>
+    <script src="autoscrollchant.js"></script>
+    <script src="chantingBook.js"></script>
+    <script src="pageDataBook1.js"></script>
+    <script src="pageDataBook2.js"></script>
+    <script>
+
+      // ======== ON PAGE LOAD STUFF. SETUP =====================================
+
+      function loadVideo() {
+        const videoIframe = document.getElementById("real-video");
+        const secondsUntilStart = LIVESTREAM.secondsUntilStart()
+        if(secondsUntilStart > 0) {
+          //livestream hasn't started yet. Tell them to come back at the right time.
+          const startDate = new Date((new Date()).setHours(0,0,LIVESTREAM.info.startTimeInSeconds));
+          const description =
+            "Stream will start at "
+            +startDate.toLocaleString('en-US', { timeZone: 'America/Los_Angeles' }).substr(11, 10)
+            +" PT";
+          displayVideoInfoDivWithMessage(description);
+
+          // refresh once it's time to start!
+          setTimeout(function () {
+            location.reload();
+          }, (secondsUntilStart + 1)* 1000)
+        } else {
+          // it's already started
+
+          //set up the url, whether it's streaming or prerecorded
+          videoIframe.src = LIVESTREAM.generateUrl();
+
+          const videoInfo = LIVESTREAM.getTodaysVideoInfo();
+          if(videoInfo) {
+            //it's a prerecorded video
+
+            //seconds until start will be negative, I hope.
+            const timeUntilEnd = secondsUntilStart + videoInfo.durationInSeconds;
+            if(timeUntilEnd > 0) {
+              // if it's NOT over (ie, currently running)
+              alert("Don't forget to unmute for sound!");
+            }
+
+            //when it ends we can show an end message. That includes if it's already over
+            setTimeout(function () {
+              displayVideoInfoDivWithMessage("Session complete. Come back tomorrow!");
+            }, timeUntilEnd * 1000) //even if timeUntilEnd is negative, this is good!
+          }
+
+        }
+      }
+
+
+      // Refresh the page if it hasn't been refreshed since yesterday.
+      // This is a simple hack to make sure that if someone stays on the page for more than a day
+      //  that it won't keep showing yesterday's livestream.
+      const pageLoadTime = new Date();
+      window.onfocus = function() {
+        const now = new Date();
+        if(pageLoadTime.getDate() != now.getDate()) {
+          location.reload();
+        }
+      }
+
+
+      // ================== HELPER FUNCTIONS ETC =================================
+
+      function displayVideoInfoDivWithMessage(message) {
+        const videoIframe = document.getElementById("real-video");
+        videoIframe.style.display = "none";
+        const infoDiv = document.getElementById("livestream-not-started");
+        infoDiv.style.display = "block";
+        infoDiv.innerText= message;
+      }
+
+      function hideDemoStuff() {
+        document.getElementById('real-video').style.display='none';
+        document.getElementById('demo-buttons').style.display='none';
+      }
+
+      function loadChantStuff() {
+        //""
+        ChantingBook.load(document.getElementById('main'), [{
+          bookNum:1,
+          data: pageDataBook1,
+          openButtonId: "open-book-1",
+        },{
+          bookNum:2,
+          data: pageDataBook2,
+          openButtonId: "open-book-2",
+        }])
+      }
+
+    </script>
+
+    <title>Stream</title>
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+
+</head>
+
+<body id=body onload="loadChantStuff(); loadVideo();">
+
+
+
+<!-- youtube video holder -->
+
+<div class='embed-container'>
+    <div id="livestream-not-started" style="display: none"></div>
+    <iframe id="demo-video" style="display: none;" src='https://www.youtube.com/embed/zwuKRGndLN0?playsinline=1' frameborder='0'></iframe>
+    <iframe id="real-video" src='' frameborder='0' ></iframe>
+    <div id="demo-audio"  style="display: none;">
+        <img src="chant-demo.jpeg"><br>
+        <audio controls src="5-18-2020-puja-small.mp3">
+            Your browser does not support the
+            <code>audio</code> element.
+        </audio>
+    </div>
+</div>
+
+<div id="main" class="w3-container">
+
+    <!-- buttons -->
+
+    <button id="open-book-1" class="w3-button w3-black">Chanting Book 1</button>
+    <button id="open-book-2" class="w3-button w3-black">Chanting Book 2</button>
+    <div class="counter-holder">	Sangha online: <script type="text/javascript" src="//livecounter.theyosh.nl/3666.js"></script></div>
+    <div id="demo-buttons" style="margin-top: 50px; display:none;">
+        <button class="w3-button w3-black" onclick="document.getElementById('demo-video').style.display='block'; hideDemoStuff()">(video demo)</button><br>
+        <button class="w3-button w3-black" onclick="document.getElementById('demo-audio').style.display='block'; hideDemoStuff()">(audio demo)</button>
+    </div>
+
+    <!-- modals will get appended here -->
+
+
+</div>
+
+
+
+
+
+
+
+
+
+
+</body>
+</html>

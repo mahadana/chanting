@@ -1,0 +1,25 @@
+/* BASIC RESET -- from another project */
+ul,ol,li,h1,h2,h3,h4,h5,h6,pre,form,body,html,p,blockquote,fieldset,input{margin:0; padding:0;}
+
+/* HTML ELEMENTS -- from another project */
+body { background-color:black; font: 20px "Lucida Grande","Lucida Sans Unicode",Helvetica,Arial,Verdana,sans-serif; }
+h1 { padding:60px 0 0 40px; }
+p,form { padding:10px 40px; }
+a { color:#999; text-decoration:none; }
+a:hover { text-decoration:underline; }
+
+
+
+
+
+#id01, #id02 { padding-top: 50px; height: 95% }
+
+/* make close button larger and gray */
+.pause-button, .close-button { font-size: 20pt; color: rgb(186, 181, 181); }
+.pause-button { margin-right: 30px }
+
+/* scroll within the popup, max height at 100% so overflow will scroll. Padding for the X button */
+.main-content { overflow-y: scroll;  height: 100% }
+
+/* don't let the images get wider than popup. Auto scale height accordingly */
+.chant-image { width: 100%; }
