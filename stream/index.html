@@ -186,7 +186,18 @@
     	document.getElementById('demo-buttons').style.display='none';
     }
 
-
+    function loadChantStuff() {
+		//""
+		ChantingBook.load(document.getElementById('main'), [{
+			bookNum:1,
+			data: pageDataBook1,
+			openButtonId: "open-book-1",
+		},{
+			bookNum:2,
+			data: pageDataBook2,
+			openButtonId: "open-book-2",
+		}])
+	}
 
     </script>
 
@@ -195,7 +206,7 @@
 
 </head>
 
-<body id=body onload="ChantingBook.load(pageDataBook1, pageDataBook2); loadVideo();">
+<body id=body onload="loadChantStuff(); loadVideo();">
 	
 	
 	
@@ -214,70 +225,21 @@
     	</div>
 	</div>
 
-	<div class="w3-container">
+	<div id="main" class="w3-container">
 
 		<!-- buttons -->
 
-	  <button onclick="document.getElementById('id01').style.display='block'" class="w3-button w3-black">Chanting Book 1</button>
-	  <button onclick="document.getElementById('id02').style.display='block'" class="w3-button w3-black">Chanting Book 2</button>
+	  <button id="open-book-1" class="w3-button w3-black">Chanting Book 1</button>
+	  <button id="open-book-2" class="w3-button w3-black">Chanting Book 2</button>
 		<div class="counter-holder">	Sangha online: <script type="text/javascript" src="//livecounter.theyosh.nl/3666.js"></script></div>
 	  <div id="demo-buttons" style="margin-top: 50px; display:none;">
 	  	<button class="w3-button w3-black" onclick="document.getElementById('demo-video').style.display='block'; hideDemoStuff()">(video demo)</button><br>
 	  	<button class="w3-button w3-black" onclick="document.getElementById('demo-audio').style.display='block'; hideDemoStuff()">(audio demo)</button>
 	  </div>
 
+	  <!-- modals will get appended here -->
 	  
-	  
-	  <!-- CHANTING BOOK 2 ---> 
-	  
-	  <div id="id02" class="w3-modal">
-	    <div class="w3-modal-content">
-	      <div class="w3-container">
-		    <span id="start-scrolling-button2" style="display:none" onclick="ChantAutoScroll.controls.userHitStart()" class="w3-button w3-display-topright pause-button">[scroll]</span>
-		  	<span id="stop-scrolling-button2" style="display:none" onclick="ChantAutoScroll.controls.userHitPause()" class="w3-button w3-display-topright pause-button">[stop]</span>
-			  &nbsp;&nbsp;
-	        <span onclick="ChantingBook.closeChantModalClicked(2)" class="close-button w3-button w3-display-topright">&times;</span>
-	        <div class="main-content">	        
-	        	<div id="toc-2" class="toc">
-	        		<!-- filled in by loadTOC -->
-			    </div><!-- end TOC -->
-			    
-			    <div id="book2images" class="image-holder">
-					<div id="spacer2"></div>
-			    	<!-- onload, insert images here -->
-			    	<!-- <img id="2-1" class="chant-image" src="chanting-book-2/1.png"> -->
-			    </div>
-		    </div>	 
-	        
-	      </div>
-	    </div>
-	  </div>
-	  
-	  <!-- CHANTING BOOK 1 ---> 
-	
-	  <div id="id01" class="w3-modal">
-	    <div class="w3-modal-content">
-	      <div class="w3-container">
-			  <span id="start-scrolling-button1" style="display:none" onclick="ChantAutoScroll.controls.userHitStart()" class="w3-button w3-display-topright pause-button">[scroll]</span>
-			  <span id="stop-scrolling-button1" style="display:none" onclick="ChantAutoScroll.controls.userHitPause()" class="w3-button w3-display-topright pause-button">[pause]</span>
-			  &nbsp;&nbsp;
-	        <span onclick="ChantingBook.closeChantModalClicked(1)" class="close-button w3-button w3-display-topright">&times;</span>
-	        <div class="main-content">
-			    <div id="toc-1" class="toc">
-					<!-- filled in by loadTOC -->
-			    </div><!-- end TOC -->
-			    
-			    <div id="book1images" class="image-holder">
-					<div id="spacer1"></div>
-					<!--loaded by loadImages: <img id="1-1" class="chant-image" src="chanting-book-1/1.png">-->
-				
-			    </div><!-- end image holder -->
-        	</div><!-- end main content -->
-		   
-		   
-	      </div>
-	    </div>
-	  </div>
+
 	</div>
 
 	

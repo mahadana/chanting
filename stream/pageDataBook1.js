@@ -1238,5 +1238,5 @@ const pageDataBook1 = [
     ]
   }
 ]
-
+pageDataBook1.maxPages = 155;
 

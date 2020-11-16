@@ -52,24 +52,36 @@ ChantingBook = {
     for(const element of holder.childNodes) if(element.style) element.style.display = "block"
   },
 
-
-  load: function(book1, book2) {
+  load: function(container, data) {
 
     //sort, since data comes out of order...
     const startPageSort = function(a, b) {
       return a.startPage - b.startPage;
     }
 
-    book1.sort(startPageSort);
-    book2.sort(startPageSort);
+    const that = this;
+    data.forEach(info => {
+      const bookNum = info.bookNum;
 
-    this.loadImages();
-    this.loadTOCs(book1, book2);
-  },
+      //first, create the html for the modal
+      container.appendChild(this.getModalElementForForBookNumber(bookNum))
 
-  loadImages: function() {
-    this.loadImageSet(1,155); //155 pages in book 1, 89  in book 2
-    this.loadImageSet(2,	89);
+      //attach action to html button
+      document.getElementById(info.openButtonId).onclick = function() {
+        //open the appropriate holder div when
+        console.log("open clicked for book "+info.bookNum)
+        document.getElementById('id0'+info.bookNum).style.display='block'
+      }
+
+      //sort the data in the books
+      info.data.sort(startPageSort);
+
+      //load images into divs
+      that.loadImageSet(bookNum, info.data.maxPages)
+
+      //load up the TOCs
+      that.loadTOC(bookNum, info.data)
+    })
   },
 
   loadImageSet: function (bookNum, maxPage) {
@@ -82,15 +94,6 @@ ChantingBook = {
       newImage.id = bookNum+"-"+i;
       holder.appendChild(newImage);
     }
-  },
-
-  loadTOCs: function(book1, book2) {
-    this.loadTOC(1, book1);
-    this.loadTOC(2, book2);
-  },
-
-  constants: {
-    START_PAGE_OFFSET: 9,
   },
 
   loadTOC: function (bookNum, data) {
@@ -111,6 +114,35 @@ ChantingBook = {
     })
 
   },
+
+  getModalElementForForBookNumber: function (bookNum) {
+    const modal = document.createElement("div");
+    modal.className = "w3-modal"
+    modal.id = "id0"+bookNum;
+    modal.innerHTML = `
+            <div class="w3-modal-content">
+                <div class="w3-container">
+                  <span id="start-scrolling-button${bookNum}" style="display:none" onclick="ChantAutoScroll.controls.userHitStart()" class="w3-button w3-display-topright pause-button">[scroll]</span>
+                  <span id="stop-scrolling-button${bookNum}" style="display:none" onclick="ChantAutoScroll.controls.userHitPause()" class="w3-button w3-display-topright pause-button">[stop]</span>
+                  &nbsp;&nbsp;
+                  <span onclick="ChantingBook.closeChantModalClicked(${bookNum})" class="close-button w3-button w3-display-topright">&times;</span>
+                  <div class="main-content">
+                    <div id="toc-${bookNum}" class="toc"></div>
+          
+                    <div id="book${bookNum}images" class="image-holder">
+                      <div id="spacer${bookNum}"></div>
+                    </div>
+                  </div>
+                </div>
+            </div>
+      `
+    return modal;
+  },
+
+  constants: {
+    START_PAGE_OFFSET: 9,
+  },
+
 }
 
 

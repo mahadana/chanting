@@ -528,4 +528,4 @@ const pageDataBook2 = [
     ]
   }
 ]
-
+pageDataBook2.maxPages = 89;
