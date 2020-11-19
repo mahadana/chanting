@@ -52,7 +52,7 @@ ChantAutoScroll = {
 
       proportionOfPageThatIsText: function(pageNum) {
         //TODO: should probably rename trueEndHeight in the data to be more like proportionOfTotalPageThatIsText
-        return this.scrollData[pageNum].trueEndHeight;
+        return 1;
       },
 
       /**

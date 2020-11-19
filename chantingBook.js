@@ -7,8 +7,21 @@ ChantingBook = {
     for(const element of holder.childNodes) if(element.style && element.nodeName === "IMG") element.style.display = "none"
 
 
-    //unhide only the relevant pages
-    pages.forEach(pageNum => document.getElementById(bookNum+"-"+pageNum).style.display = "block")
+    //unhide only the relevant pages, and size them appropriately
+    chantInfo.pageScrollData.forEach(pageData => {
+      const image = document.getElementById(bookNum+"-"+pageData.pageNum)
+      image.style.display = "block"
+      if(pageData.trueEndHeightInPx) {
+        //if I've managed to find the actual end height, use that (multiplying by a ratio for width)
+        image.style.height = Math.round(pageData.trueEndHeightInPx * image.width / image.naturalWidth) + "px"
+      } else {
+        //if I haven't gotten around to it, try just using the trueEndHeight (a percentage number I eyeballed)
+        // I round up by 5% just to prevent trimming in unnecessary cases
+        const height = image.width * image.naturalHeight / image.naturalWidth;
+        image.style.height = Math.round(height * Math.min(1, pageData.trueEndHeight+ 0.05)) + "px";
+      }
+
+    })
 
     // scroll to the right spot
     document.getElementById("spacer"+bookNum).style.height =

@@ -23,4 +23,8 @@ a:hover { text-decoration:underline; }
 .main-content { overflow-y: scroll;  height: 100% }
 
 /* don't let the images get wider than popup. Auto scale height accordingly */
-.chant-image { width: 100%; }
+.chant-image {
+    width: 100%;
+    object-fit: cover;
+    object-position: top;
+}
