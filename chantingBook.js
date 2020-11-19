@@ -84,6 +84,8 @@ ChantingBook = {
         //open the appropriate holder div when
         console.log("open clicked for book "+info.bookNum)
         document.getElementById('id0'+info.bookNum).style.display='block'
+        // need this to fix firefox, which thinks it's so smart for saving prev scroll height!!
+        document.getElementById('toc-'+info.bookNum).scrollIntoView(true)
       }
 
       //sort the data in the books

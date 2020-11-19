@@ -491,25 +491,29 @@ const pageDataBook2 = [
         "pageNum": 64,
         "trueEndHeight": 0.85,
         "charactersPerSecond": 6.5,
-        "charactersOnPage": 808
+        "charactersOnPage": 808,
+        "trueEndHeightInPx":1187,
       },
       {
         "pageNum": 66,
         "trueEndHeight": 0.9,
         "charactersPerSecond": 6.5,
-        "charactersOnPage": 863
+        "charactersOnPage": 863,
+        "trueEndHeightInPx":1260,
       },
       {
         "pageNum": 68,
         "trueEndHeight": 0.95,
         "charactersPerSecond": 6.5,
-        "charactersOnPage": 1015
+        "charactersOnPage": 1015,
+        "trueEndHeightInPx":1266,
       },
       {
         "pageNum": 70,
         "trueEndHeight": 0.85,
         "charactersPerSecond": 6.5,
-        "charactersOnPage": 805
+        "charactersOnPage": 805,
+        "trueEndHeightInPx": 1097,
       }
     ]
   },

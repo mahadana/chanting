@@ -2,7 +2,7 @@ ChantAutoScroll = {
 
 
   configure: function ({bookNum, startPageNum, scrollData}) {
-    const holder = document.getElementById('book'+bookNum+'images').parentElement;
+    const imageHolder = document.getElementById('book'+bookNum+'images');
     //allow instance functions to reference static constants
     const constants = this.constants;
 
@@ -13,37 +13,54 @@ ChantAutoScroll = {
       scrollData: scrollData,//the scroll data for the chant
       //originalStartHeightInPx - he STARTING height, which allows for calculations. We record it at config time.
       // This is possibly brittle if user rotates the device.
-      originalStartHeightInPx: holder.scrollTop,
+      originalStartHeightInPx: imageHolder.parentElement.scrollTop,
       //TODO: could eliminate need to specify holder by just using a single holder, not 2 holders. Better code.
       //holder = the holding element for this chant. Varies depending on the book number.
-      holder: holder,
-      //firstImageElement - used only to dynamically (esp for rotating devices) determine the current
-      // screen height. Derivative of "holder"
-      firstImageElement: document.getElementById(bookNum+"-"+startPageNum),
+      holder: imageHolder.parentElement,
+      imageHolder: imageHolder,
 
       //inefficient to keep making new functions with every instance, but whatever, it's cheap and not frequent
       _getCurrentImageHeight: function() {
-        return this.firstImageElement.scrollHeight;
+        return this._getCurrentImage().height;
       },
 
-      _heightFromFirstImageTop: function(scrollHeight) {
-        return (scrollHeight - this.originalStartHeightInPx - this._startHeightOffset());
-      },
-
-      _currentPageNumber: function (scrollHeight) {
-        return Math.floor(this._heightFromFirstImageTop(scrollHeight) / this._getCurrentImageHeight());
+      //always assume true eye height
+      _currentPageNumber: function () {
+        const currentImage = this._getCurrentImage()
+        return currentImage ? currentImage.pageNumber : -1;
       },
 
       _startHeightOffset: function() {
-        return holder.clientHeight * constants.presumedEyeHeightAsFractionOfPage;
+        return this.holder.clientHeight * constants.presumedEyeHeightAsFractionOfPage;
+      },
+
+      //assumes current page for the assumed eye height
+      _getCurrentImage: function() {
+        //iterate through images until you find the FIRST one whose "top" is >= assumed eye height
+        let pageNumber = 0;
+        for(let node of this.imageHolder.childNodes) {
+          //console.log("node", node)
+          if(node.nodeName === "IMG") {
+            if(node.style.display !== "none") {
+              if(node.getBoundingClientRect().bottom - this._startHeightOffset() >= 0 && node.getBoundingClientRect().top <= this.holder.clientHeight) {
+                //break here, this is the node
+                node.pageNumber = pageNumber;
+                return node;
+              }
+              pageNumber++;
+            }
+          }
+        }
+        return null;
       },
 
       _doesPageExistInScrollData: function(pageNumber) {
         return !!this.scrollData[pageNumber];
       },
 
+      //TODO: make sure using the current image of the true eye height is not an issue....
       _heightWithinCurrentPage: function (scrollHeight) {
-        return this._heightFromFirstImageTop(scrollHeight) % this._getCurrentImageHeight();
+        return (scrollHeight - this.holder.scrollTop) - this._getCurrentImage().getBoundingClientRect().top;
       },
 
       _currentHolderScrollPosition: function() {
@@ -51,7 +68,8 @@ ChantAutoScroll = {
       },
 
       proportionOfPageThatIsText: function(pageNum) {
-        //TODO: should probably rename trueEndHeight in the data to be more like proportionOfTotalPageThatIsText
+        // now that we trimmed all the images using the data, this is not needed
+        // it's always 1.
         return 1;
       },
 
@@ -184,7 +202,7 @@ ChantAutoScroll = {
 
   _logStartOfAutoscroll: function() {
     const trueHeightInPx = this.instance._currentHolderScrollPosition() + this.instance._startHeightOffset();
-    const pageNum = this.instance._currentPageNumber(trueHeightInPx);
+    const pageNum = this.instance._currentPageNumber();
     console.log("scroll data", this.instance.scrollData)
     console.log("Scrolling, scrollPos = "+this.instance._currentHolderScrollPosition()+", trueheight = "+trueHeightInPx+" pageNum = "+pageNum);
     console.log("start")
@@ -221,7 +239,7 @@ ChantAutoScroll = {
   _scrollingIntervalFunction:function () {
     // we assume that the user is starting with their eye in the middle of the page. Scroll from there.
     const trueHeightInPx = this.instance._currentHolderScrollPosition() + this.instance._startHeightOffset();
-    const pageNum = this.instance._currentPageNumber(trueHeightInPx);
+    const pageNum = this.instance._currentPageNumber();
 
 
 
@@ -233,6 +251,16 @@ ChantAutoScroll = {
         this.controls.toggleStartStopButtons()
         return;
       } else {
+        // TODO: it should no longer reach this code. Prove it!
+        console.log(["_currentHolderScrollPosition: "+this.instance._currentHolderScrollPosition(),
+          "image height: "+this.instance._getCurrentImageHeight(),
+          "clientHeight: "+this.instance.holder.clientHeight,
+          "heightWithinPage (trueHeight): "+this.instance._heightWithinCurrentPage(trueHeightInPx),
+          "trueHeight: "+trueHeightInPx,
+          "originalHeight: "+this.instance.originalStartHeightInPx,
+          "heightWithinPage (topHeight): "+this.instance._heightWithinCurrentPage(this.instance._currentHolderScrollPosition()),
+          //"fractionOfFullPage: "+this.instance._fractionOfFullPageToScrollPerInterval(pageNum),
+        ].join(",\n"))
         //we are at a page >= 0 where there is no data. We must therefore have reaced the true end
         //we've reached the end. Stop scrolling! Fully cancel and remove listeners
         this.cancelAutoScrolling(" trueEnd on last page. Page = "+pageNum);
