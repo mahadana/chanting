@@ -6,14 +6,22 @@ ChantingBook = {
     //hideAll images for book (some may already be displayed if they previously had a chant open)
     for(const element of holder.childNodes) if(element.style && element.nodeName === "IMG") element.style.display = "none"
 
+    const setScaledHeightString = function(height, image) {
+      return image.style.height = Math.round(height * image.width / image.naturalWidth) + "px"
+    }
 
     //unhide only the relevant pages, and size them appropriately
     chantInfo.pageScrollData.forEach(pageData => {
       const image = document.getElementById(bookNum+"-"+pageData.pageNum)
       image.style.display = "block"
-      if(pageData.trueEndHeightInPx) {
+      if(pageData.trueStartHeightInPx) {
+        // rare edge case where we want to start mid-page
+        setScaledHeightString(pageData.trueStartHeightInPx, image)
+        // in this case, we override the css for all images and attach a "bottom" start
+        image.style.objectPosition = "bottom"
+      } else if(pageData.trueEndHeightInPx) {
         //if I've managed to find the actual end height, use that (multiplying by a ratio for width)
-        image.style.height = Math.round(pageData.trueEndHeightInPx * image.width / image.naturalWidth) + "px"
+        setScaledHeightString(pageData.trueEndHeightInPx, image)
       } else {
         //if I haven't gotten around to it, try just using the trueEndHeight (a percentage number I eyeballed)
         // I round up by 5% just to prevent trimming in unnecessary cases

@@ -16,7 +16,6 @@ const pageDataBook1 = [
       22,
       23,
       24,
-      25
     ],
     "startPage": 11,
     "pageScrollData": [
@@ -111,6 +110,13 @@ const pageDataBook1 = [
         "trueEndHeightInPx": 851,
         "charactersOnPage": 607
       },
+    ]
+  },
+  {
+    "name": "Morning Chanting - Closing Homage",
+    "pages": [25],
+    "startPage": 25,
+    "pageScrollData":[
       {
         "pageNum": 25,
         "pageTimeInSeconds": 60,
@@ -118,7 +124,7 @@ const pageDataBook1 = [
         "trueEndHeightInPx": 853,
         "charactersOnPage": 451
       }
-    ]
+    ],
   },
   {
     "name": "Evening Chanting (Pali)",
@@ -176,6 +182,19 @@ const pageDataBook1 = [
     ]
   },
   {
+    "name": "Evening Chanting - Closing Homage (Pali)",
+    "pages": [37],
+    "startPage": 37,
+    "pageScrollData":[
+      {
+        "pageNum": 37,
+        "pageTimeInSeconds": 60,  //total guess
+        "trueStartHeightInPx": 461, //461px from bottom
+        "charactersOnPage": 851  //wrong -- some are from the earlier part
+      }
+    ],
+  },
+  {
     "name": "Evening Chanting (English)",
     "pages": [
       28,
@@ -229,6 +248,19 @@ const pageDataBook1 = [
         "charactersOnPage": 993
       }
     ]
+  },
+  {
+    "name": "Evening Chanting - Closing Homage (English)",
+    "pages": [38],
+    "startPage": 38,
+    "pageScrollData":[
+      {
+        "pageNum": 38,
+        "pageTimeInSeconds": 60,  //total guess
+        "trueStartHeightInPx": 461, //461px from bottom
+        "charactersOnPage": 851  //wrong -- some are from the earlier part
+      }
+    ],
   },
   {
     "name": "Verses of Sharing and Aspiration (Pali)",
