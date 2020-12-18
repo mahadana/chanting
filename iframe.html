@@ -1,0 +1,78 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Chanting Book</title>
+
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+
+
+    <style>
+        #buttons { padding: 50px; }
+        #open-book-1, #open-book-2 { font-size: 32pt }
+
+        /* ONLY FOR MARGIN FREE-POPUP */
+        .w3-modal-content { width: 100% } /*get more specific*/
+        .close-button { display: none }
+        #id01, #id02 { height: 100%; padding-top: 10px; }
+        #body { background-color: white;}
+    </style>
+
+    <meta http-equiv="content-type" content="text/html;charset=utf-8"/>
+
+    <script src="autoscrollchant.js"></script>
+    <script src="chantingBook.js"></script>
+    <script src="pageDataBook1.js"></script>
+    <script src="pageDataBook2.js"></script>
+    <script>
+
+      function loadChantStuff() {
+        //only load one page specifically
+        let data;
+
+        const url = new URL(location.href);
+        const bookNumber = parseInt(url.searchParams.get("book")) || alert("NO BOOK NUMBER WAS PASSED. ADD PARAM TO URL 'book'");
+        if(bookNumber === 1) {
+          data = {
+            bookNum:1,
+            data: pageDataBook1,
+            openButtonId: "open-book-1",
+          }
+        } else if(bookNumber === 2) {
+          data = {
+            bookNum:2,
+            data: pageDataBook2,
+            openButtonId: "open-book-2",
+          }
+        } else {
+          alert("incorrect book number: "+bookNumber);
+        }
+
+        ChantingBook.load(document.getElementById('main'), [data])
+
+        //fire the "click" command
+        ChantingBook.buttonClickedToShowBookNumber(bookNumber);
+      }
+
+    </script>
+</head>
+
+<!-- SILLY HACK -- hide the buttons so the other code doesnt bug out -->
+<div id="buttons" style="display:none">
+    <!-- buttons -->
+    <div>
+        <button id="open-book-1" class="w3-button w3-black">Chanting Book 1</button>
+    </div>
+    <div>
+        <button id="open-book-2" class="w3-button w3-black">Chanting Book 2</button>
+    </div>
+</div>
+
+<!-- end SILLY HACK -->
+
+<body id=body onload="loadChantStuff();">
+    <div id="main" class="w3-container">
+        <!-- modals will get appended here -->
+    </div>
+</body>
+</html>

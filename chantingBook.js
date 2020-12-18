@@ -65,6 +65,14 @@ ChantingBook = {
     ChantAutoScroll.controls.closeClicked()
   },
 
+  buttonClickedToShowBookNumber: function(bookNum) {
+    //open the appropriate holder div when
+    console.log("open clicked for book "+bookNum)
+    document.getElementById('id0'+bookNum).style.display='block'
+    // need this to fix firefox, which thinks it's so smart for saving prev scroll height!!
+    document.getElementById('toc-'+bookNum).scrollIntoView(true)
+  },
+
 
   showAllPagesForBook: function (bookNum) {
     const holder = document.getElementById('book'+bookNum+'images')
@@ -89,11 +97,7 @@ ChantingBook = {
 
       //attach action to html button
       document.getElementById(info.openButtonId).onclick = function() {
-        //open the appropriate holder div when
-        console.log("open clicked for book "+info.bookNum)
-        document.getElementById('id0'+info.bookNum).style.display='block'
-        // need this to fix firefox, which thinks it's so smart for saving prev scroll height!!
-        document.getElementById('toc-'+info.bookNum).scrollIntoView(true)
+        that.buttonClickedToShowBookNumber(bookNum)
       }
 
       //sort the data in the books
