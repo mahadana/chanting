@@ -12,10 +12,13 @@
         #open-book-1, #open-book-2 { font-size: 32pt }
 
         /* ONLY FOR MARGIN FREE-POPUP */
-        .w3-modal-content { width: 100% } /*get more specific*/
+        .w3-modal { overflow: hidden; }
+        .w3-modal-content { width: 100%; } /*get more specific*/
+        .w3-container { padding: 0; }
         .close-button { display: none }
-        #id01, #id02 { height: 100%; padding-top: 10px; }
+        #id01, #id02 { height: 100%; padding-top: 0; }
         #body { background-color: white;}
+        .pause-button { margin: 30px; }
     </style>
 
     <meta http-equiv="content-type" content="text/html;charset=utf-8"/>
