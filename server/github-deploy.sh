@@ -3,6 +3,7 @@
 [ "${FLOCKER}" != "$0" ] && exec env FLOCKER="$0" flock -en "$0" "$0" "$@" || :
 
 set -eu
+cd "$(dirname "$0")/.."
 
-cd /opt/chanting
-git pull
+git fetch
+git reset --hard origin/main
