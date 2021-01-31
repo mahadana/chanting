@@ -71,6 +71,8 @@ ChantingBook = {
     document.getElementById('id0'+bookNum).style.display='block'
     // need this to fix firefox, which thinks it's so smart for saving prev scroll height!!
     document.getElementById('toc-'+bookNum).scrollIntoView(true)
+    // tracking
+    plausible("chantingBook", { props: { book: ''+bookNum } });
   },
 
 
